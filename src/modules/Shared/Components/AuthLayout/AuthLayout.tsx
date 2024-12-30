@@ -3,23 +3,19 @@ import authImage from '../../../../assets/Images/authImage.svg'
 
 export const AuthLayout = () => {
   return <>
-  
-  <div className="bg-dark text-white min-h-screen flex items-center justify-center">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8  p-8 rounded-lg shadow-md">
-          {/* Left Section */}
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-5 bg-dark">
+      {/* Left Section */}
+      <div className="text-white p-6 lg:col-span-3">
+        <Outlet />
+      </div>
 
-          <Outlet/>
-
-          {/* Right Section */}
-          <div className="flex justify-center">
-            <img
-              src={authImage}
-              alt="quiz app illustration"
-              className="rounded-lg"
-            />
-          </div>
-        </div>
+      {/* Right Section */}
+      <div className="p-6 lg:col-span-2">
+        <img
+          src={authImage}
+          alt="Quiz app Illustration"
+          className="w-full h-full object-contain"
+        />
       </div>
     </div>
   
