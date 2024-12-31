@@ -1,3 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .auth-label {
+    @apply text-olive text-2xl font-bold;
+  }
+  .auth-button {
+    @apply flex items-center justify-center gap-[10px]
+    bg-[#F5F5F5] text-black w-36 h-12 rounded-[10px] font-bold 
+    hover:brightness-125 transition duration-300 ease-in-out;
+  }
+}
