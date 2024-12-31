@@ -1,108 +1,92 @@
-import { Button, Modal } from "flowbite-react";
-import { useEffect, useState } from "react";
-import logo from "../../../assets/logo.png";
-import PasswordInput from "../PasswordInput/PasswordInput";
-import { SubmitHandler, useForm } from "react-hook-form";
-import ButtonForm from "../ButtonForm/ButtonForm";
-import {
-  ChangePasswordReguest,
-  ChangePasswordResponse,
-} from "../../../InterFaces/Interfaces";
-import toast from "react-hot-toast";
-import { apiClient, AUTHENTICATION_URLS } from "../../../Apis/EndPoints";
-import { AxiosError } from "axios";
-import { PasswordValidation } from "../../../Validation/Validation";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useForm } from "react-hook-form";
+import { getRequiredMessage, PasswordValidation } from "../../../services/validations";
+import CustomPasswordInput from "../../Shared/Components/CustomPasswordInput/CustomPasswordInput";
+import { CheckIcon } from "../../Shared/Components/SvgIcons/SvgIcons";
+import { useNavigate } from "react-router-dom";
+import { AUTH_URLS, axiosInstance } from "../../../services/urls";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
-export default function ChangePasswordModal() {
-  const [openModal, setOpenModal] = useState(false);
+export type User = {
+  password: string;
+  password_new: string;
+  Confirm_Password: string;
+};
+
+export default function ChangePassword() {
   const {
     register,
-    formState: { errors, isSubmitting },
     handleSubmit,
     watch,
-    setFocus,
-  } = useForm();
+    trigger,
+    formState: { errors, isSubmitting },
+  } = useForm<User>({ mode: "onChange" });
 
-  const onSubmit: SubmitHandler<ChangePasswordReguest> = async (data) => {
-    const toastId = toast.loading("Processing...");
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: User): Promise<void> => {
+    console.log(data);
     try {
-      const { Confirm_Password, ...submitData } = data;
-
-      const response = await apiClient.post<ChangePasswordResponse>(
-        AUTHENTICATION_URLS.changePassword,
-        submitData
-      );
-
-      setOpenModal(false);
-      toast.success("Paswword is changed Successfully", {
-        id: toastId,
-      });
-    } catch (error) {
-      const axiosError = error as AxiosError<{ message: string }>;
-      toast.error(axiosError.response?.data?.message || "An error occurred", {
-        id: toastId,
-      });
+      await axiosInstance.put<string>(AUTH_URLS.changePassword, data);
+      toast.success("Password changed successfully");
+      navigate("/login");
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || "An error occurred");
     }
   };
+
+  const password = watch("password_new");
+  const confirmPassword = watch("Confirm_Password");
+
   useEffect(() => {
-    setFocus("password");
-  }, []);
+    if (confirmPassword) trigger("Confirm_Password");
+  }, [password, confirmPassword, trigger]);
 
   return (
-    <>
-      <Button onClick={() => setOpenModal(true)}>Change Password</Button>
-      <Modal
-        show={openModal}
-        size="3xl"
-        onClose={() => setOpenModal(false)}
-        popup>
-        <Modal.Header className="bg-[#0D1321]" />
-        <Modal.Body className="bg-[#0D1321]">
-          <div>
-            <div className="w-[200px]">
-              <img src={logo} alt="Logo" />
-            </div>
-            <p className="font-bold text-2xl text-[#C5D86D] pt-4">
-              Change Password
-            </p>
-            <form
-              className="my-7 flex flex-col gap-3"
-              onSubmit={handleSubmit(onSubmit)}>
-              <PasswordInput
-                label="Password"
-                error={
-                  errors?.password?.message && String(errors.password.message)
-                }
-                {...register("password", { required: "Password is required" })}
-              />
-              <PasswordInput
-                label="New Password"
-                error={
-                  errors?.password_new?.message &&
-                  String(errors.password_new.message)
-                }
-                {...register("password_new", PasswordValidation(8))}
-              />
-              <PasswordInput
-                label="Confirm Password"
-                error={
-                  errors?.Confirm_Password?.message &&
-                  String(errors.Confirm_Password.message)
-                }
-                {...register("Confirm_Password", {
-                  required: "Confirm Password is required",
-                  validate: (value) =>
-                    value === watch("password_new") || "Passwords do not match",
-                })}
-              />
+    <main>
+      <h1 className="auth-label mb-9">Change password</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <CustomPasswordInput
+          label="Old Password"
+          placeholder="Type your password"
+          inputId="password"
+          register={register("password", {
+            required: getRequiredMessage("Password"),
+          })}
+          isError={errors?.password}
+          errorMessage={errors?.password?.message}
+        />
 
-              <div className="flex justify-start gap-4 mt-3">
-                <ButtonForm isSubmitting={isSubmitting} text="Change" />
-              </div>
-            </form>
-          </div>
-        </Modal.Body>
-      </Modal>
-    </>
+        <CustomPasswordInput
+          label="New Password"
+          placeholder="Type your new password"
+          inputId="new-password"
+          register={register("password_new", PasswordValidation(8))}
+          isError={errors?.password_new}
+          errorMessage={errors?.password_new?.message}
+        />
+
+        <CustomPasswordInput
+          label="Confirm Password"
+          placeholder="Re-enter your password"
+          inputId="confirm-password"
+          register={register("Confirm_Password", {
+            required: getRequiredMessage("Confirm Password"),
+            validate: (value) =>
+              value === password || "Passwords do not match",
+          })}
+          isError={errors?.Confirm_Password}
+          errorMessage={errors?.Confirm_Password?.message}
+        />
+
+        <div className="flex items-center justify-between gap-4">
+          <button className="auth-button" type="submit">
+            {isSubmitting ? "loading" : "Change"}
+            <CheckIcon />
+          </button>
+        </div>
+      </form>
+    </main>
   );
 }
