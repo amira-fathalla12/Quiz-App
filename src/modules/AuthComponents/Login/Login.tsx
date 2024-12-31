@@ -65,6 +65,7 @@ export const Login = () => {
           register={register("email", emailValidation)}
           isError={errors?.email}
           errorMessage={errors?.email?.message}
+          inputId="email"
         />
         <CustomPasswordInput
           label="Password"
@@ -74,6 +75,7 @@ export const Login = () => {
           })}
           isError={errors?.password}
           errorMessage={errors?.password?.message}
+          inputId="password"
         />
         <div className="flex items-center justify-between gap-4">
           <button type="submit" disabled={isSubmitting} className="auth-button">
