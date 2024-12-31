@@ -41,9 +41,9 @@ const App = () => {
 ,
 {
   path:'',
-  element: <ProtectedRoute>
+  element: 
     <MasterLayout/>
-  </ProtectedRoute>,
+  ,
   errorElement:<NotFound/>,
   children : [
     {

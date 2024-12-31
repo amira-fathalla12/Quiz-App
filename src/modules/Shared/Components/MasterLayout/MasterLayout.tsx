@@ -1,16 +1,17 @@
-import { Outlet } from "react-router-dom"
-import { Navbar } from "../Navbar/Navbar"
-import { SideBarMenu } from "../SideBarMenu/SideBarMenu"
+import { Outlet } from "react-router-dom";
+import { Navbar } from "../Navbar/Navbar";
+import { SideBarMenu } from "../SideBarMenu/SideBarMenu";
 
 export const MasterLayout = () => {
-  return <>
-  
-    <div className="master-content">
-      <Navbar />
-      <SideBarMenu />
-      <div className="main-content d-flex  mt-5 w-auto ">
-        <Outlet />
+  return (
+    <>
+      <div className="flex h-screen">
+        <SideBarMenu />
+        <div className=" w-full main px-2">
+          <Navbar />
+          <Outlet />
+        </div>
       </div>
-    </div> 
-  </>
-}
+    </>
+  );
+};
