@@ -4,7 +4,7 @@ import { Register } from "./modules/AuthComponents/Register/Register"
 import { VerifyRegister } from "./modules/AuthComponents/VerifyRegister/VerifyRegister"
 import { ForgetPassword } from "./modules/AuthComponents/ForgetPassword/ForgetPassword"
 import { ResetPassword } from "./modules/AuthComponents/ResetPassword/ResetPassword"
-import { ChangePassword } from "./modules/AuthComponents/ChangePassword/ChangePassword"
+import ChangePassword from "./modules/AuthComponents/ChangePassword/ChangePassword";
 import { Dashboard } from "./modules/Dashboard/Dashboard"
 import { QuizzesSetup } from "./modules/Quizzes/QuizzesSetup"
 import { StudentList } from "./modules/Students/StudentList"
