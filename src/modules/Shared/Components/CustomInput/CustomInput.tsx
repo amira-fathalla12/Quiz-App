@@ -7,6 +7,9 @@ interface CustomInputProps {
   isError?: FieldError | undefined | boolean;
   errorMessage?: string;
   placeholder?: string;
+  inputId: string;
+  readonly?: boolean;
+  value?: string;
 }
 
 const CustomInput = ({
@@ -16,10 +19,13 @@ const CustomInput = ({
   register,
   isError,
   errorMessage,
+  inputId,
+  readonly,
+  value,
 }: CustomInputProps) => {
   return (
     <div className="flex flex-col gap-[5px] ">
-      <label htmlFor="email" className="font-bold pl-2">
+      <label htmlFor={inputId} className="font-bold pl-2">
         {label}
       </label>
       <div className="relative ">
@@ -30,6 +36,9 @@ const CustomInput = ({
         <input
           type={type}
           placeholder={placeholder}
+          id={inputId}
+          readOnly={readonly}
+          value={value}
           className="py-4 pl-12 bg-inherit border-[3px] rounded-[10px] w-full outline-none"
           {...register}
         />

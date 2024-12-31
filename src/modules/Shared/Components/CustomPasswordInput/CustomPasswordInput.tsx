@@ -7,6 +7,7 @@ interface CustomInputProps {
   placeholder: string;
   isError?: FieldError | undefined;
   errorMessage?: string;
+  inputId: string;
 }
 
 const CustomPasswordInput = ({
@@ -15,11 +16,12 @@ const CustomPasswordInput = ({
   isError,
   errorMessage,
   placeholder,
+  inputId,
 }: CustomInputProps) => {
   const [value, toggleFunction] = useToggle(false);
   return (
     <div className="flex flex-col gap-[5px] ">
-      <label htmlFor="password" className="font-bold pl-2">
+      <label htmlFor={inputId} className="font-bold pl-2">
         {label}
       </label>
       <div className="relative ">
@@ -30,6 +32,7 @@ const CustomPasswordInput = ({
         <input
           type={value ? "text" : "password"}
           placeholder={placeholder}
+          id={inputId}
           className="py-4 pl-12 bg-inherit border-[3px] rounded-[10px] w-full outline-none"
           {...register}
         />
