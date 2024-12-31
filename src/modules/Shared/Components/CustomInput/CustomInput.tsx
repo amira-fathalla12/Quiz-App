@@ -5,11 +5,12 @@ interface CustomInputProps {
   type: string;
   register?: ReturnType<UseFormRegister<FieldValues>>;
   isError?: FieldError | undefined | boolean;
-  errorMessage?: string;
+  errorMessage?: string ;
   placeholder?: string;
   inputId: string;
   readonly?: boolean;
   value?: string;
+  className?: string;
 }
 
 const CustomInput = ({
@@ -30,8 +31,9 @@ const CustomInput = ({
       </label>
       <div className="relative ">
         <i
-          className="fa-solid fa-envelope absolute 
-            top-1/2 transform -translate-y-1/2 left-4 text-white text-2xl"
+          className={type === "email" ? 
+            "fa-solid fa-envelope absolute top-1/2 transform -translate-y-1/2 left-4 text-white text-2xl" 
+            : "fa-solid fa-address-card absolute top-1/2 transform -translate-y-1/2 left-4 text-white text-2xl"}
         />
         <input
           type={type}
