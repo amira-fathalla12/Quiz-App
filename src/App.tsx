@@ -18,7 +18,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { AuthLayout } from './modules/Shared/Components/AuthLayout/AuthLayout';
 import { NotFound } from './modules/Shared/Components/NotFound/NotFound';
 import { MasterLayout } from './modules/Shared/Components/MasterLayout/MasterLayout';
-import ProtectedRoute from "./modules/Shared/Components/ProtectedRoute/ProtectedRoute";
 
 const App = () => {
 
