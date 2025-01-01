@@ -11,7 +11,7 @@ import {
   getRequiredMessage,
 } from "../../services/validations";
 import CustomInput from "./Components/CustomInput/CustomInput";
-import CustomPasswordInput from "./Components/CustomInput/CustomInput";
+import CustomPasswordInput from "./Components/CustomPasswordInput/CustomPasswordInput";
 import { useEffect } from "react";
 export type User = {
   email: string;
