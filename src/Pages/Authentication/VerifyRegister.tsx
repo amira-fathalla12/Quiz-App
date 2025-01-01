@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import CustomInput from "../../Shared/Components/CustomInput/CustomInput";
+import CustomInput from "./Components/CustomInput/CustomInput";
 import { emailValidation } from "../../services/validations";
-import { CheckIcon } from "../../Shared/Components/SvgIcons/SvgIcons";
-import { user } from "./Register";
+import { CheckIcon } from "../components/SvgIcons/SvgIcons";
+import { user } from "../../Pages/Authentication/Register";
 export type verifyUser = user & {
   otp: string;
 };

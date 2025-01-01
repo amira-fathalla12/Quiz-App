@@ -8,9 +8,9 @@ import {
   getRequiredMessage,
   PasswordValidation,
 } from "../../services/validations";
-import { CheckIcon } from "../../Shared/Components/SvgIcons/SvgIcons";
+import { CheckIcon } from "../components/SvgIcons/SvgIcons";
 import { AUTH_URLS, axiosInstance } from "../../services/urls";
-import CustomPasswordInput from "../../Shared/Components/CustomPasswordInput/CustomPasswordInput";
+import CustomPasswordInput from "./Components/CustomPasswordInput/CustomPasswordInput";
 
 export type User = {
   password: string;

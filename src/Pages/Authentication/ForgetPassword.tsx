@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import CustomInput from "../../Shared/Components/CustomInput/CustomInput";
+import CustomInput from "./Components/CustomInput/CustomInput";
 import { emailValidation } from "../../services/validations";
-import { CheckIcon } from "../../Shared/Components/SvgIcons/SvgIcons";
+import { CheckIcon } from "../components/SvgIcons/SvgIcons";
 
 interface IFormInput {
   email: string;

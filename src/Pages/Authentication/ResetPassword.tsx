@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import CustomInput from "../../Shared/Components/CustomInput/CustomInput";
+import CustomInput from "./Components/CustomInput/CustomInput";
 import {
   getRequiredMessage,
   passwordConfirmation,
 } from "../../services/validations";
-import { CheckIcon } from "../../Shared/Components/SvgIcons/SvgIcons";
-import CustomPasswordInput from "../../Shared/Components/CustomPasswordInput/CustomPasswordInput";
+import { CheckIcon } from "../components/SvgIcons/SvgIcons";
+import CustomPasswordInput from "./Components/CustomPasswordInput/CustomPasswordInput";
 
 export interface IFormInput {
   email: string;

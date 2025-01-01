@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import DropdownMenu from "./DropdownMenu";
-import { AlarmIcon } from "../SvgIcons/SvgIcons";
+import { AlarmIcon } from "../../../components/SvgIcons/SvgIcons";
 
 export const Navbar = () => {
   const { pathname } = useLocation();

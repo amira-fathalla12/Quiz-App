@@ -9,7 +9,7 @@ import {
   QuizzesIcon,
   ResultsIcon,
   StudentsIcon,
-} from "../SvgIcons/SvgIcons";
+} from "../../../components/SvgIcons/SvgIcons";
 
 export const SideBarMenu = () => {
   const { pathname } = useLocation();
@@ -25,8 +25,7 @@ export const SideBarMenu = () => {
           <MenuItem
             onClick={toggleCollapse}
             icon={<MenuIcon />}
-            className="border border-gray-300 py-2"
-          ></MenuItem>
+            className="border border-gray-300 py-2"></MenuItem>
           <MenuItem
             component={<Link to="/dashboard" />}
             icon={
@@ -37,8 +36,7 @@ export const SideBarMenu = () => {
             }
             className={`border border-gray-300 py-2 ${
               pathname == "/dashboard" ? "border-r-4 border-r-dark" : ""
-            }`}
-          >
+            }`}>
             {" "}
             Dashboard
           </MenuItem>
@@ -52,8 +50,7 @@ export const SideBarMenu = () => {
             }
             className={`border border-gray-300 py-2 ${
               pathname == "/students" ? "border-r-4 border-r-dark" : ""
-            }`}
-          >
+            }`}>
             {" "}
             Students
           </MenuItem>
@@ -67,8 +64,7 @@ export const SideBarMenu = () => {
             }
             className={`border border-gray-300 py-2 ${
               pathname == "/groups" ? "border-r-4 border-r-dark" : ""
-            }`}
-          >
+            }`}>
             {" "}
             Groups
           </MenuItem>
@@ -82,8 +78,7 @@ export const SideBarMenu = () => {
             }
             className={`border border-gray-300 py-2 ${
               pathname == "/quzzies" ? "border-r-4 border-r-dark" : ""
-            }`}
-          >
+            }`}>
             {" "}
             Quizzes
           </MenuItem>
@@ -97,15 +92,13 @@ export const SideBarMenu = () => {
             }
             className={`border border-gray-300 py-2 ${
               pathname == "/result-list" ? "border-r-4 border-r-dark" : ""
-            }`}
-          >
+            }`}>
             {" "}
             Results
           </MenuItem>
           <MenuItem
             icon={<HelpIcon />}
-            className="border border-gray-300 py-2 help"
-          >
+            className="border border-gray-300 py-2 help">
             {" "}
             Help
           </MenuItem>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "../SvgIcons/SvgIcons";
+import { ArrowRight } from "../../../components/SvgIcons/SvgIcons";
 import QuizCard from "./QuizCard";
 
 export default function UpComingQuizzes() {

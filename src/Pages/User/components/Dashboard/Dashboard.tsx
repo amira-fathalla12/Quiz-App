@@ -1,6 +1,5 @@
-import TopStudents from "../TopStudents/TopStudents";
-import UpComingQuizzes from "../UpComingQuizzes/UpComingQuizzes";
-
+import TopStudents from "../../Instructor/TopStudents/TopStudents";
+import UpComingQuizzes from "../../Instructor/UpComingQuizzes/UpComingQuizzes";
 
 export const Dashboard = () => {
   return (

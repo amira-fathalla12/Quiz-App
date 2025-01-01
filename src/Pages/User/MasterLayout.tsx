@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { SideBarMenu } from "../../Shared/Components/SideBarMenu/SideBarMenu";
-import { Navbar } from "../../Shared/Components/Navbar/Navbar";
+import { SideBarMenu } from "./components/SideBarMenu/SideBarMenu";
+import { Navbar } from "./components/Navbar/Navbar";
 
 export const MasterLayout = () => {
   return (

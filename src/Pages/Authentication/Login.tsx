@@ -1,17 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
-import CustomAuthTab from "../../Shared/Components/CustomAuthTab/CustomAuthTab";
+import CustomAuthTab from "./Components/CustomAuthTab/CustomAuthTab";
 import {
   CheckIcon,
   SignInIcon,
   SignUpIcon,
-} from "../../Shared/Components/SvgIcons/SvgIcons";
+} from "../components/SvgIcons/SvgIcons";
 import { useForm } from "react-hook-form";
 import {
   emailValidation,
   getRequiredMessage,
 } from "../../services/validations";
-import CustomInput from "../../Shared/Components/CustomInput/CustomInput";
-import CustomPasswordInput from "../../Shared/Components/CustomInput/CustomInput";
+import CustomInput from "./Components/CustomInput/CustomInput";
+import CustomPasswordInput from "./Components/CustomInput/CustomInput";
 import { useEffect } from "react";
 export type User = {
   email: string;

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import quizImg from '../../../assets/Images/quiz-img.png';
-import { CircleRightArrow } from "../SvgIcons/SvgIcons";
+import quizImg from '../../../../assets/Images/quiz-img.png';
+import { CircleRightArrow } from "../../../components/SvgIcons/SvgIcons";
 
 export default function QuizCard() {
   return (

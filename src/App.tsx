@@ -1,24 +1,24 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { QuizzesSetup } from "./User/Components/Instructor/Quizzes/QuizzesSetup";
-import { StudentList } from "./User/Components/Instructor/StudentList";
-import { GroupsList } from "./User/Components/Instructor/GroupsList";
-import { ResultList } from "./User/Components/Instructor/Results/ResultList";
-import { ResultDetails } from "./User/Components/Instructor/Results/ResultDetails";
-import { QuestionsList } from "./User/Components/Instructor/QuestionsList";
-import { QuizzesDetails } from "./User/Components/Instructor/Quizzes/QuizzesDetails";
+import { QuizzesSetup } from "./Pages/User/Instructor/Quizzes/QuizzesSetup";
+import { StudentList } from "./Pages/User/Instructor/StudentList";
+import { GroupsList } from "./Pages/User/Instructor/GroupsList";
+import { ResultList } from "./Pages/User/Instructor/Results/ResultList";
+import { ResultDetails } from "./Pages/User/Instructor/Results/ResultDetails";
+import { QuestionsList } from "./Pages/User/Instructor/QuestionsList";
+import { QuizzesDetails } from "./Pages/User/Instructor/Quizzes/QuizzesDetails";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { NotFound } from "./Shared/Components/NotFound/NotFound";
-import { Login } from "./Authentication/Components/Login";
-import { Register } from "./Authentication/Components/Register";
-import { VerifyRegister } from "./Authentication/Components/VerifyRegister";
-import { ResetPassword } from "./Authentication/Components/ResetPassword";
-import { ForgetPassword } from "./Authentication/Components/ForgetPassword";
-import ChangePassword from "./Authentication/Components/ChangePassword";
-import { AuthLayout } from "./Authentication/Components/AuthLayout";
-import { MasterLayout } from "./User/Components/MasterLayout";
-import { Dashboard } from "./Shared/Components/Dashboard/Dashboard";
+import { NotFound } from "./Pages/components/NotFound/NotFound";
+import { Login } from "./Pages/Authentication/Login";
+import { Register } from "./Pages/Authentication/Register";
+import { ResetPassword } from "./Pages/Authentication/ResetPassword";
+import { ForgetPassword } from "./Pages/Authentication/ForgetPassword";
+import ChangePassword from "./Pages/Authentication/ChangePassword";
+import { AuthLayout } from "./Pages/Authentication/AuthLayout";
+import { MasterLayout } from "./Pages/User/MasterLayout";
+import { Dashboard } from "./Pages/User/components/Dashboard/Dashboard";
+import { VerifyRegister } from "./Pages/Authentication/VerifyRegister";
 
 const App = () => {
   const routes = createBrowserRouter([
