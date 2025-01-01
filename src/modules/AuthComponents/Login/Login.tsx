@@ -12,20 +12,33 @@ import {
 } from "../../../services/validations";
 import CustomInput from "../../Shared/Components/CustomInput/CustomInput";
 import CustomPasswordInput from "../../Shared/Components/CustomPasswordInput/CustomPasswordInput";
+import { useEffect } from "react";
 export type User = {
   email: string;
   password: string;
 };
 export const Login = () => {
   const { pathname } = useLocation();
+  const email = useLocation().state?.email || '';
+	const password = useLocation().state?.password || '';
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
-  } = useForm<User>({ mode: "onChange" });
+  } = useForm<User>({ mode: "onChange", defaultValues: {
+    email,
+    password,
+  }, });
+  
   const onSubmit = (data: User) => {
     console.log(data);
   };
+
+  useEffect(() => {
+		setValue('email', email);
+		setValue('password', password);
+	}, [setValue, email, password]);
 
   return (
     <main>
