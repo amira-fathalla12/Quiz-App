@@ -1,89 +1,86 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { Login } from './modules/AuthComponents/Login/Login';
-import { Register } from "./modules/AuthComponents/Register/Register"
-import { VerifyRegister } from "./modules/AuthComponents/VerifyRegister/VerifyRegister"
-import { ForgetPassword } from "./modules/AuthComponents/ForgetPassword/ForgetPassword"
-import { ResetPassword } from "./modules/AuthComponents/ResetPassword/ResetPassword"
-import ChangePassword from "./modules/AuthComponents/ChangePassword/ChangePassword"
-import { Dashboard } from "./modules/Dashboard/Dashboard"
-import { QuizzesSetup } from "./modules/Quizzes/QuizzesSetup"
-import { StudentList } from "./modules/Students/StudentList"
-import { GroupsList } from "./modules/Groups/GroupsList"
-import { ResultList } from "./modules/Results/ResultList"
-import { ResultDetails } from "./modules/Results/ResultDetails"
-import { QuestionsList } from "./modules/Questions/QuestionsList"
-import { QuizzesDetails } from "./modules/Quizzes/QuizzesDetails"
-import { ToastContainer } from "react-toastify"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import { QuizzesSetup } from "./Pages/User/Instructor/Quizzes/QuizzesSetup";
+import { StudentList } from "./Pages/User/Instructor/StudentList";
+import { GroupsList } from "./Pages/User/Instructor/GroupsList";
+import { ResultList } from "./Pages/User/Instructor/Results/ResultList";
+import { ResultDetails } from "./Pages/User/Instructor/Results/ResultDetails";
+import { QuestionsList } from "./Pages/User/Instructor/QuestionsList";
+import { QuizzesDetails } from "./Pages/User/Instructor/Quizzes/QuizzesDetails";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AuthLayout } from './modules/Shared/Components/AuthLayout/AuthLayout';
-import { NotFound } from './modules/Shared/Components/NotFound/NotFound';
-import { MasterLayout } from './modules/Shared/Components/MasterLayout/MasterLayout';
+import { NotFound } from "./Pages/components/NotFound/NotFound";
+import { Login } from "./Pages/Authentication/Login";
+import { Register } from "./Pages/Authentication/Register";
+import { ResetPassword } from "./Pages/Authentication/ResetPassword";
+import { ForgetPassword } from "./Pages/Authentication/ForgetPassword";
+import ChangePassword from "./Pages/Authentication/ChangePassword";
+import { AuthLayout } from "./Pages/Authentication/AuthLayout";
+import { MasterLayout } from "./Pages/User/MasterLayout";
+import { Dashboard } from "./Pages/User/components/Dashboard/Dashboard";
+import { VerifyRegister } from "./Pages/Authentication/VerifyRegister";
 
 const App = () => {
-
-  const routes = createBrowserRouter([ {
-    path: "",
-    element: <AuthLayout />,
-    errorElement: <NotFound
-     />,
-    children: [
-      { index: true, element: <Login /> },
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
-      { path: "verify-user", element: <VerifyRegister /> },
-      { path: "forget-password", element: <ForgetPassword /> },
-      { path: "reset-password", element: <ResetPassword /> },
-      { path: "change-password", element: <ChangePassword /> },
-    ],
-  }
-
-,
-{
-  path:'',
-  element: 
-    <MasterLayout/>
-  
-  ,
-  errorElement:<NotFound/>,
-  children : [
+  const routes = createBrowserRouter([
     {
-      path : 'dashboard',element : <Dashboard/>,
-    
+      path: "",
+      element: <AuthLayout />,
+      errorElement: <NotFound />,
+      children: [
+        { index: true, element: <Login /> },
+        { path: "login", element: <Login /> },
+        { path: "register", element: <Register /> },
+        { path: "verify-user", element: <VerifyRegister /> },
+        { path: "forget-password", element: <ForgetPassword /> },
+        { path: "reset-password", element: <ResetPassword /> },
+        { path: "change-password", element: <ChangePassword /> },
+      ],
     },
-    {
-      path : 'quzzies' , element : <QuizzesSetup/>
-    },
-    {
-      path : 'quzziesDetails/:id' , element : <QuizzesDetails/>
-    },
-    {
-      path:'students' , element : <StudentList/>,
-    },
-    {
-      path :'groups' , element : <GroupsList/>
-    },
-    {
-      path:'result-list' , element : <ResultList/>
-    },
-    { path: "resultDetails/:id", element: <ResultDetails /> },
-    {
-      path : 'questions' , element : <QuestionsList/>
 
-    }
-    
-  ]
-}
+    {
+      path: "",
+      element: <MasterLayout />,
 
+      errorElement: <NotFound />,
+      children: [
+        {
+          path: "dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "quzzies",
+          element: <QuizzesSetup />,
+        },
+        {
+          path: "quzziesDetails/:id",
+          element: <QuizzesDetails />,
+        },
+        {
+          path: "students",
+          element: <StudentList />,
+        },
+        {
+          path: "groups",
+          element: <GroupsList />,
+        },
+        {
+          path: "result-list",
+          element: <ResultList />,
+        },
+        { path: "resultDetails/:id", element: <ResultDetails /> },
+        {
+          path: "questions",
+          element: <QuestionsList />,
+        },
+      ],
+    },
+  ]);
+  return (
+    <>
+      <ToastContainer />
+      <RouterProvider router={routes}></RouterProvider>
+    </>
+  );
+};
 
-])
- return <>
- <ToastContainer />
- <RouterProvider router={routes}></RouterProvider>
- 
- 
-
- 
- </>
-}
-
-export default App
+export default App;

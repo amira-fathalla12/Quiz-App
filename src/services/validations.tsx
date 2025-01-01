@@ -1,3 +1,6 @@
+import { UseFormWatch } from "react-hook-form";
+import { IFormInput } from "../modules/AuthComponents/ResetPassword/ResetPassword";
+
 export const getRequiredMessage = (filedName: string) =>
   `${filedName} is required`;
 
@@ -8,6 +11,7 @@ export const emailValidation = {
     message: "Invalid Email",
   },
 };
+
 export const PasswordValidation = (minLength: number = 8) => ({
   required: "Password is required",
   minLength: {
@@ -28,3 +32,13 @@ export const PasswordValidation = (minLength: number = 8) => ({
       "Password must contain at least one special character",
   },
 });
+
+export const passwordConfirmation = (
+	watch: UseFormWatch<IFormInput> | null
+) => {
+	return {
+		required: getRequiredMessage('Confirm Password'),
+		validate: (value: string) =>
+			value === watch!('password') || 'The passwords do not match ',
+	};
+};
