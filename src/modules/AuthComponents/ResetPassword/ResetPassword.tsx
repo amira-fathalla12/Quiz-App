@@ -4,8 +4,12 @@ import { toast } from 'react-toastify';
 import { CheckIcon } from '../../Shared/Components/SvgIcons/SvgIcons';
 import CustomInput from '../../Shared/Components/CustomInput/CustomInput';
 import CustomPasswordInput from '../../Shared/Components/CustomPasswordInput/CustomPasswordInput';
+import {
+	getRequiredMessage,
+	passwordConfirmation,
+} from '../../../services/validations';
 
-interface IFormInput {
+export interface IFormInput {
 	email: string;
 	otp: string;
 	password: string;
@@ -18,6 +22,7 @@ export const ResetPassword = () => {
 		formState: { errors, isSubmitting },
 		register,
 		handleSubmit,
+		watch,
 	} = useForm<IFormInput>({
 		mode: 'onChange',
 	});
@@ -47,21 +52,27 @@ export const ResetPassword = () => {
 					type='text'
 					label='OTP'
 					placeholder='OTP'
-					register={register('otp', { required: 'OTP is required' })}
+					register={register('otp', { required: getRequiredMessage('OTP') })}
 					isError={errors.otp}
 					errorMessage={errors?.otp?.message}
 					inputId='otp'
 				/>
 				<CustomPasswordInput
 					label='Password'
-					register={register('password')}
+					register={register('password', {
+						required: getRequiredMessage('Password'),
+					})}
 					placeholder='Type your password'
+					isError={errors.password}
+					errorMessage={errors?.password?.message}
 					inputId='password'
 				/>
 				<CustomPasswordInput
 					label='Confirm Password'
-					register={register('password')}
+					register={register('passwordConf', passwordConfirmation(watch))}
 					placeholder='Type your confirm password'
+					isError={errors.passwordConf}
+					errorMessage={errors?.passwordConf?.message}
 					inputId='confirm-password'
 				/>
 				<button className='auth-button'>
