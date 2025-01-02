@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AUTH_URLS, BASE_URL } from "../../services/urls";
-import { forgetPasswordCredentials, forgetPasswordResponse, LoginCredentials, LoginResponse, resetPasswordCredentials, resetPasswordResponse } from "../../services/interfaces";
+import { AUTH_URLS, BASE_URL, QUIZ_URLS } from "../../services/urls";
+import { forgetPasswordCredentials, forgetPasswordResponse, LoginCredentials, LoginResponse, Quiz, resetPasswordCredentials, resetPasswordResponse } from "../../services/interfaces";
 import { AppState } from "../store";
 
 export const apis = createApi({
@@ -16,6 +16,7 @@ export const apis = createApi({
     },
   }),
   endpoints: (builder) => ({
+    /*user */
     login: builder.mutation<LoginResponse, LoginCredentials>({
       query: (credentials) => ({
         url: AUTH_URLS.login,
@@ -37,7 +38,13 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
+    /*quiz */
+    topUpcomingQuizzes: builder.query<Quiz[],void>({
+      query: () => ({
+        url: QUIZ_URLS.getTopUpcommingQuizzes,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useForgetPasswordMutation, useResetPasswordMutation } = apis;
+export const { useLoginMutation, useForgetPasswordMutation, useResetPasswordMutation, useTopUpcomingQuizzesQuery } = apis;

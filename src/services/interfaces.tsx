@@ -32,7 +32,7 @@ export interface forgetPasswordCredentials {
 }
 
 export interface forgetPasswordResponse {
-  message: string; 
+  message: string;
 }
 
 //* reset password
@@ -44,4 +44,42 @@ export interface resetPasswordCredentials {
 
 export interface resetPasswordResponse {
   message: string;
+}
+
+//* quiz
+export interface Quiz {
+  _id: string;
+  code: string;
+  title: string;
+  description: string;
+  status: "open" | "closed";
+  instructor: string;
+  group: string;
+  questions_number: number;
+  questions: QuizQuestion[];
+  schadule: "2025-02-15T21:19:34.000Z";
+  duration: 60;
+  score_per_question: 5;
+  type: "BE";
+  difficulty: "medium";
+  updatedAt: "2025-01-02T11:20:49.102Z";
+  createdAt: "2025-01-02T11:20:49.102Z";
+  __v: 0;
+  participants: 0;
+}
+
+//* question
+export interface QuizQuestion {
+  _id: string;
+  title: string;
+  options: Answers;
+}
+
+//* answers
+export interface Answers {
+  A: string;
+  B: string;
+  C: string;
+  D: string;
+  _id: string;
 }
