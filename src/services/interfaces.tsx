@@ -25,3 +25,23 @@ export interface ApiError {
     message: string;
   };
 }
+
+//* forget password
+export interface forgetPasswordCredentials {
+  email: string;
+}
+
+export interface forgetPasswordResponse {
+  message: string; 
+}
+
+//* reset password
+export interface resetPasswordCredentials {
+  email: string;
+  otp: string;
+  password: string;
+}
+
+export interface resetPasswordResponse {
+  message: string;
+}

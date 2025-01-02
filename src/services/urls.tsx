@@ -20,11 +20,11 @@ axiosInstance.interceptors.request.use((config) => {
 // AuthUrls
 export const AUTH_URLS = {
   login: "/auth/login",
-  register: ``,
+  register: "/auth/register",
   verify: ``,
-  forgetPassword: ``,
-  resetPassword: ``,
-  changePassword: ``,
+  forgetPassword: "/auth/forgot-password",
+  resetPassword: "/auth/reset-password",
+  changePassword: "/auth/change-password",
 };
 
 export { axiosInstance, BASE_URL, IMAGE_URL };
