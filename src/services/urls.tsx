@@ -37,4 +37,9 @@ export const QUESTIONS_URLS = {
   getAllQuestions: "/question",
 };
 
+//studentsUrls
+export const STUDENTS_URLS = {
+  getTopStudents: "/student/top-five",
+};
+
 export { axiosInstance, BASE_URL, IMAGE_URL };
