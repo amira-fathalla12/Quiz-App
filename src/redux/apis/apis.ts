@@ -4,6 +4,7 @@ import {
   BASE_URL,
   QUESTIONS_URLS,
   QUIZ_URLS,
+  STUDENTS_URLS,
 } from "../../services/urls";
 import {
   forgetPasswordCredentials,
@@ -14,6 +15,7 @@ import {
   Quiz,
   resetPasswordCredentials,
   resetPasswordResponse,
+  TopStudent,
 } from "../../services/interfaces";
 import { AppState } from "../store";
 
@@ -64,6 +66,12 @@ export const apis = createApi({
         url: QUIZ_URLS.getTopUpcommingQuizzes,
       }),
     }),
+    /*students */
+    topStudents: builder.query<TopStudent[], void>({
+      query: () => ({
+        url: STUDENTS_URLS.getTopStudents,
+      }),
+    }),
     /*questions */
     allQuestions: builder.query<Question[], void>({
       query: () => ({
@@ -78,5 +86,6 @@ export const {
   useForgetPasswordMutation,
   useResetPasswordMutation,
   useTopUpcomingQuizzesQuery,
+  useTopStudentsQuery,
   useAllQuestionsQuery,
 } = apis;

@@ -93,3 +93,28 @@ export interface Answers {
   D: string;
   _id: string;
 }
+
+//* students
+export interface Student {
+  _id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  status: string;
+  role: "Student";
+  group: {
+    _id: string;
+    name: string;
+    status: string;
+    instructor: string;
+    students: string[];
+    max_students: number;
+    updatedAt: string;
+    createdAt: string;
+    __v: number;
+  };
+}
+
+export interface TopStudent extends Student {
+  avg_score: number;
+}

@@ -1,16 +1,29 @@
-import quizImg from '../../../../assets/Images/quiz-img.png';
+import quizImg from "../../../../assets/Images/quiz-img.png";
 import { Link } from "react-router-dom";
-export default function StudentCard() {
+
+export interface StudentCardInterface {
+  firstName: string;
+  lastName: string;
+  avgScore: number;
+}
+export default function StudentCard({
+  firstName,
+  lastName,
+  avgScore,
+}: StudentCardInterface) {
+  let percentage = (avgScore * 10).toFixed(2);
   return (
     <div className="flex mb-5 border rounded-xl border-gray-300 w-full">
       <img src={quizImg} width={70} height={70} />
       <div className="px-4 py-6 flex justify-between items-center w-full">
         <div>
-          <p className="font-bold text-lg">Emmanuel James</p>
+          <p className="font-bold text-lg">
+            {firstName} {lastName}
+          </p>
           <p className="text-sm text-gray-500">
             Class rank: 2nd{" "}
             <span className="border-l border-gray-300 pl-3 ml-3">
-              Average score: 87%
+              Average score: {percentage}%
             </span>
           </p>
         </div>
