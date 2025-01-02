@@ -68,11 +68,21 @@ export interface Quiz {
   participants: 0;
 }
 
-//* question
+//* questions
 export interface QuizQuestion {
   _id: string;
   title: string;
   options: Answers;
+}
+
+export interface Question extends QuizQuestion {
+  description: string;
+  answer: "A" | "B" | "C" | "D";
+  status: string;
+  instructor: string;
+  difficulty: "easy" | "medium" | "hard";
+  points: number;
+  type: "BE" | "FE" | "DO";
 }
 
 //* answers
