@@ -26,5 +26,9 @@ export const AUTH_URLS = {
   resetPassword: "/auth/reset-password",
   changePassword: "/auth/change-password",
 };
+//quizUrls
+export const QUIZ_URLS ={
+  getTopUpcommingQuizzes : "/quiz/incomming"
+}
 
 export { axiosInstance, BASE_URL, IMAGE_URL };
