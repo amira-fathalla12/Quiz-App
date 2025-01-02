@@ -57,15 +57,15 @@ export interface Quiz {
   group: string;
   questions_number: number;
   questions: QuizQuestion[];
-  schadule: "2025-02-15T21:19:34.000Z";
-  duration: 60;
-  score_per_question: 5;
-  type: "BE";
-  difficulty: "medium";
-  updatedAt: "2025-01-02T11:20:49.102Z";
-  createdAt: "2025-01-02T11:20:49.102Z";
-  __v: 0;
-  participants: 0;
+  schadule: string;
+  duration: number;
+  score_per_question: number;
+  type: "BE" | "FE" | "DO";
+  difficulty: "easy" | "medium" | "hard";
+  updatedAt: string;
+  createdAt: string;
+  __v: number;
+  participants: number;
 }
 
 //* questions
