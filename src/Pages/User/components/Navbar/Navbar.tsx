@@ -16,6 +16,8 @@ export const Navbar = () => {
         return "Results";
       case "/quzzies":
         return "Quizzes";
+      case "/questions":
+        return "Questions";
       default:
         return "Dashboard";
     }

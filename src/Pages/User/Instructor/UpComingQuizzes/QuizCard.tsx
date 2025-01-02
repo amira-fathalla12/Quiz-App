@@ -16,7 +16,6 @@ export default function QuizCard({
 }: QuizCardInterface) {
   let date = formatDate(schadule)
   let time = formatTime(schadule)
-  console.log(date , time)
   return (
     <div className="flex mb-5 border rounded-xl border-gray-300 w-full">
       <img src={quizImg} />
