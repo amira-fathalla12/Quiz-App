@@ -1,15 +1,27 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store";
+import { clearUser } from "../../../../redux/slices/userSlice";
 
 export default function DropdownMenu() {
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  console.log(user);
+
+  const logout = () => {
+    dispatch(clearUser());
+    navigate("/login");
+  };
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex w-full justify-center gap-x-8 items-center border-l border-gray-300 bg-white px-3 py-2  font-semibold text-gray-900  hover:bg-gray-50">
           <div>
-            <p>User Name</p>
-            <p className="text-olive">Instructor</p>
+            <p>{user?.first_name + " " + user?.last_name}</p>
+            <p className="text-olive">{user?.role}</p>
           </div>
 
           <ChevronDownIcon
@@ -33,7 +45,10 @@ export default function DropdownMenu() {
             </Link>
           </MenuItem>
           <MenuItem>
-            <div className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
+            <div
+              onClick={logout}
+              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+            >
               Log out
             </div>
           </MenuItem>
