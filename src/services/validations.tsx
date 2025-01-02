@@ -1,6 +1,3 @@
-import { UseFormWatch } from "react-hook-form";
-import { IFormInput } from "../Pages/Authentication/ResetPassword";
-
 export const getRequiredMessage = (filedName: string) =>
   `${filedName} is required`;
 
@@ -33,12 +30,3 @@ export const PasswordValidation = (minLength: number = 8) => ({
   },
 });
 
-export const passwordConfirmation = (
-  watch: UseFormWatch<IFormInput> | null
-) => {
-  return {
-    required: getRequiredMessage("Confirm Password"),
-    validate: (value: string) =>
-      value === watch!("password") || "The passwords do not match ",
-  };
-};
