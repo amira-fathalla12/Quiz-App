@@ -11,7 +11,7 @@ export default function StudentCard({
   lastName,
   avgScore,
 }: StudentCardInterface) {
-  let percentage = (avgScore * 10).toFixed(2);
+  const percentage = (avgScore * 10).toFixed(2);
   return (
     <div className="flex mb-5 border rounded-xl border-gray-300 w-full">
       <img src={quizImg} width={70} height={70} />
