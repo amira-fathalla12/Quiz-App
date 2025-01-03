@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   AUTH_URLS,
   BASE_URL,
+  GROUPS_URLS,
   QUESTIONS_URLS,
   QUIZ_URLS,
   STUDENTS_URLS,
@@ -9,6 +10,7 @@ import {
 import {
   forgetPasswordCredentials,
   forgetPasswordResponse,
+  group,
   LoginCredentials,
   LoginResponse,
   Question,
@@ -78,6 +80,16 @@ export const apis = createApi({
         url: QUESTIONS_URLS.getAllQuestions,
       }),
     }),
+
+
+    // getAllGroups
+    allGroups : builder.query <group [] , void> ({
+      query : ()=> ({
+        url : GROUPS_URLS.getAllGroups,
+      
+      }),
+      
+    })
   }),
 });
 
@@ -88,4 +100,5 @@ export const {
   useTopUpcomingQuizzesQuery,
   useTopStudentsQuery,
   useAllQuestionsQuery,
+  useAllGroupsQuery
 } = apis;

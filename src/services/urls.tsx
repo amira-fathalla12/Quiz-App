@@ -42,4 +42,9 @@ export const STUDENTS_URLS = {
   getTopStudents: "/student/top-five",
 };
 
+//groupsURLS
+export const GROUPS_URLS = {
+  getAllGroups: "/group",
+};
+
 export { axiosInstance, BASE_URL, IMAGE_URL };
