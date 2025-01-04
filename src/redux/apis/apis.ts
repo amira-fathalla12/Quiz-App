@@ -14,6 +14,7 @@ import {
   LoginCredentials,
   LoginResponse,
   Question,
+  QuestionResponse,
   Quiz,
   resetPasswordCredentials,
   resetPasswordResponse,
@@ -42,20 +43,14 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
-    forgetPassword: builder.mutation<
-      forgetPasswordResponse,
-      forgetPasswordCredentials
-    >({
+    forgetPassword: builder.mutation<forgetPasswordResponse, forgetPasswordCredentials>({
       query: (credentials) => ({
         url: AUTH_URLS.forgetPassword,
         method: "POST",
         body: credentials,
       }),
     }),
-    resetPassword: builder.mutation<
-      resetPasswordResponse,
-      resetPasswordCredentials
-    >({
+    resetPassword: builder.mutation<resetPasswordResponse, resetPasswordCredentials>({
       query: (credentials) => ({
         url: AUTH_URLS.resetPassword,
         method: "POST",
@@ -80,16 +75,32 @@ export const apis = createApi({
         url: QUESTIONS_URLS.getAllQuestions,
       }),
     }),
-
-
+    getQuestion: builder.query<Question, string>({
+      query: (id) => ({
+        url: QUESTIONS_URLS.getQuestion(id),
+      }),
+    }),
+    addQuestion: builder.mutation<QuestionResponse, Question>({
+      query: (credentials) => ({
+        url: QUESTIONS_URLS.addQuestion,
+        method: "POST",
+        body: credentials,
+      }),
+    }),
+    editQuestion: builder.mutation<QuestionResponse, { id: string; data: Question }>({
+      query: ({ id, data }) => ({
+        url: QUESTIONS_URLS.editQuestion(id),
+        method: "PUT",
+        body: data,
+      }),
+    }),
     // getAllGroups
     allGroups : builder.query <group [] , void> ({
       query : ()=> ({
         url : GROUPS_URLS.getAllGroups,
       
-      }),
-      
-    })
+      }),   
+    }),
   }),
 });
 
@@ -100,5 +111,8 @@ export const {
   useTopUpcomingQuizzesQuery,
   useTopStudentsQuery,
   useAllQuestionsQuery,
-  useAllGroupsQuery
+  useAllGroupsQuery,
+  useAddQuestionMutation,
+  useEditQuestionMutation,
+  useGetQuestionQuery,
 } = apis;
