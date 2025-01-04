@@ -2,7 +2,11 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { DeleteIcon, EditIcon, ViewIcon } from "../SvgIcons/SvgIcons";
 
-export default function ActionsMenu() {
+interface Actions {
+  openEdit: () => void;
+}
+
+export default function ActionsMenu({openEdit}: Actions) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -17,22 +21,22 @@ export default function ActionsMenu() {
       >
         <div className="py-1">
           <MenuItem>
-            <div className="flex items-center gap-x-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
+            <button className="w-full flex items-center gap-x-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
               <ViewIcon/>
               view
-            </div>
+            </button>
           </MenuItem>
           <MenuItem>
-            <div className="flex items-center gap-x-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
+            <button className="w-full flex items-center gap-x-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none" onClick={openEdit}>
               <EditIcon/>
               Edit
-            </div>
+            </button>
           </MenuItem>
           <MenuItem>
-            <div className="flex items-center gap-x-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
+            <button className="w-full flex items-center gap-x-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
               <DeleteIcon/>
               Delete
-            </div>
+            </button>
           </MenuItem>
         </div>
       </MenuItems>
