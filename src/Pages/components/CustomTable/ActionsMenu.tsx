@@ -4,9 +4,12 @@ import { DeleteIcon, EditIcon, ViewIcon } from "../SvgIcons/SvgIcons";
 
 interface Actions {
   openEdit: () => void;
+  openDelete: () => void;
+  openview: ()=> void;
+
 }
 
-export default function ActionsMenu({openEdit}: Actions) {
+export default function ActionsMenu({openEdit, openDelete, openview }: Actions) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -21,7 +24,7 @@ export default function ActionsMenu({openEdit}: Actions) {
       >
         <div className="py-1">
           <MenuItem>
-            <button className="w-full flex items-center gap-x-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
+            <button className="w-full flex items-center gap-x-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none" onClick={openview}>
               <ViewIcon/>
               view
             </button>
@@ -33,7 +36,7 @@ export default function ActionsMenu({openEdit}: Actions) {
             </button>
           </MenuItem>
           <MenuItem>
-            <button className="w-full flex items-center gap-x-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none">
+            <button className="w-full flex items-center gap-x-2 px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none" onClick={openDelete}>
               <DeleteIcon/>
               Delete
             </button>
