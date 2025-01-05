@@ -35,6 +35,9 @@ export const QUIZ_URLS = {
 // questionsUrls
 export const QUESTIONS_URLS = {
   getAllQuestions: "/question",
+  getQuestion: (id: string) => `/question/${id}`,
+  addQuestion: "/question",
+  editQuestion: (id: string) => `/question/${id}`,
 };
 
 //studentsUrls

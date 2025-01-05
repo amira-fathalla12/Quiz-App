@@ -87,6 +87,11 @@ export interface Question extends QuizQuestion {
   type: "BE" | "FE" | "DO";
 }
 
+export interface QuestionResponse {
+  message: string;
+  data: Question;
+}
+
 //* answers
 export interface Answers {
   A: string;
