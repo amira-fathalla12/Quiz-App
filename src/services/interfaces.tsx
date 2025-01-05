@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 // login interface
 export interface LoginCredentials {
   email: string;
@@ -119,6 +121,14 @@ export interface Student {
 
 export interface TopStudent extends Student {
   avg_score: number;
+}
+export interface DeleteModalType {
+  setOpenModal: (value: boolean) => void;
+  openModal: boolean;
+  loading: boolean;
+  onConfirm: () => void;
+  title: string;
+  modalRef: RefObject<HTMLDivElement>;
 }
 
 

@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useAllGroupsQuery } from "../../../redux/apis/apis"
 
 import Spinner from "../../components/Spinner/Spinner"
@@ -6,6 +7,8 @@ import TableHeader from "../../components/TableHeader/TableHeader"
 export const GroupsList = () => {
     const { isLoading, isError, data } = useAllGroupsQuery()
       console.log(data);
+      const [groupIdToDelete, setGroupIdToDelete] = useState(""); // Initializing state for student ID to delete
+
       
   return <>
     <div className="p-5">
