@@ -133,8 +133,9 @@ export interface DeleteModalType {
   loading: boolean;
   onConfirm: () => void;
   title: string;
-  modalRef: RefObject<HTMLDivElement>;
+  modalRef: RefObject<HTMLDivElement> | null;  
 }
+
 
 
 

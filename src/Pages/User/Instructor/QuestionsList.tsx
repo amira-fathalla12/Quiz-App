@@ -1,173 +1,203 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import {
-	useAddQuestionMutation,
-	useAllQuestionsQuery,
-	useEditQuestionMutation,
-	useGetQuestionQuery,
-} from '../../../redux/apis/apis';
-import ActionsMenu from '../../components/CustomTable/ActionsMenu';
-import CustomTable from '../../components/CustomTable/CustomTable';
-import Spinner from '../../components/Spinner/Spinner';
-import TableHeader from '../../components/TableHeader/TableHeader';
-import Modal from '../../components/ModalForm/ModalForm';
-import Form from '../../components/Forms/Form';
-import { useForm } from 'react-hook-form';
-import { Question } from '../../../services/interfaces';
-import { toast } from 'react-toastify';
+  useAddQuestionMutation,
+  useAllQuestionsQuery,
+  useEditQuestionMutation,
+  useGetQuestionQuery,
+} from "../../../redux/apis/apis";
+import ActionsMenu from "../../components/CustomTable/ActionsMenu";
+import CustomTable from "../../components/CustomTable/CustomTable";
+import Spinner from "../../components/Spinner/Spinner";
+import TableHeader from "../../components/TableHeader/TableHeader";
+import Modal from "../../components/ModalForm/ModalForm";
+import Form from "../../components/Forms/Form";
+import { useForm } from "react-hook-form";
+import { Question } from "../../../services/interfaces";
+import { toast } from "react-toastify";
+import { axiosInstance, QUESTIONS_URLS } from "../../../services/urls";
+import { DeleteConfirm } from "../components/DeleteConfirm/DeleteConfirm";
 
 export const QuestionsList = () => {
-	const { isLoading, isError, data, refetch } = useAllQuestionsQuery();
-	const tableData = data?.slice(0, 10);
-	console.log(tableData);
+  const { isLoading, isError, data, refetch } = useAllQuestionsQuery();
+  const tableData = data?.slice(0, 10);
 
-	const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
-	const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
-	const [editId, setEditId] = useState<string>('');
+  const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
+  const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
+  const [editId, setEditId] = useState<string>("");
+  const [deleting, setDeleting] = useState<boolean>(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedId, setSelectedId] = useState<string>("");
 
-	const {
-		register,
-		handleSubmit,
-		setValue,
-		reset,
-		formState: { errors, isSubmitting },
-	} = useForm<Question>({ mode: 'onChange' });
+  const handleOpenDelete = (id: string) => {
+    setSelectedId(id);
+    setOpenDelete(true);
+  };
 
-	const [addQuestion, { isLoading: isLoadingAdd }] = useAddQuestionMutation();
-	const [editQuestion, { isLoading: isLoadingEdit }] =
-		useEditQuestionMutation();
-	const { data: questionData, isFetching: isFetchingQuestion } =
-		useGetQuestionQuery(editId);
+  const handleCloseDelete = () => setOpenDelete(false);
 
-	const handleAddQuestion = async (data: Question) => {
-		try {
-			const result = await addQuestion(data).unwrap();
-			console.log(result);
-			closeAddModal();
-			refetch();
-			toast.success(result.message);
-		} catch (error) {
-			console.log(error);
-		}
-	};
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<Question>({ mode: "onChange" });
 
-	const handleEditQuestion = async (data: Question) => {
-		console.log(editId);
-		try {
-			const result = await editQuestion({ id: editId, data }).unwrap();
-			console.log(result);
-			closeEditModal();
-			refetch();
-			toast.success(result.message);
-		} catch (error) {
-			console.log(error);
-		}
-	};
+  const [addQuestion, { isLoading: isLoadingAdd }] = useAddQuestionMutation();
+  const [editQuestion, { isLoading: isLoadingEdit }] =
+    useEditQuestionMutation();
+  const { data: questionData, isFetching: isFetchingQuestion } =
+    useGetQuestionQuery(editId);
 
-	function openAddModal() {
-		reset();
-		setIsOpenAdd(true);
-	}
+  const handleAddQuestion = async (data: Question) => {
+    try {
+      const result = await addQuestion(data).unwrap();
+      closeAddModal();
+      refetch();
+      toast.success(result.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-	function closeAddModal() {
-		setIsOpenAdd(false);
-		reset();
-	}
+  const handleEditQuestion = async (data: Question) => {
+    try {
+      const result = await editQuestion({ id: editId, data }).unwrap();
+      closeEditModal();
+      refetch();
+      toast.success(result.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-	function openEditModal(id: string) {
-		setEditId(id);
-		setIsOpenEdit(true);
-	}
+  // function delete
+  const deleteQuestions = async () => {
+    try {
+      setDeleting(true);
+      await axiosInstance.delete(QUESTIONS_URLS.deleteQuestion(selectedId));
+      toast.success("Question deleted successfully");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "something went wrong");
+    } finally {
+      setDeleting(false);
+      handleCloseDelete();
+    }
+  };
 
-	useEffect(() => {
-		if (!openEditModal) return;
-		setValue('title', questionData?.title);
-		setValue('description', questionData?.description);
-		setValue('type', questionData?.type);
-		setValue('answer', questionData?.answer);
-		setValue('options.A', questionData?.options?.A);
-		setValue('options.B', questionData?.options?.B);
-		setValue('options.C', questionData?.options?.C);
-		setValue('options.D', questionData?.options?.D);
-	}, [questionData, setValue]);
+  function openAddModal() {
+    reset();
+    setIsOpenAdd(true);
+  }
 
-	function closeEditModal() {
-		setIsOpenEdit(false);
-		reset();
-	}
+  function closeAddModal() {
+    setIsOpenAdd(false);
+    reset();
+  }
 
-	return (
-		<div className='p-5'>
-			<Modal
-				isOpen={isOpenAdd}
-				closeModal={closeAddModal}
-				title='Set up a new question'
-				handleSubmit={handleSubmit}
-				onSubmit={handleAddQuestion}
-				isSubmitting={isSubmitting}
-				isLoading={isLoadingAdd}
-			>
-				<Form register={register} errors={errors} />
-			</Modal>
-			<Modal
-				isOpen={isOpenEdit}
-				closeModal={closeEditModal}
-				title='Update question'
-				handleSubmit={handleSubmit}
-				onSubmit={handleEditQuestion}
-				isSubmitting={isSubmitting}
-				isLoading={isLoadingEdit}
-			>
-				{isFetchingQuestion ? (
-					<div className='text-center'>
-						<Spinner size='h-20 w-20' />
-					</div>
-				) : (
-					<Form register={register} errors={errors} />
-				)}
-			</Modal>
-			<TableHeader
-				title='Bank of Questions'
-				btnText='Add Question'
-				handleClick={openAddModal}
-			/>
-			<CustomTable
-				columns={[
-					'Title',
-					'Description',
-					'Difficulty Level',
-					'Type',
-					'Actions',
-				]}
-			>
-				{isError && <h3>Something went wrong! Could not get questions</h3>}
-				{isLoading && (
-					<tr>
-						<td colSpan={5} className='text-center py-8'>
-							<Spinner />
-						</td>
-					</tr>
-				)}
-				{tableData &&
-					tableData?.map((ques) => (
-						<tr key={ques._id} className='border border-gray-300'>
-							<td className='border border-gray-300 px-2 py-1'>{ques.title}</td>
-							<td className='border border-gray-300 px-2 py-1'>
-								{ques.description}
-							</td>
-							<td className='border border-gray-300 px-2 py-1'>
-								{ques.difficulty}
-							</td>
-							<td className='border border-gray-300 px-2 py-1'>{ques.type}</td>
-							<td className='border border-gray-300 px-2 py-1'>
-								<ActionsMenu
-									openEdit={() => {
-										openEditModal(ques._id);
-									}}
-								/>
-							</td>
-						</tr>
-					))}
-			</CustomTable>
-		</div>
-	);
+  function openEditModal(id: string) {
+    setEditId(id);
+    setIsOpenEdit(true);
+  }
+
+  useEffect(() => {
+    if (!openEditModal) return;
+    setValue("title", questionData?.title);
+    setValue("description", questionData?.description);
+    setValue("type", questionData?.type);
+    setValue("answer", questionData?.answer);
+    setValue("options.A", questionData?.options?.A);
+    setValue("options.B", questionData?.options?.B);
+    setValue("options.C", questionData?.options?.C);
+    setValue("options.D", questionData?.options?.D);
+  }, [questionData, setValue]);
+
+  function closeEditModal() {
+    setIsOpenEdit(false);
+    reset();
+  }
+
+  return (
+    <div className="p-5">
+      <Modal
+        isOpen={isOpenAdd}
+        closeModal={closeAddModal}
+        title="Set up a new question"
+        handleSubmit={handleSubmit}
+        onSubmit={handleAddQuestion}
+        isSubmitting={isSubmitting}
+        isLoading={isLoadingAdd}
+      >
+        <Form register={register} errors={errors} />
+      </Modal>
+      <Modal
+        isOpen={isOpenEdit}
+        closeModal={closeEditModal}
+        title="Update question"
+        handleSubmit={handleSubmit}
+        onSubmit={handleEditQuestion}
+        isSubmitting={isSubmitting}
+        isLoading={isLoadingEdit}
+      >
+        {isFetchingQuestion ? (
+          <div className="text-center">
+            <Spinner size="h-20 w-20" />
+          </div>
+        ) : (
+          <Form register={register} errors={errors} />
+        )}
+      </Modal>
+      <TableHeader
+        title="Bank of Questions"
+        btnText="Add Question"
+        handleClick={openAddModal}
+      />
+      <CustomTable
+        columns={[
+          "Title",
+          "Description",
+          "Difficulty Level",
+          "Type",
+          "Actions",
+        ]}
+      >
+        {isError && <h3>Something went wrong! Could not get questions</h3>}
+        {isLoading && (
+          <tr>
+            <td colSpan={5} className="text-center py-8">
+              <Spinner />
+            </td>
+          </tr>
+        )}
+        {tableData &&
+          tableData?.map((ques) => (
+            <tr key={ques._id} className="border border-gray-300">
+              <td className="border border-gray-300 px-2 py-1">{ques.title}</td>
+              <td className="border border-gray-300 px-2 py-1">
+                {ques.description}
+              </td>
+              <td className="border border-gray-300 px-2 py-1">
+                {ques.difficulty}
+              </td>
+              <td className="border border-gray-300 px-2 py-1">{ques.type}</td>
+              <td className="border border-gray-300 px-2 py-1">
+                <ActionsMenu
+                  openEdit={() => openEditModal(ques._id)}
+				  openDelete={() => handleOpenDelete(ques._id)}                />
+              </td>
+            </tr>
+          ))}
+      </CustomTable>
+      <DeleteConfirm
+        setOpenModal={handleCloseDelete} 
+        openModal={openDelete} 
+        loading={deleting} 
+        onConfirm={deleteQuestions} 
+        title="Question" 
+        modalRef={null} 
+      />
+    </div>
+  );
 };
