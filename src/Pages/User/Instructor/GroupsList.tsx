@@ -6,13 +6,27 @@ import Spinner from "../../components/Spinner/Spinner"
 import TableHeader from "../../components/TableHeader/TableHeader"
 import { DeleteConfirm } from "../components/DeleteConfirm/DeleteConfirm"
 import { useState } from "react"
+/* import { useForm } from "react-hook-form" */
+
+export interface Group{
+        name:string,
+        students:string[]
+}
 
 export const GroupsList = () => {
+/*     const{
+        register,
+        handleSubmit,
+        formState:{errors,isSubmitting}
+    }= useForm<Group>() */
     const { isLoading, isError, data } = useAllGroupsQuery()
     console.log(data);
     const [deleting, setDeleting] = useState<boolean>(false);
     const [openDelete, setOpenDelete] = useState(false);
     const [selectedId, setSelectedId] = useState<string>("");
+    const [openAdd, setOpenAdd] = useState(false);
+    const handleOpenAdd = () => setOpenAdd(!openAdd);
+    
 
     const handleOpenDelete = (id: string) => {
         setSelectedId(id);
@@ -36,10 +50,20 @@ export const GroupsList = () => {
         }
     };
 
+    //function Add Group
+    const addGroup = async (data:Group) =>{
+        try {
+            await axiosInstance.post(GROUPS_URLS.addGroup, data)       
+            toast.success("Group added successfully");     
+        } catch (error) {
+            console.log(error);       
+        }
+    }
+
     return (
         <>
             <div className="p-5">
-                <TableHeader btnText="Add group" title=""/>
+                <TableHeader btnText="Add group" title="" handleClick={handleOpenAdd}/>
                 <div className="groupWrapper border-2 rounded-lg px-[1rem] py-[1rem]">
                     <h3 className="pt-[1rem] pb-[1.7rem]">Group List</h3>
 

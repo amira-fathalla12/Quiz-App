@@ -50,6 +50,7 @@ export const STUDENTS_URLS = {
 export const GROUPS_URLS = {
   getAllGroups: "/group",
   deleteGroup: (id:string) => `/group/${id}` ,
+  addGroup:"/group"
 };
 
 export { axiosInstance, BASE_URL, IMAGE_URL };
