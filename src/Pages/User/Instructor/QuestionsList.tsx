@@ -21,20 +21,11 @@ import { DeleteConfirm } from "../components/DeleteConfirm/DeleteConfirm";
 export const QuestionsList = () => {
   const { isLoading, isError, data, refetch } = useAllQuestionsQuery();
   const tableData = data?.slice(0, 10);
+  console.log(tableData);
 
   const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
-  const [deleting, setDeleting] = useState<boolean>(false);
-  const [openDelete, setOpenDelete] = useState(false);
-  const [selectedId, setSelectedId] = useState<string>("");
-
-  const handleOpenDelete = (id: string) => {
-    setSelectedId(id);
-    setOpenDelete(true);
-  };
-
-  const handleCloseDelete = () => setOpenDelete(false);
 
   const {
     register,
@@ -53,6 +44,7 @@ export const QuestionsList = () => {
   const handleAddQuestion = async (data: Question) => {
     try {
       const result = await addQuestion(data).unwrap();
+      console.log(result);
       closeAddModal();
       refetch();
       toast.success(result.message);
@@ -62,28 +54,15 @@ export const QuestionsList = () => {
   };
 
   const handleEditQuestion = async (data: Question) => {
+    console.log(editId);
     try {
       const result = await editQuestion({ id: editId, data }).unwrap();
+      console.log(result);
       closeEditModal();
       refetch();
       toast.success(result.message);
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  // function delete
-  const deleteQuestions = async () => {
-    try {
-      setDeleting(true);
-      await axiosInstance.delete(QUESTIONS_URLS.deleteQuestion(selectedId));
-      toast.success("Question deleted successfully");
-    } catch (error: any) {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "something went wrong");
-    } finally {
-      setDeleting(false);
-      handleCloseDelete();
     }
   };
 
@@ -119,16 +98,43 @@ export const QuestionsList = () => {
     reset();
   }
 
+  const [deleting, setDeleting] = useState<boolean>(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedId, setSelectedId] = useState<string>("");
+
+  const handleOpenDelete = (id: string) => {
+    setSelectedId(id);
+    setOpenDelete(true);
+  };
+
+  const handleCloseDelete = () => setOpenDelete(false);
+
+  // function delete
+  const deleteQuestions = async () => {
+    try {
+      setDeleting(true);
+      await axiosInstance.delete(QUESTIONS_URLS.deleteQuestion(selectedId));
+      toast.success("Question deleted successfully");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "something went wrong");
+    } finally {
+      setDeleting(false);
+      handleCloseDelete();
+    }
+  };
+
   return (
     <div className="p-5">
       <Modal
         isOpen={isOpenAdd}
         closeModal={closeAddModal}
         title="Set up a new question"
-        handleSubmit={handleSubmit}
+        handleSubmitQuestion={handleSubmit}
         onSubmit={handleAddQuestion}
         isSubmitting={isSubmitting}
         isLoading={isLoadingAdd}
+        formType="question"
       >
         <Form register={register} errors={errors} />
       </Modal>
@@ -136,10 +142,11 @@ export const QuestionsList = () => {
         isOpen={isOpenEdit}
         closeModal={closeEditModal}
         title="Update question"
-        handleSubmit={handleSubmit}
+        handleSubmitQuestion={handleSubmit}
         onSubmit={handleEditQuestion}
         isSubmitting={isSubmitting}
         isLoading={isLoadingEdit}
+        formType="question"
       >
         {isFetchingQuestion ? (
           <div className="text-center">
@@ -185,18 +192,19 @@ export const QuestionsList = () => {
               <td className="border border-gray-300 px-2 py-1">
                 <ActionsMenu
                   openEdit={() => openEditModal(ques._id)}
-				  openDelete={() => handleOpenDelete(ques._id)}                />
+                  openDelete={() => handleOpenDelete(ques._id)}
+                />
               </td>
             </tr>
           ))}
       </CustomTable>
       <DeleteConfirm
-        setOpenModal={handleCloseDelete} 
-        openModal={openDelete} 
-        loading={deleting} 
-        onConfirm={deleteQuestions} 
-        title="Question" 
-        modalRef={null} 
+        setOpenModal={handleCloseDelete}
+        openModal={openDelete}
+        loading={deleting}
+        onConfirm={deleteQuestions}
+        title="Question"
+        modalRef={null}
       />
     </div>
   );

@@ -69,7 +69,10 @@ export interface Quiz {
   __v: number;
   participants: number;
 }
-
+export interface QuizResponse {
+  message: string;
+  data: Quiz;
+}
 //* questions
 export interface QuizQuestion {
   _id: string;

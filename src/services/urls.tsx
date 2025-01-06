@@ -30,6 +30,7 @@ export const AUTH_URLS = {
 // quizUrls
 export const QUIZ_URLS = {
   getTopUpcommingQuizzes: "/quiz/incomming",
+  addQuiz: "/quiz",
 };
 
 // questionsUrls
@@ -38,7 +39,7 @@ export const QUESTIONS_URLS = {
   getQuestion: (id: string) => `/question/${id}`,
   addQuestion: "/question",
   editQuestion: (id: string) => `/question/${id}`,
-  deleteQuestion:(id:string) => `/question/${id}`,
+  deleteQuestion: (id: string) => `/question/${id}`,
 };
 
 //studentsUrls
@@ -49,10 +50,11 @@ export const STUDENTS_URLS = {
 //groupsURLS
 export const GROUPS_URLS = {
   getAllGroups: "/group",
-  deleteGroup: (id:string) => `/group/${id}` ,
+  getGroup: (id: string) => `/group/${id}`,
+  deleteGroup: (id: string) => `/group/${id}`,
 };
 
-//resultsUrls 
+//resultsUrls
 export const RESULTS_URLS = {
   getAllResults: "/quiz/result",
 };

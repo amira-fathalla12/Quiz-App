@@ -17,6 +17,7 @@ import {
   Question,
   QuestionResponse,
   Quiz,
+  QuizResponse,
   resetPasswordCredentials,
   resetPasswordResponse,
   Results,
@@ -69,6 +70,13 @@ export const apis = createApi({
     topUpcomingQuizzes: builder.query<Quiz[], void>({
       query: () => ({
         url: QUIZ_URLS.getTopUpcommingQuizzes,
+      }),
+    }),
+    addQuiz: builder.mutation<QuizResponse, Quiz>({
+      query: (credentials) => ({
+        url: QUIZ_URLS.addQuiz,
+        method: "POST",
+        body: credentials,
       }),
     }),
     /*students */
@@ -132,4 +140,5 @@ export const {
   useEditQuestionMutation,
   useGetQuestionQuery,
   useAllResultsQuery,
+  useAddQuizMutation,
 } = apis;
