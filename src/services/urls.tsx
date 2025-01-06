@@ -39,6 +39,7 @@ export const QUESTIONS_URLS = {
   getQuestion: (id: string) => `/question/${id}`,
   addQuestion: "/question",
   editQuestion: (id: string) => `/question/${id}`,
+  deleteQuestion: (id: string) => `/question/${id}`,
 };
 
 //studentsUrls
@@ -50,6 +51,12 @@ export const STUDENTS_URLS = {
 export const GROUPS_URLS = {
   getAllGroups: "/group",
   getGroup: (id: string) => `/group/${id}`,
+  deleteGroup: (id: string) => `/group/${id}`,
+};
+
+//resultsUrls
+export const RESULTS_URLS = {
+  getAllResults: "/quiz/result",
 };
 
 export { axiosInstance, BASE_URL, IMAGE_URL };

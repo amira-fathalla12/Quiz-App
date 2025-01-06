@@ -5,6 +5,7 @@ import {
   GROUPS_URLS,
   QUESTIONS_URLS,
   QUIZ_URLS,
+  RESULTS_URLS,
   STUDENTS_URLS,
 } from "../../services/urls";
 import {
@@ -19,6 +20,7 @@ import {
   QuizResponse,
   resetPasswordCredentials,
   resetPasswordResponse,
+  Results,
   TopStudent,
 } from "../../services/interfaces";
 import { AppState } from "../store";
@@ -117,12 +119,6 @@ export const apis = createApi({
         url: GROUPS_URLS.getAllGroups,
       }),
     }),
-    // getGroup
-    getGroup: builder.query<group, string>({
-      query: (id) => ({
-        url: GROUPS_URLS.getGroup(id),
-      }),
-    }),
   }),
 });
 
@@ -138,5 +134,4 @@ export const {
   useEditQuestionMutation,
   useGetQuestionQuery,
   useAddQuizMutation,
-  useGetGroupQuery,
 } = apis;
