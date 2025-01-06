@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 /* eslint-disable @typescript-eslint/no-explicit-any */
->>>>>>> d4e0e5e65eb1da7c21e456a1d653a2728e981c72
 import { useEffect, useState } from "react";
 import {
   useAddQuestionMutation,
@@ -18,24 +15,17 @@ import Form from "../../components/Forms/Form";
 import { useForm } from "react-hook-form";
 import { Question } from "../../../services/interfaces";
 import { toast } from "react-toastify";
-<<<<<<< HEAD
-=======
 import { axiosInstance, QUESTIONS_URLS } from "../../../services/urls";
 import { DeleteConfirm } from "../components/DeleteConfirm/DeleteConfirm";
->>>>>>> d4e0e5e65eb1da7c21e456a1d653a2728e981c72
 
 export const QuestionsList = () => {
   const { isLoading, isError, data, refetch } = useAllQuestionsQuery();
   const tableData = data?.slice(0, 10);
-<<<<<<< HEAD
   console.log(tableData);
-=======
->>>>>>> d4e0e5e65eb1da7c21e456a1d653a2728e981c72
 
   const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
-<<<<<<< HEAD
 
   const {
     register,
@@ -108,7 +98,6 @@ export const QuestionsList = () => {
     reset();
   }
 
-=======
   const [deleting, setDeleting] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedId, setSelectedId] = useState<string>("");
@@ -119,42 +108,6 @@ export const QuestionsList = () => {
   };
 
   const handleCloseDelete = () => setOpenDelete(false);
-
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<Question>({ mode: "onChange" });
-
-  const [addQuestion, { isLoading: isLoadingAdd }] = useAddQuestionMutation();
-  const [editQuestion, { isLoading: isLoadingEdit }] =
-    useEditQuestionMutation();
-  const { data: questionData, isFetching: isFetchingQuestion } =
-    useGetQuestionQuery(editId);
-
-  const handleAddQuestion = async (data: Question) => {
-    try {
-      const result = await addQuestion(data).unwrap();
-      closeAddModal();
-      refetch();
-      toast.success(result.message);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleEditQuestion = async (data: Question) => {
-    try {
-      const result = await editQuestion({ id: editId, data }).unwrap();
-      closeEditModal();
-      refetch();
-      toast.success(result.message);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // function delete
   const deleteQuestions = async () => {
@@ -171,57 +124,17 @@ export const QuestionsList = () => {
     }
   };
 
-  function openAddModal() {
-    reset();
-    setIsOpenAdd(true);
-  }
-
-  function closeAddModal() {
-    setIsOpenAdd(false);
-    reset();
-  }
-
-  function openEditModal(id: string) {
-    setEditId(id);
-    setIsOpenEdit(true);
-  }
-
-  useEffect(() => {
-    if (!openEditModal) return;
-    setValue("title", questionData?.title);
-    setValue("description", questionData?.description);
-    setValue("type", questionData?.type);
-    setValue("answer", questionData?.answer);
-    setValue("options.A", questionData?.options?.A);
-    setValue("options.B", questionData?.options?.B);
-    setValue("options.C", questionData?.options?.C);
-    setValue("options.D", questionData?.options?.D);
-  }, [questionData, setValue]);
-
-  function closeEditModal() {
-    setIsOpenEdit(false);
-    reset();
-  }
-
->>>>>>> d4e0e5e65eb1da7c21e456a1d653a2728e981c72
   return (
     <div className="p-5">
       <Modal
         isOpen={isOpenAdd}
         closeModal={closeAddModal}
         title="Set up a new question"
-<<<<<<< HEAD
         handleSubmitQuestion={handleSubmit}
         onSubmit={handleAddQuestion}
         isSubmitting={isSubmitting}
         isLoading={isLoadingAdd}
         formType="question"
-=======
-        handleSubmit={handleSubmit}
-        onSubmit={handleAddQuestion}
-        isSubmitting={isSubmitting}
-        isLoading={isLoadingAdd}
->>>>>>> d4e0e5e65eb1da7c21e456a1d653a2728e981c72
       >
         <Form register={register} errors={errors} />
       </Modal>
@@ -229,18 +142,11 @@ export const QuestionsList = () => {
         isOpen={isOpenEdit}
         closeModal={closeEditModal}
         title="Update question"
-<<<<<<< HEAD
         handleSubmitQuestion={handleSubmit}
         onSubmit={handleEditQuestion}
         isSubmitting={isSubmitting}
         isLoading={isLoadingEdit}
         formType="question"
-=======
-        handleSubmit={handleSubmit}
-        onSubmit={handleEditQuestion}
-        isSubmitting={isSubmitting}
-        isLoading={isLoadingEdit}
->>>>>>> d4e0e5e65eb1da7c21e456a1d653a2728e981c72
       >
         {isFetchingQuestion ? (
           <div className="text-center">
@@ -285,30 +191,21 @@ export const QuestionsList = () => {
               <td className="border border-gray-300 px-2 py-1">{ques.type}</td>
               <td className="border border-gray-300 px-2 py-1">
                 <ActionsMenu
-<<<<<<< HEAD
-                  openEdit={() => {
-                    openEditModal(ques._id);
-                  }}
-                />
-=======
                   openEdit={() => openEditModal(ques._id)}
-				  openDelete={() => handleOpenDelete(ques._id)}                />
->>>>>>> d4e0e5e65eb1da7c21e456a1d653a2728e981c72
+                  openDelete={() => handleOpenDelete(ques._id)}
+                />
               </td>
             </tr>
           ))}
       </CustomTable>
-<<<<<<< HEAD
-=======
       <DeleteConfirm
-        setOpenModal={handleCloseDelete} 
-        openModal={openDelete} 
-        loading={deleting} 
-        onConfirm={deleteQuestions} 
-        title="Question" 
-        modalRef={null} 
+        setOpenModal={handleCloseDelete}
+        openModal={openDelete}
+        loading={deleting}
+        onConfirm={deleteQuestions}
+        title="Question"
+        modalRef={null}
       />
->>>>>>> d4e0e5e65eb1da7c21e456a1d653a2728e981c72
     </div>
   );
 };

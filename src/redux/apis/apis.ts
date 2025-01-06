@@ -133,5 +133,6 @@ export const {
   useAddQuestionMutation,
   useEditQuestionMutation,
   useGetQuestionQuery,
+  useAllResultsQuery,
   useAddQuizMutation,
 } = apis;
