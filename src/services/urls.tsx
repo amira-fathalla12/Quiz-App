@@ -30,6 +30,7 @@ export const AUTH_URLS = {
 // quizUrls
 export const QUIZ_URLS = {
   getTopUpcommingQuizzes: "/quiz/incomming",
+  addQuiz: "/quiz",
 };
 
 // questionsUrls
@@ -48,6 +49,7 @@ export const STUDENTS_URLS = {
 //groupsURLS
 export const GROUPS_URLS = {
   getAllGroups: "/group",
+  getGroup: (id: string) => `/group/${id}`,
 };
 
 export { axiosInstance, BASE_URL, IMAGE_URL };

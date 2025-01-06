@@ -67,7 +67,19 @@ export interface Quiz {
   __v: number;
   participants: number;
 }
-
+export interface QuizResponse {
+  // title: string;
+  // description: string;
+  // group: string;
+  // questions_number: number;
+  // difficulty: string;
+  // type: string;
+  // schadule: string;
+  // duration: string;
+  // score_per_question: string;
+  message: string;
+  data: Quiz;
+}
 //* questions
 export interface QuizQuestion {
   _id: string;
@@ -100,17 +112,17 @@ export interface Answers {
 }
 
 export interface group {
-  
-    _id: string;
-    name: string;
-    status: string;
-    instructor: string;
-    students: string[];
-    max_students: number;
-    updatedAt: string;
-    createdAt: string;
-    __v: number; }
-  
+  _id: string;
+  name: string;
+  status: string;
+  instructor: string;
+  students: string[];
+  max_students: number;
+  updatedAt: string;
+  createdAt: string;
+  __v: number;
+}
+
 //* students
 export interface Student {
   _id: string;
@@ -119,12 +131,9 @@ export interface Student {
   email: string;
   status: string;
   role: "Student";
-  group: group
+  group: group;
 }
 
 export interface TopStudent extends Student {
   avg_score: number;
 }
-
-
-

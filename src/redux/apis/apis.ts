@@ -16,6 +16,7 @@ import {
   Question,
   QuestionResponse,
   Quiz,
+  QuizResponse,
   resetPasswordCredentials,
   resetPasswordResponse,
   TopStudent,
@@ -43,14 +44,20 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
-    forgetPassword: builder.mutation<forgetPasswordResponse, forgetPasswordCredentials>({
+    forgetPassword: builder.mutation<
+      forgetPasswordResponse,
+      forgetPasswordCredentials
+    >({
       query: (credentials) => ({
         url: AUTH_URLS.forgetPassword,
         method: "POST",
         body: credentials,
       }),
     }),
-    resetPassword: builder.mutation<resetPasswordResponse, resetPasswordCredentials>({
+    resetPassword: builder.mutation<
+      resetPasswordResponse,
+      resetPasswordCredentials
+    >({
       query: (credentials) => ({
         url: AUTH_URLS.resetPassword,
         method: "POST",
@@ -61,6 +68,13 @@ export const apis = createApi({
     topUpcomingQuizzes: builder.query<Quiz[], void>({
       query: () => ({
         url: QUIZ_URLS.getTopUpcommingQuizzes,
+      }),
+    }),
+    addQuiz: builder.mutation<QuizResponse, Quiz>({
+      query: (credentials) => ({
+        url: QUIZ_URLS.addQuiz,
+        method: "POST",
+        body: credentials,
       }),
     }),
     /*students */
@@ -87,7 +101,10 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
-    editQuestion: builder.mutation<QuestionResponse, { id: string; data: Question }>({
+    editQuestion: builder.mutation<
+      QuestionResponse,
+      { id: string; data: Question }
+    >({
       query: ({ id, data }) => ({
         url: QUESTIONS_URLS.editQuestion(id),
         method: "PUT",
@@ -95,11 +112,16 @@ export const apis = createApi({
       }),
     }),
     // getAllGroups
-    allGroups : builder.query <group [] , void> ({
-      query : ()=> ({
-        url : GROUPS_URLS.getAllGroups,
-      
-      }),   
+    allGroups: builder.query<group[], void>({
+      query: () => ({
+        url: GROUPS_URLS.getAllGroups,
+      }),
+    }),
+    // getGroup
+    getGroup: builder.query<group, string>({
+      query: (id) => ({
+        url: GROUPS_URLS.getGroup(id),
+      }),
     }),
   }),
 });
@@ -115,4 +137,6 @@ export const {
   useAddQuestionMutation,
   useEditQuestionMutation,
   useGetQuestionQuery,
+  useAddQuizMutation,
+  useGetGroupQuery,
 } = apis;
