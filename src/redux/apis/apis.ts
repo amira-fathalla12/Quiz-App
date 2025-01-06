@@ -119,6 +119,12 @@ export const apis = createApi({
         url: GROUPS_URLS.getAllGroups,
       }),
     }),
+    /*results */
+    allResults: builder.query<Results[], void>({
+      query: () => ({
+        url: RESULTS_URLS.getAllResults,
+      }),
+    }),
   }),
 });
 
