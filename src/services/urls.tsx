@@ -52,4 +52,9 @@ export const GROUPS_URLS = {
   deleteGroup: (id:string) => `/group/${id}` ,
 };
 
+//resultsUrls 
+export const RESULTS_URLS = {
+  getAllResults: "/quiz/result",
+};
+
 export { axiosInstance, BASE_URL, IMAGE_URL };

@@ -5,6 +5,7 @@ import {
   GROUPS_URLS,
   QUESTIONS_URLS,
   QUIZ_URLS,
+  RESULTS_URLS,
   STUDENTS_URLS,
 } from "../../services/urls";
 import {
@@ -18,6 +19,7 @@ import {
   Quiz,
   resetPasswordCredentials,
   resetPasswordResponse,
+  Results,
   TopStudent,
 } from "../../services/interfaces";
 import { AppState } from "../store";
@@ -43,14 +45,20 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
-    forgetPassword: builder.mutation<forgetPasswordResponse, forgetPasswordCredentials>({
+    forgetPassword: builder.mutation<
+      forgetPasswordResponse,
+      forgetPasswordCredentials
+    >({
       query: (credentials) => ({
         url: AUTH_URLS.forgetPassword,
         method: "POST",
         body: credentials,
       }),
     }),
-    resetPassword: builder.mutation<resetPasswordResponse, resetPasswordCredentials>({
+    resetPassword: builder.mutation<
+      resetPasswordResponse,
+      resetPasswordCredentials
+    >({
       query: (credentials) => ({
         url: AUTH_URLS.resetPassword,
         method: "POST",
@@ -87,7 +95,10 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
-    editQuestion: builder.mutation<QuestionResponse, { id: string; data: Question }>({
+    editQuestion: builder.mutation<
+      QuestionResponse,
+      { id: string; data: Question }
+    >({
       query: ({ id, data }) => ({
         url: QUESTIONS_URLS.editQuestion(id),
         method: "PUT",
@@ -95,11 +106,16 @@ export const apis = createApi({
       }),
     }),
     // getAllGroups
-    allGroups : builder.query <group [] , void> ({
-      query : ()=> ({
-        url : GROUPS_URLS.getAllGroups,
-      
-      }),   
+    allGroups: builder.query<group[], void>({
+      query: () => ({
+        url: GROUPS_URLS.getAllGroups,
+      }),
+    }),
+    /*results */
+    allResults: builder.query<Results[], void>({
+      query: () => ({
+        url: RESULTS_URLS.getAllResults,
+      }),
     }),
   }),
 });
@@ -115,4 +131,5 @@ export const {
   useAddQuestionMutation,
   useEditQuestionMutation,
   useGetQuestionQuery,
+  useAllResultsQuery,
 } = apis;
