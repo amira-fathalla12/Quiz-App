@@ -48,7 +48,7 @@ const QuizForm = ({ register, errors, control }: Props) => {
           />
           <CustomFormSelect
             label="No. of questions"
-            width="w-[30.5%]"
+            width="w-[34%]"
             register={register("questions_number", {
               required: getRequiredMessage("Questions No"),
             })}
@@ -61,7 +61,7 @@ const QuizForm = ({ register, errors, control }: Props) => {
           />
           <CustomFormSelect
             label="Score per question"
-            width="w-[30.8%]"
+            width="w-[34%]"
             register={register("score_per_question", {
               required: getRequiredMessage("Score"),
             })}

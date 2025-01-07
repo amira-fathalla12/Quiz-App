@@ -8,7 +8,10 @@ export default {
         linen: "#FFEDDF",
         olive: "#C5D86D",
       },
-      fontFamily: { sans: ["Nunito", "serif"] },
+      fontFamily: {
+        sans: ["Nunito", "Inter", "serif"],
+        Inter: ["Inter", "serif"],
+      },
       screens: {
         custom: {
           raw: "(min-width: 1024px) and (max-width: 1366px) and (min-height: 1366px)",
