@@ -44,12 +44,16 @@ export const QUESTIONS_URLS = {
 //studentsUrls
 export const STUDENTS_URLS = {
   getTopStudents: "/student/top-five",
+  allStudentsWithoutGroups: "/student/without-group",
+  allStudents: "/student",
+  StudentDetails: "/"
+
 };
 
 //groupsURLS
 export const GROUPS_URLS = {
   getAllGroups: "/group",
-  deleteGroup: (id:string) => `/group/${id}` ,
+  deleteGroup:(_id:string) => `/group/${_id}` ,
 };
 
 export { axiosInstance, BASE_URL, IMAGE_URL };

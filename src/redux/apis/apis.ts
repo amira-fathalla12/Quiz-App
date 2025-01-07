@@ -18,6 +18,7 @@ import {
   Quiz,
   resetPasswordCredentials,
   resetPasswordResponse,
+  Student,
   TopStudent,
 } from "../../services/interfaces";
 import { AppState } from "../store";
@@ -64,6 +65,11 @@ export const apis = createApi({
       }),
     }),
     /*students */
+    allStudents: builder.query<Student[], void>({
+      query: () => ({
+        url: STUDENTS_URLS.allStudents,
+      }),
+    }),
     topStudents: builder.query<TopStudent[], void>({
       query: () => ({
         url: STUDENTS_URLS.getTopStudents,
@@ -94,13 +100,26 @@ export const apis = createApi({
         body: data,
       }),
     }),
+    deleteQuestion: builder.mutation<Question, {id: string; data: Question}>({
+      query: ({id,data}) => ({
+        url: QUESTIONS_URLS.deleteQuestion(id),
+        body: data,
+      }),
+    }),
     // getAllGroups
     allGroups : builder.query <group [] , void> ({
       query : ()=> ({
         url : GROUPS_URLS.getAllGroups,
-      
       }),   
     }),
+    deleteGroups: builder.mutation<group, {id: string; data: group}>({
+      query: ({id,data}) => ({
+        url:GROUPS_URLS.deleteGroup(id),
+        method: "DELETE",
+        body: data,
+      }),
+    }),
+    
   }),
 });
 
@@ -115,4 +134,7 @@ export const {
   useAddQuestionMutation,
   useEditQuestionMutation,
   useGetQuestionQuery,
+  useAllStudentsQuery,
+  useDeleteGroupsMutation,
+  useDeleteQuestionMutation,
 } = apis;
