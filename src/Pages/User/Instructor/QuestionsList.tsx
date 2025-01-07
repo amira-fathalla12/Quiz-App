@@ -81,6 +81,7 @@ export const QuestionsList = () => {
       setDeleting(true);
       await deleteQuestion({id:selectedId, data}).unwrap(); 
       toast.success("Question deleted successfully");
+      refetch();
     } catch (error: any) {
       console.log(error);
       toast.error(error?.message || "Something went wrong");

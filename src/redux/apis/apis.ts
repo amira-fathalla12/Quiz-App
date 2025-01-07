@@ -135,6 +135,7 @@ export const apis = createApi({
     deleteQuestion: builder.mutation<Question, {id: string; data: Question}>({
       query: ({id,data}) => ({
         url: QUESTIONS_URLS.deleteQuestion(id),
+        method: "DELETE",
         body: data,
       }),
     }),
