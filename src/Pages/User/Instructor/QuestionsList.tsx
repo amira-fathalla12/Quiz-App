@@ -21,6 +21,7 @@ import { DeleteConfirm } from "../components/DeleteConfirm/DeleteConfirm";
 export const QuestionsList = () => {
   const { isLoading, isError, data, refetch } = useAllQuestionsQuery();
   const tableData = data?.slice(0, 10);
+  console.log(tableData);
 
   const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
@@ -53,6 +54,7 @@ export const QuestionsList = () => {
   const handleAddQuestion = async (data: Question) => {
     try {
       const result = await addQuestion(data).unwrap();
+      console.log(result);
       closeAddModal();
       refetch();
       toast.success(result.message);
@@ -62,8 +64,10 @@ export const QuestionsList = () => {
   };
 
   const handleEditQuestion = async (data: Question) => {
+    console.log(editId);
     try {
       const result = await editQuestion({ id: editId, data }).unwrap();
+      console.log(result);
       closeEditModal();
       refetch();
       toast.success(result.message);
@@ -119,16 +123,18 @@ export const QuestionsList = () => {
     reset();
   }
 
+
   return (
     <div className="p-5">
       <Modal
         isOpen={isOpenAdd}
         closeModal={closeAddModal}
         title="Set up a new question"
-        handleSubmit={handleSubmit}
+        handleSubmitQuestion={handleSubmit}
         onSubmit={handleAddQuestion}
         isSubmitting={isSubmitting}
         isLoading={isLoadingAdd}
+        formType="question"
       >
         <Form register={register} errors={errors} />
       </Modal>
@@ -136,10 +142,11 @@ export const QuestionsList = () => {
         isOpen={isOpenEdit}
         closeModal={closeEditModal}
         title="Update question"
-        handleSubmit={handleSubmit}
+        handleSubmitQuestion={handleSubmit}
         onSubmit={handleEditQuestion}
         isSubmitting={isSubmitting}
         isLoading={isLoadingEdit}
+        formType="question"
       >
         {isFetchingQuestion ? (
           <div className="text-center">
@@ -192,12 +199,12 @@ export const QuestionsList = () => {
           ))}
       </CustomTable>
       <DeleteConfirm
-        setOpenModal={handleCloseDelete}
-        openModal={openDelete}
+        setOpenModal={handleCloseDelete} 
+        openModal={openDelete} 
         loading={deleting || isLoadingDell}
-        onConfirm={deleteQuestions}
-        title="Question"
-        modalRef={null}
+        onConfirm={deleteQuestions} 
+        title="Question" 
+        modalRef={null} 
       />
     </div>
   );

@@ -16,8 +16,10 @@ import {
   Question,
   QuestionResponse,
   Quiz,
+  QuizResponse,
   resetPasswordCredentials,
   resetPasswordResponse,
+  Results,
   Student,
   TopStudent,
 } from "../../services/interfaces";
@@ -31,6 +33,8 @@ export const apis = createApi({
       const token = (getState() as AppState).user.token;
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
+      } else {
+        console.error("Token is missing");
       }
       return headers;
     },
@@ -44,14 +48,20 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
-    forgetPassword: builder.mutation<forgetPasswordResponse, forgetPasswordCredentials>({
+    forgetPassword: builder.mutation<
+      forgetPasswordResponse,
+      forgetPasswordCredentials
+    >({
       query: (credentials) => ({
         url: AUTH_URLS.forgetPassword,
         method: "POST",
         body: credentials,
       }),
     }),
-    resetPassword: builder.mutation<resetPasswordResponse, resetPasswordCredentials>({
+    resetPassword: builder.mutation<
+      resetPasswordResponse,
+      resetPasswordCredentials
+    >({
       query: (credentials) => ({
         url: AUTH_URLS.resetPassword,
         method: "POST",
@@ -62,6 +72,25 @@ export const apis = createApi({
     topUpcomingQuizzes: builder.query<Quiz[], void>({
       query: () => ({
         url: QUIZ_URLS.getTopUpcommingQuizzes,
+      }),
+    }),
+    addQuiz: builder.mutation<QuizResponse, Quiz>({
+      query: (credentials) => ({
+        url: QUIZ_URLS.addQuiz,
+        method: "POST",
+        body: credentials,
+      }),
+    }),
+    getQuiz: builder.query<Quiz, string>({
+      query: (id) => ({
+        url: QUIZ_URLS.getQuiz(id),
+      }),
+    }),
+    updateQuiz: builder.mutation<QuizResponse, { id: string; data: Quiz }>({
+      query: ({ id, data }) => ({
+        url: QUIZ_URLS.updateQuiz(id),
+        method: "PUT",
+        body: data,
       }),
     }),
     /*students */
@@ -93,7 +122,10 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
-    editQuestion: builder.mutation<QuestionResponse, { id: string; data: Question }>({
+    editQuestion: builder.mutation<
+      QuestionResponse,
+      { id: string; data: Question }
+    >({
       query: ({ id, data }) => ({
         url: QUESTIONS_URLS.editQuestion(id),
         method: "PUT",
@@ -107,19 +139,23 @@ export const apis = createApi({
       }),
     }),
     // getAllGroups
-    allGroups : builder.query <group [] , void> ({
-      query : ()=> ({
-        url : GROUPS_URLS.getAllGroups,
-      }),   
+    allGroups: builder.query<group[], void>({
+      query: () => ({
+        url: GROUPS_URLS.getAllGroups,
+      }),
+    }),
+    allQuizzesResults: builder.query<Results[], void>({
+      query: () => ({
+        url: QUIZ_URLS.getAllQuizzesResults,
+      }),
     }),
     deleteGroups: builder.mutation<group, {id: string; data: group}>({
       query: ({id,data}) => ({
-        url:GROUPS_URLS.deleteGroup(id),
+        url: GROUPS_URLS.deleteGroup(id),
         method: "DELETE",
         body: data,
       }),
     }),
-    
   }),
 });
 
@@ -134,6 +170,10 @@ export const {
   useAddQuestionMutation,
   useEditQuestionMutation,
   useGetQuestionQuery,
+  useAddQuizMutation,
+  useGetQuizQuery,
+  useUpdateQuizMutation,
+  useAllQuizzesResultsQuery,
   useAllStudentsQuery,
   useDeleteGroupsMutation,
   useDeleteQuestionMutation,

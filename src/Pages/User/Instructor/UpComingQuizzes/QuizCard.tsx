@@ -7,12 +7,14 @@ export interface QuizCardInterface {
   title: string;
   schadule: string;
   participants: number;
+  id:string
 }
 
 export default function QuizCard({
   title,
   schadule,
   participants,
+  id
 }: QuizCardInterface) {
   let date = formatDate(schadule)
   let time = formatTime(schadule)
@@ -29,7 +31,7 @@ export default function QuizCard({
         </p>
         <div className="flex items-center justify-between mt-5">
           <p className="text-sm font-bold">No. of students enrolled: {participants}</p>
-          <Link to="/quzziesDetails/:id" className="flex items-center gap-x-1">
+          <Link to={`/quzziesDetails/${id}`} className="flex items-center gap-x-1">
             Open
             <CircleRightArrow />
           </Link>

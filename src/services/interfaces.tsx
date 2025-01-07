@@ -69,7 +69,10 @@ export interface Quiz {
   __v: number;
   participants: number;
 }
-
+export interface QuizResponse {
+  message: string;
+  data: Quiz;
+}
 //* questions
 export interface QuizQuestion {
   _id: string;
@@ -102,17 +105,17 @@ export interface Answers {
 }
 
 export interface group {
-  
-    _id: string;
-    name: string;
-    status: string;
-    instructor: string;
-    students: string[];
-    max_students: number;
-    updatedAt: string;
-    createdAt: string;
-    __v: number; }
-  
+  _id: string;
+  name: string;
+  status: string;
+  instructor: string;
+  students: string[];
+  max_students: number;
+  updatedAt: string;
+  createdAt: string;
+  __v: number;
+}
+
 //* students
 export interface Student {
   _id: string;
@@ -122,7 +125,7 @@ export interface Student {
   status: string;
   avg_score: number;
   role: "Student";
-  group: group
+  group: group;
 }
 
 export interface TopStudent extends Student {
@@ -134,9 +137,49 @@ export interface DeleteModalType {
   loading: boolean;
   onConfirm: (data:Question) => void;
   title: string;
-  modalRef: RefObject<HTMLDivElement> | null;  
+  modalRef: RefObject<HTMLDivElement> | null;
 }
 
+// reults
 
+export interface Results {
+  quiz: QuizOfResults;
+  participants: Participants[];
+}
 
+export interface QuizOfResults {
+  _id: string;
+  code: string;
+  title: string;
+  description: string;
+  status: "open" | "closed";
+  instructor: string;
+  group: string;
+  questions_number: number;
+  schadule: string;
+  duration: number;
+  score_per_question: number;
+  type: "BE" | "FE" | "DO";
+  difficulty: "easy" | "medium" | "hard";
+  updatedAt: string;
+  createdAt: string;
+  __v: number;
+  closed_at: string;
+}
 
+export interface Participants {
+  _id: string;
+  quiz: {
+    _id: string;
+    title: string;
+  };
+  participant: {
+    _id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+  };
+  score: number;
+  started_at: string;
+  finished_at: string;
+}
