@@ -22,14 +22,26 @@ const CustomFormInput = ({
   value,
 }: Iprops) => {
   return (
-    <div className={`md:${width}  mb-2  `}>
-      <div className={`flex ${height} `}>
+    <div className={`flex flex-col ${width}  mb-2  `}>
+      <div className={`flex ${height}  `}>
         <label
           className={`flex-shrink-0 flex items-center p-2.5 
 		pointer-events-none border-y border-l border-[#0000004D]
-		 bg-linen rounded-l-lg font-bold ${labelWidth}  `}
+		 bg-linen rounded-l-lg font-bold w-20 sm:${labelWidth}  `}
         >
-          {label}
+          {label === "Duration" ? (
+            <>
+              {label}
+              <span className="font-normal ps-1"> (in minutes)</span>
+            </>
+          ) : label === "Score per question" ? (
+            <>
+              Score
+              <span className="hidden sm:visible">per question</span>
+            </>
+          ) : (
+            label
+          )}
         </label>
         <input
           type="text"

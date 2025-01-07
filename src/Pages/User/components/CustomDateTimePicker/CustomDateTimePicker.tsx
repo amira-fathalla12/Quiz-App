@@ -44,7 +44,7 @@ const CustomDateTimePicker = ({ control, isError, errorMessage }: Props) => {
               value={dateTime}
               minDate={new Date()} // Disable previous days
               className="block w-full  border-y border-r border-[#0000004D] rounded-r-lg 
-              h-10 font-bold ps-5"
+              h-10 font-bold ps-0 sm:ps-5"
             />
           )}
         />

@@ -54,7 +54,7 @@ export const QuizzesDetails = () => {
     <div
       className={twMerge(
         "ps-2",
-        isFetchingQuiz ? "w-full" : "w-full sm:w-[45%] md:w-[55%] "
+        isFetchingQuiz ? "w-full" : "w-[95%] sm:w-[45%] md:w-[55%] "
       )}
     >
       <div className="flex items-center gap-4 pt-5 pb-6">
@@ -112,7 +112,7 @@ export const QuizzesDetails = () => {
             <div className="w-[80%]">
               <CustomFormInput
                 label="Duration"
-                width="w-[35%]"
+                width="w-full"
                 labelWidth="w-48"
                 register={register("duration", {
                   required: getRequiredMessage("Duration"),
@@ -142,7 +142,7 @@ export const QuizzesDetails = () => {
             <div className="w-[80%] ">
               <CustomFormInput
                 label="Score per question"
-                width="w-[34%]"
+                width="w-full"
                 labelWidth="w-48"
                 register={register("score_per_question", {
                   required: getRequiredMessage("Score"),
@@ -199,7 +199,7 @@ export const QuizzesDetails = () => {
             <div className="w-[80%]">
               <CustomFormSelect
                 label="Group name"
-                width="w-[31.7%]"
+                width="w-full"
                 labelWidth="w-48"
                 register={register("group", {
                   required: getRequiredMessage("Group"),

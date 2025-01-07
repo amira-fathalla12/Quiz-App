@@ -54,7 +54,6 @@
 .react-datetime-picker {
   height: 50px !important;
   width: 53% !important;
-  /* flex-wrap: wrap !important; */
 }
 .react-datetime-picker__wrapper {
   border: none !important;
@@ -73,6 +72,29 @@
   margin-inline-start: 1.5rem;
   margin-inline-end: 0.5rem;
   font-size: 20px;
+}
+@media screen and (max-width: 768px) {
+  .react-datetime-picker {
+    width: 100% !important;
+  }
+  .react-datetime-picker__wrapper {
+    /* width: 90% !important; */
+  }
+  .react-datetime-picker__button {
+    padding: 0 !important;
+    padding-inline-end: 3px !important;
+  }
+  .react-datetime-picker__inputGroup__divider:nth-of-type(3):before {
+    margin-inline-start: 0.4rem;
+    margin-inline-end: 0.3rem;
+  }
+  .react-datetime-picker__inputGroup:first-child::before {
+    margin-inline-end: 0.3rem;
+  }
+  /* .react-datetime-picker__clear-button__icon,
+  .react-datetime-picker__calendar-button__icon {
+    display: none !important;
+  } */
 }
 
 /* code modal */

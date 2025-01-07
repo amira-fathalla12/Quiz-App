@@ -34,21 +34,22 @@ const QuizForm = ({ register, errors, control }: Props) => {
           errorMessage={errors?.title?.message}
         />
         <div className="flex flex-wrap gap-3">
-          <CustomFormSelect
+          <CustomFormInput
             label="Duration"
-            width="w-[35%]"
+            width="w-full sm:w-[35.5%]"
+            height="h-10"
+            labelWidth="w-44"
             register={register("duration", {
               required: getRequiredMessage("Duration"),
             })}
             isError={errors?.duration}
             errorMessage={errors?.duration?.message}
-            selectValues={Array.from({ length: 12 }, (_, i) =>
-              ((i + 1) * 10).toString()
-            )}
           />
           <CustomFormSelect
             label="No. of questions"
-            width="w-[34%]"
+            width="w-full sm:w-[30%]"
+            height="h-10"
+            labelWidth="w-44"
             register={register("questions_number", {
               required: getRequiredMessage("Questions No"),
             })}
@@ -59,15 +60,16 @@ const QuizForm = ({ register, errors, control }: Props) => {
               (_, i) => (i + 1).toString()
             )}
           />
-          <CustomFormSelect
+          <CustomFormInput
             label="Score per question"
-            width="w-[34%]"
+            width="w-full sm:w-[30.5%]"
+            height="h-10"
+            labelWidth="w-44"
             register={register("score_per_question", {
               required: getRequiredMessage("Score"),
             })}
             isError={errors?.score_per_question}
             errorMessage={errors?.score_per_question?.message}
-            selectValues={["1", "2", "3", "4", "5"]}
           />
         </div>
         <div className="mb-2 w-full flex overflow-hidden">
@@ -87,10 +89,12 @@ const QuizForm = ({ register, errors, control }: Props) => {
           isError={errors?.schadule}
           errorMessage={errors?.schadule?.message}
         />
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-4 ">
           <CustomFormSelect
             label="Difficulty level"
-            width="w-[31.7%]"
+            width="w-full sm:w-[31.7%]"
+            height="h-10"
+            labelWidth="w-44"
             register={register("difficulty", {
               required: getRequiredMessage("Difficulty"),
             })}
@@ -100,7 +104,9 @@ const QuizForm = ({ register, errors, control }: Props) => {
           />
           <CustomFormSelect
             label="Category type"
-            width="w-[31.7%]"
+            width="w-full sm:w-[31.7%]"
+            height="h-10"
+            labelWidth="w-44"
             register={register("type", {
               required: getRequiredMessage("Type"),
             })}
@@ -110,7 +116,9 @@ const QuizForm = ({ register, errors, control }: Props) => {
           />
           <CustomFormSelect
             label="Group name"
-            width="w-[31.7%]"
+            width="w-full sm:w-[31.7%]"
+            height="h-10"
+            labelWidth="w-44"
             register={register("group", {
               required: getRequiredMessage("Group"),
             })}
