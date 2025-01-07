@@ -13,6 +13,7 @@ type Props = {
   groupValue?: group[];
   labelWidth?: string;
   value?: string | number;
+  height?: string;
 };
 const CustomFormSelect = ({
   register,
@@ -25,23 +26,17 @@ const CustomFormSelect = ({
   groupValue,
   labelWidth,
   value,
+  height,
 }: Props) => {
   return (
-    <div className={` flex flex-col md:${width}  mb-2 `}>
-      <div className={` flex `}>
+    <div className={` flex flex-col ${width}  mb-2 `}>
+      <div className={` flex ${height}`}>
         <label
           className={`flex-shrink-0 flex items-center p-2.5
       pointer-events-none border-y border-l border-[#0000004D] bg-linen
-      rounded-l-lg font-bold h-10 ${labelWidth} text-sm sm:text-base`}
+      rounded-l-lg font-bold h-10 sm:${labelWidth} text-sm sm:text-base`}
         >
-          {label === "Duration" ? (
-            <>
-              {label}
-              <span className="font-normal ps-1"> (in minutes)</span>
-            </>
-          ) : (
-            label
-          )}
+          {label}
         </label>
 
         <Select
