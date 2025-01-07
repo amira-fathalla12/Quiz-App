@@ -26,15 +26,10 @@ const CodeModal = ({ openModal, setOpenModal, title, code }: Props) => {
     <div
       className={twMerge(
         `fixed inset-0 flex items-center justify-center `,
-        openModal ? "bg-black/30" : "hidden"
+        openModal ? "bg-black/30  z-10" : "hidden"
       )}
     >
-      <Modal
-        show={openModal}
-        className="mx-auto w-fit border-0"
-        popup
-        //   ref={modalRef}
-      >
+      <Modal show={openModal} className="mx-auto w-fit border-0 z-20 " popup>
         <Modal.Header onClick={() => setOpenModal()} />
         <Modal.Body className="">
           <div className="flex  flex-col  justify-center items-center text-center">

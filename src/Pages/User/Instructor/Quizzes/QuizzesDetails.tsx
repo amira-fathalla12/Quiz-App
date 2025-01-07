@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   PencilIcon,
   RightArrowIcon,
@@ -6,6 +6,7 @@ import {
 import {
   useAllGroupsQuery,
   useGetQuizQuery,
+  useTopUpcomingQuizzesQuery,
   useUpdateQuizMutation,
 } from "../../../../redux/apis/apis";
 import CustomFormSelect from "../../../components/CustomFormSelect/CustomFormSelect";
@@ -21,11 +22,16 @@ import { useState } from "react";
 
 export const QuizzesDetails = () => {
   const { id } = useParams();
-  const { data: quiz, isLoading: isFetchingQuiz } = useGetQuizQuery(id!);
+  const {
+    data: quiz,
+    isLoading: isFetchingQuiz,
+    refetch: refetchQuiz,
+  } = useGetQuizQuery(id!);
   const { data: groups, isLoading: isGroupsLoading } = useAllGroupsQuery();
+  const { refetch } = useTopUpcomingQuizzesQuery();
   const [updateQuiz, { isLoading: isLoadingEdit }] = useUpdateQuizMutation();
   const [dateTime, setDateTime] = useState(new Date());
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -43,8 +49,10 @@ export const QuizzesDetails = () => {
           title: quiz?.title ?? "",
         },
       }).unwrap();
-
       toast.success(result?.message || "Quiz updated successfully");
+      await refetch();
+      await refetchQuiz();
+      navigate("/quzzies");
     } catch (err: unknown) {
       const error = err as ApiError;
       toast.error(error?.data?.message || "Something went wrong");
@@ -165,7 +173,7 @@ export const QuizzesDetails = () => {
                 rounded-r-lg rounded-l-lg rounded-t-none resize-none"
                 {...register("description")}
                 name="description"
-                value={quiz?.description}
+                defaultValue={quiz?.description}
               ></textarea>
             </div>
             {/* <div className="w-[80%]">

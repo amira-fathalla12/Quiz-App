@@ -30,20 +30,12 @@ export const apis = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as AppState).user.token;
-      // const refreshToken = (getState() as AppState).user.refreshToken;
       console.log("Token:", token);
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
-        // if (token && refreshToken) {
-        //   headers.set(
-        //     "Cookie",
-        //     `access-token=${token}; refresh-token=${refreshToken}`
-        //   );
-        // }
       } else {
-        console.error("Token is missing"); // Debugging log
+        console.error("Token is missing");
       }
-      console.log("Headers:", headers);
       return headers;
     },
   }),
@@ -163,5 +155,5 @@ export const {
   useAddQuizMutation,
   useGetQuizQuery,
   useUpdateQuizMutation,
-  useAllQuizzesResultsQuery
+  useAllQuizzesResultsQuery,
 } = apis;
