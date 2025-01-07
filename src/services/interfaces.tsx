@@ -123,6 +123,7 @@ export interface Student {
   last_name: string;
   email: string;
   status: string;
+  avg_score: number;
   role: "Student";
   group: group;
 }
@@ -134,7 +135,7 @@ export interface DeleteModalType {
   setOpenModal: (value: boolean) => void;
   openModal: boolean;
   loading: boolean;
-  onConfirm: () => void;
+  onConfirm: (data:Question) => void;
   title: string;
   modalRef: RefObject<HTMLDivElement> | null;
 }

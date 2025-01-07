@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { QuizzesSetup } from "./Pages/User/Instructor/Quizzes/QuizzesSetup";
-import { StudentList } from "./Pages/User/Instructor/StudentList";
+import StudentsList from "./Pages/User/Instructor/StudentList";
 import { GroupsList } from "./Pages/User/Instructor/GroupsList";
 import { QuestionsList } from "./Pages/User/Instructor/QuestionsList";
 import { QuizzesDetails } from "./Pages/User/Instructor/Quizzes/QuizzesDetails";
@@ -55,7 +55,7 @@ const App = () => {
         },
         {
           path: "students",
-          element: <StudentList />,
+          element: <StudentsList />,
         },
         {
           path: "groups",

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   useAddQuestionMutation,
   useAllQuestionsQuery,
+  useDeleteQuestionMutation,
   useEditQuestionMutation,
   useGetQuestionQuery,
 } from "../../../redux/apis/apis";
@@ -15,7 +16,6 @@ import Form from "../../components/Forms/Form";
 import { useForm } from "react-hook-form";
 import { Question } from "../../../services/interfaces";
 import { toast } from "react-toastify";
-import { axiosInstance, QUESTIONS_URLS } from "../../../services/urls";
 import { DeleteConfirm } from "../components/DeleteConfirm/DeleteConfirm";
 
 export const QuestionsList = () => {
@@ -26,6 +26,18 @@ export const QuestionsList = () => {
   const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+  const [deleting, setDeleting] = useState<boolean>(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedId, setSelectedId] = useState<string>("");
+
+  const [deleteQuestion, { isLoading: isLoadingDell }] = useDeleteQuestionMutation();
+
+  const handleOpenDelete = (id: string) => {
+    setSelectedId(id);
+    setOpenDelete(true);
+  };
+
+  const handleCloseDelete = () => setOpenDelete(false);
 
   const {
     register,
@@ -36,10 +48,8 @@ export const QuestionsList = () => {
   } = useForm<Question>({ mode: "onChange" });
 
   const [addQuestion, { isLoading: isLoadingAdd }] = useAddQuestionMutation();
-  const [editQuestion, { isLoading: isLoadingEdit }] =
-    useEditQuestionMutation();
-  const { data: questionData, isFetching: isFetchingQuestion } =
-    useGetQuestionQuery(editId);
+  const [editQuestion, { isLoading: isLoadingEdit }] = useEditQuestionMutation();
+  const { data: questionData, isFetching: isFetchingQuestion } = useGetQuestionQuery(editId);
 
   const handleAddQuestion = async (data: Question) => {
     try {
@@ -66,6 +76,21 @@ export const QuestionsList = () => {
     }
   };
 
+  const deleteQuestions = async (data: Question) => {
+    try {
+      setDeleting(true);
+      await deleteQuestion({id:selectedId, data}).unwrap(); 
+      toast.success("Question deleted successfully");
+      refetch();
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.message || "Something went wrong");
+    } finally {
+      setDeleting(false);
+      handleCloseDelete();
+    }
+  };
+
   function openAddModal() {
     reset();
     setIsOpenAdd(true);
@@ -80,6 +105,7 @@ export const QuestionsList = () => {
     setEditId(id);
     setIsOpenEdit(true);
   }
+  
 
   useEffect(() => {
     if (!openEditModal) return;
@@ -98,31 +124,6 @@ export const QuestionsList = () => {
     reset();
   }
 
-  const [deleting, setDeleting] = useState<boolean>(false);
-  const [openDelete, setOpenDelete] = useState(false);
-  const [selectedId, setSelectedId] = useState<string>("");
-
-  const handleOpenDelete = (id: string) => {
-    setSelectedId(id);
-    setOpenDelete(true);
-  };
-
-  const handleCloseDelete = () => setOpenDelete(false);
-
-  // function delete
-  const deleteQuestions = async () => {
-    try {
-      setDeleting(true);
-      await axiosInstance.delete(QUESTIONS_URLS.deleteQuestion(selectedId));
-      toast.success("Question deleted successfully");
-    } catch (error: any) {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "something went wrong");
-    } finally {
-      setDeleting(false);
-      handleCloseDelete();
-    }
-  };
 
   return (
     <div className="p-5">
@@ -199,12 +200,12 @@ export const QuestionsList = () => {
           ))}
       </CustomTable>
       <DeleteConfirm
-        setOpenModal={handleCloseDelete}
-        openModal={openDelete}
-        loading={deleting}
-        onConfirm={deleteQuestions}
-        title="Question"
-        modalRef={null}
+        setOpenModal={handleCloseDelete} 
+        openModal={openDelete} 
+        loading={deleting || isLoadingDell}
+        onConfirm={deleteQuestions} 
+        title="Question" 
+        modalRef={null} 
       />
     </div>
   );
