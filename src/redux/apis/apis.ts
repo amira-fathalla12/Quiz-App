@@ -31,9 +31,20 @@ export const apis = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as AppState).user.token;
+      // const refreshToken = (getState() as AppState).user.refreshToken;
+      console.log("Token:", token);
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
+        // if (token && refreshToken) {
+        //   headers.set(
+        //     "Cookie",
+        //     `access-token=${token}; refresh-token=${refreshToken}`
+        //   );
+        // }
+      } else {
+        console.error("Token is missing"); // Debugging log
       }
+      console.log("Headers:", headers);
       return headers;
     },
   }),
@@ -77,6 +88,18 @@ export const apis = createApi({
         url: QUIZ_URLS.addQuiz,
         method: "POST",
         body: credentials,
+      }),
+    }),
+    getQuiz: builder.query<Quiz, string>({
+      query: (id) => ({
+        url: QUIZ_URLS.getQuiz(id),
+      }),
+    }),
+    updateQuiz: builder.mutation<QuizResponse, { id: string; data: Quiz }>({
+      query: ({ id, data }) => ({
+        url: QUIZ_URLS.updateQuiz(id),
+        method: "PUT",
+        body: data,
       }),
     }),
     /*students */
@@ -141,4 +164,6 @@ export const {
   useGetQuestionQuery,
   useAllResultsQuery,
   useAddQuizMutation,
+  useGetQuizQuery,
+  useUpdateQuizMutation,
 } = apis;

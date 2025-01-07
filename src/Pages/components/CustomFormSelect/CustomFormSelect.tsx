@@ -11,6 +11,8 @@ type Props = {
   selectValues?: string[];
   selectType?: string;
   groupValue?: group[];
+  labelWidth?: string;
+  value?: string | number;
 };
 const CustomFormSelect = ({
   register,
@@ -21,14 +23,16 @@ const CustomFormSelect = ({
   selectValues,
   selectType,
   groupValue,
+  labelWidth,
+  value,
 }: Props) => {
   return (
     <div className={` flex flex-col md:${width}  mb-2 `}>
       <div className={` flex `}>
         <label
-          className="flex-shrink-0 flex items-center p-2.5
+          className={`flex-shrink-0 flex items-center p-2.5
       pointer-events-none border-y border-l border-[#0000004D] bg-linen
-      rounded-l-lg font-bold h-10 "
+      rounded-l-lg font-bold h-10 ${labelWidth} text-sm sm:text-base`}
         >
           {label === "Duration" ? (
             <>
@@ -44,7 +48,8 @@ const CustomFormSelect = ({
           className="block w-full ps-1 border-y border-r border-[#0000004D]
         rounded-r-lg h-10"
           {...register}
-          defaultValue=""
+          defaultValue={value ? value : ""}
+          // value={value}
         >
           <option value="" disabled>
             {" "}
