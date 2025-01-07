@@ -52,11 +52,13 @@ export const GROUPS_URLS = {
   getAllGroups: "/group",
   getGroup: (id: string) => `/group/${id}`,
   deleteGroup: (id: string) => `/group/${id}`,
+  addGroup:"/groups"
 };
 
 //resultsUrls
 export const RESULTS_URLS = {
   getAllResults: "/quiz/result",
+  addGroup:"/group"
 };
 
 export { axiosInstance, BASE_URL, IMAGE_URL };
