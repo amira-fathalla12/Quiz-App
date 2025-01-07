@@ -5,7 +5,6 @@ import {
   GROUPS_URLS,
   QUESTIONS_URLS,
   QUIZ_URLS,
-  RESULTS_URLS,
   STUDENTS_URLS,
 } from "../../services/urls";
 import {
@@ -31,9 +30,20 @@ export const apis = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as AppState).user.token;
+      // const refreshToken = (getState() as AppState).user.refreshToken;
+      console.log("Token:", token);
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
+        // if (token && refreshToken) {
+        //   headers.set(
+        //     "Cookie",
+        //     `access-token=${token}; refresh-token=${refreshToken}`
+        //   );
+        // }
+      } else {
+        console.error("Token is missing"); // Debugging log
       }
+      console.log("Headers:", headers);
       return headers;
     },
   }),
@@ -79,6 +89,18 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
+    getQuiz: builder.query<Quiz, string>({
+      query: (id) => ({
+        url: QUIZ_URLS.getQuiz(id),
+      }),
+    }),
+    updateQuiz: builder.mutation<QuizResponse, { id: string; data: Quiz }>({
+      query: ({ id, data }) => ({
+        url: QUIZ_URLS.updateQuiz(id),
+        method: "PUT",
+        body: data,
+      }),
+    }),
     /*students */
     topStudents: builder.query<TopStudent[], void>({
       query: () => ({
@@ -119,10 +141,9 @@ export const apis = createApi({
         url: GROUPS_URLS.getAllGroups,
       }),
     }),
-    /*results */
-    allResults: builder.query<Results[], void>({
+    allQuizzesResults: builder.query<Results[], void>({
       query: () => ({
-        url: RESULTS_URLS.getAllResults,
+        url: QUIZ_URLS.getAllQuizzesResults,
       }),
     }),
   }),
@@ -139,6 +160,8 @@ export const {
   useAddQuestionMutation,
   useEditQuestionMutation,
   useGetQuestionQuery,
-  useAllResultsQuery,
   useAddQuizMutation,
+  useGetQuizQuery,
+  useUpdateQuizMutation,
+  useAllQuizzesResultsQuery
 } = apis;

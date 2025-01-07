@@ -1,18 +1,15 @@
 import { BankIcon, ClockIcon } from "../../../components/SvgIcons/SvgIcons";
 import CustomQuizesTab from "../../components/CustomQuizesTabs/CustomQuizesTabs";
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 import Comingquizes from "./Comingquizes";
 import AllQuizzes from "./AllQuizzes";
 import CompletedQuizzes from "./CompletedQuizzes";
 
 export const QuizzesSetup = () => {
-
-
-
   return (
-    <div className="flex justify-between pt-5">
-      <div className="flex gap-7">
+    <div className="flex justify-between pt-5 ps-2">
+      <div className="flex flex-wrap  gap-7">
         <CustomQuizesTab
           icon={<ClockIcon />}
           label="Set up a new quiz"
@@ -36,23 +33,13 @@ export const QuizzesSetup = () => {
             <Comingquizes />
           </TabPanel>
           <TabPanel>
-            <CompletedQuizzes />    
+            <CompletedQuizzes />
           </TabPanel>
           <TabPanel>
-            <AllQuizzes />     
+            <AllQuizzes />
           </TabPanel>
         </Tabs>
       </div>
-      
-
-
-  
-
-
-
     </div>
-
-  )}
-
-
-  
+  );
+};
