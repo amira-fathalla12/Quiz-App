@@ -6,7 +6,6 @@ import Comingquizes from "./Comingquizes";
 import AllQuizzes from "./AllQuizzes";
 import CompletedQuizzes from "./CompletedQuizzes";
 
-
 export const QuizzesSetup = () => {
 
 
