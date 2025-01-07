@@ -27,11 +27,17 @@ export const SignUpIcon = ({ color }: { color: string }) => (
     ></path>
   </svg>
 );
-export const CheckIcon = () => (
+export const CheckIcon = ({
+  width = "25",
+  height = "25",
+}: {
+  width?: string;
+  height?: string;
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="25"
-    height="25"
+    width={width}
+    height={height}
     fill="none"
     viewBox="0 0 25 25"
   >
@@ -447,6 +453,20 @@ export const BankIcon = () => (
     <path
       fill="#000"
       d="M7.5 42.5H10v6.25A1.25 1.25 0 0 0 11.25 50h42.5A1.25 1.25 0 0 0 55 48.75V6.25A1.25 1.25 0 0 0 53.75 5h-42.5A1.25 1.25 0 0 0 10 6.25v6.25H7.5A2.5 2.5 0 0 0 5 15v2.5A2.5 2.5 0 0 0 7.5 20H10v15H7.5A2.5 2.5 0 0 0 5 37.5V40a2.5 2.5 0 0 0 2.5 2.5m0-27.5H15v2.5H7.5zm5 5H15a2.5 2.5 0 0 0 2.5-2.5V15a2.5 2.5 0 0 0-2.5-2.5h-2.5v-5h40v40h-40v-5H15a2.5 2.5 0 0 0 2.5-2.5v-2.5A2.5 2.5 0 0 0 15 35h-2.5zm-5 17.5H15V40H7.5z"
+    ></path>
+  </svg>
+);
+export const CopyIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="22"
+    height="25"
+    fill="none"
+    viewBox="0 0 22 25"
+  >
+    <path
+      fill="#000"
+      d="M15.625 21.875v1.953c0 .647-.525 1.172-1.172 1.172H1.172A1.17 1.17 0 0 1 0 23.828V5.86c0-.647.525-1.171 1.172-1.171h3.516V19.14a2.737 2.737 0 0 0 2.734 2.734zm0-16.797V0H7.422C6.775 0 6.25.525 6.25 1.172V19.14c0 .647.525 1.172 1.172 1.172h13.281c.647 0 1.172-.525 1.172-1.172V6.25h-5.078a1.175 1.175 0 0 1-1.172-1.172m5.907-1.515-3.22-3.22A1.17 1.17 0 0 0 17.483 0h-.296v4.688h4.688v-.296c0-.311-.123-.61-.343-.829"
     ></path>
   </svg>
 );

@@ -8,12 +8,18 @@ import { ApiError, Quiz } from "../../../../services/interfaces";
 import { toast } from "react-toastify";
 import { useAddQuizMutation } from "../../../../redux/apis/apis";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { openModal } from "../../../../redux/slices/modalSlice";
+import { openCodeModal, openModal } from "../../../../redux/slices/modalSlice";
+import { useState } from "react";
+import CodeModal from "../CodeModal/CodeModal";
 
 export const Navbar = () => {
   const { pathname } = useLocation();
+  const [code, setCode] = useState("");
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector((state) => state.modal.isOpen);
+  const isCodeModalOpen = useAppSelector(
+    (state) => state.modal.isCodeModalOpen
+  );
   const navTitle = () => {
     switch (pathname) {
       case "/dashboard":
@@ -41,10 +47,15 @@ export const Navbar = () => {
   } = useForm<Quiz>({ mode: "onChange" });
   // const { isLoading, isError, data, refetch } = useAllQuizesQuery();
   const [addQuiz, { isLoading }] = useAddQuizMutation();
+
   const handleOpenModal = () => {
     reset();
     dispatch(openModal());
   };
+  const handleOpenCodeModal = () => {
+    dispatch(openCodeModal());
+  };
+
   const handleAddQuestion = async (data: Quiz) => {
     try {
       const result = await addQuiz(data).unwrap();
@@ -52,6 +63,8 @@ export const Navbar = () => {
       handleOpenModal();
       // refetch();
       toast.success(result?.message || "Quiz created successfully");
+      setCode(result?.data?.code);
+      dispatch(openCodeModal());
     } catch (err: unknown) {
       const error = err as ApiError;
       toast.error(error.data?.message || "Something went wrong");
@@ -84,6 +97,12 @@ export const Navbar = () => {
       >
         <QuizForm register={register} errors={errors} control={control} />
       </Modal>
+      <CodeModal
+        openModal={isCodeModalOpen}
+        setOpenModal={handleOpenCodeModal}
+        title="Quiz was successfully created"
+        code={code}
+      />
     </div>
   );
 };
