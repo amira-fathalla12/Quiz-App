@@ -5,7 +5,6 @@ import {
   GROUPS_URLS,
   QUESTIONS_URLS,
   QUIZ_URLS,
-  RESULTS_URLS,
   STUDENTS_URLS,
 } from "../../services/urls";
 import {
@@ -142,10 +141,9 @@ export const apis = createApi({
         url: GROUPS_URLS.getAllGroups,
       }),
     }),
-    /*results */
-    allResults: builder.query<Results[], void>({
+    allQuizzesResults: builder.query<Results[], void>({
       query: () => ({
-        url: RESULTS_URLS.getAllResults,
+        url: QUIZ_URLS.getAllQuizzesResults,
       }),
     }),
   }),
@@ -162,8 +160,8 @@ export const {
   useAddQuestionMutation,
   useEditQuestionMutation,
   useGetQuestionQuery,
-  useAllResultsQuery,
   useAddQuizMutation,
   useGetQuizQuery,
   useUpdateQuizMutation,
+  useAllQuizzesResultsQuery
 } = apis;

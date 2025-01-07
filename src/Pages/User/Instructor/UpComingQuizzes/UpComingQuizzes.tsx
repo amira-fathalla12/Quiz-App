@@ -23,6 +23,7 @@ export default function UpComingQuizzes() {
           schadule={quiz.schadule}
           participants={quiz.participants}
           key={quiz._id}
+          id ={quiz._id}
         />
       ))}
     </div>
