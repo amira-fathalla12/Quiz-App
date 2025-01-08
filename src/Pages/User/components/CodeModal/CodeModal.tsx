@@ -64,7 +64,6 @@ const CodeModal = ({ openModal, setOpenModal, title, code }: Props) => {
             >
               Close
             </Button>
-            {/* </div> */}
           </div>
         </Modal.Body>
       </Modal>

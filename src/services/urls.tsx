@@ -34,8 +34,7 @@ export const QUIZ_URLS = {
   getQuiz: (id: string) => `/quiz/${id}`,
   updateQuiz: (id: string) => `/quiz/${id}`,
   getAllQuizzesResults: "/quiz/result",
-  getAllCompletedQuizzes:"/quiz/completed"
-
+  getAllCompletedQuizzes: "/quiz/completed",
 };
 
 // questionsUrls
@@ -52,8 +51,7 @@ export const STUDENTS_URLS = {
   getTopStudents: "/student/top-five",
   allStudentsWithoutGroups: "/student/without-group",
   allStudents: "/student",
-  StudentDetails: "/"
-
+  StudentDetails: "/",
 };
 
 //groupsURLS
@@ -63,6 +61,5 @@ export const GROUPS_URLS = {
   deleteGroup: (id: string) => `/group/${id}`,
   addGroup: "/groups",
 };
-
 
 export { axiosInstance, BASE_URL, IMAGE_URL };
