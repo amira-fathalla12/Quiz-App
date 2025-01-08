@@ -20,6 +20,7 @@ import {
   resetPasswordCredentials,
   resetPasswordResponse,
   Results,
+  Student,
   TopStudent,
 } from "../../services/interfaces";
 import { AppState } from "../store";
@@ -30,20 +31,11 @@ export const apis = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as AppState).user.token;
-      // const refreshToken = (getState() as AppState).user.refreshToken;
-      console.log("Token:", token);
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
-        // if (token && refreshToken) {
-        //   headers.set(
-        //     "Cookie",
-        //     `access-token=${token}; refresh-token=${refreshToken}`
-        //   );
-        // }
       } else {
-        console.error("Token is missing"); // Debugging log
+        console.error("Token is missing");
       }
-      console.log("Headers:", headers);
       return headers;
     },
   }),
@@ -102,6 +94,11 @@ export const apis = createApi({
       }),
     }),
     /*students */
+    allStudents: builder.query<Student[], void>({
+      query: () => ({
+        url: STUDENTS_URLS.allStudents,
+      }),
+    }),
     topStudents: builder.query<TopStudent[], void>({
       query: () => ({
         url: STUDENTS_URLS.getTopStudents,
@@ -135,6 +132,13 @@ export const apis = createApi({
         body: data,
       }),
     }),
+    deleteQuestion: builder.mutation<Question, {id: string; data: Question}>({
+      query: ({id,data}) => ({
+        url: QUESTIONS_URLS.deleteQuestion(id),
+        method: "DELETE",
+        body: data,
+      }),
+    }),
     // getAllGroups
     allGroups: builder.query<group[], void>({
       query: () => ({
@@ -149,6 +153,13 @@ export const apis = createApi({
     allCompletedQuizzes: builder.query<Results[], void>({
       query: () => ({
         url: QUIZ_URLS.getAllCompletedQuizzes,
+      }),
+    }),
+    deleteGroups: builder.mutation<group, {id: string; data: group}>({
+      query: ({id,data}) => ({
+        url: GROUPS_URLS.deleteGroup(id),
+        method: "DELETE",
+        body: data,
       }),
     }),
   }),
@@ -170,4 +181,7 @@ export const {
   useUpdateQuizMutation,
   useAllQuizzesResultsQuery,
   useAllCompletedQuizzesQuery,
+  useAllStudentsQuery,
+  useDeleteGroupsMutation,
+  useDeleteQuestionMutation,
 } = apis;

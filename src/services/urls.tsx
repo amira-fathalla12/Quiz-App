@@ -50,6 +50,10 @@ export const QUESTIONS_URLS = {
 //studentsUrls
 export const STUDENTS_URLS = {
   getTopStudents: "/student/top-five",
+  allStudentsWithoutGroups: "/student/without-group",
+  allStudents: "/student",
+  StudentDetails: "/"
+
 };
 
 //groupsURLS
