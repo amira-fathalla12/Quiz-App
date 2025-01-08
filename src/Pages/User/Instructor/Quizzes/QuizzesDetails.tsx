@@ -40,7 +40,6 @@ export const QuizzesDetails = () => {
   } = useForm<Quiz>({ mode: "onChange" });
 
   const onSubmit = async (data: Quiz) => {
-    console.log(quiz?.questions, "quiz?.question");
     try {
       const result = await updateQuiz({
         id: id ?? "",
@@ -130,23 +129,7 @@ export const QuizzesDetails = () => {
                 errorMessage={errors?.duration?.message}
               />
             </div>
-            {/* <div className="w-[80%]">
-              <CustomFormSelect
-                label="No. of questions"
-                width="w-[34%]"
-                labelWidth="w-48"
-                register={register("questions_number", {
-                  required: getRequiredMessage("Questions No"),
-                })}
-                value={quiz?.questions_number}
-                isError={errors?.questions_number}
-                errorMessage={errors?.questions_number?.message}
-                selectValues={Array.from(
-                  { length: questions?.length ?? 0 },
-                  (_, i) => (i + 1).toString()
-                )}
-              />
-            </div> */}
+
             <div className="w-[80%] ">
               <CustomFormInput
                 label="Score per question"
@@ -176,34 +159,6 @@ export const QuizzesDetails = () => {
                 defaultValue={quiz?.description}
               ></textarea>
             </div>
-            {/* <div className="w-[80%]">
-              <CustomFormSelect
-                label="Difficulty level"
-                width="w-[31.7%]"
-                labelWidth="w-48"
-                register={register("difficulty", {
-                  required: getRequiredMessage("Difficulty"),
-                })}
-                value={quiz?.difficulty}
-                isError={errors?.difficulty}
-                errorMessage={errors?.difficulty?.message}
-                selectValues={["easy", "medium", "hard"]}
-              />
-            </div>
-            <div className="w-[80%]">
-              <CustomFormSelect
-                label="Category type"
-                width="w-[31.7%]"
-                labelWidth="w-48"
-                register={register("type", {
-                  required: getRequiredMessage("Type"),
-                })}
-                value={quiz?.type}
-                isError={errors?.type}
-                errorMessage={errors?.type?.message}
-                selectValues={["FE", "BE", "DO"]}
-              />
-            </div> */}
             <div className="w-[80%]">
               <CustomFormSelect
                 label="Group name"
