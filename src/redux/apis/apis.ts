@@ -146,6 +146,11 @@ export const apis = createApi({
         url: QUIZ_URLS.getAllQuizzesResults,
       }),
     }),
+    allCompletedQuizzes: builder.query<Results[], void>({
+      query: () => ({
+        url: QUIZ_URLS.getAllCompletedQuizzes,
+      }),
+    }),
   }),
 });
 
@@ -163,5 +168,6 @@ export const {
   useAddQuizMutation,
   useGetQuizQuery,
   useUpdateQuizMutation,
-  useAllQuizzesResultsQuery
+  useAllQuizzesResultsQuery,
+  useAllCompletedQuizzesQuery,
 } = apis;

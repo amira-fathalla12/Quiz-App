@@ -34,6 +34,7 @@ export const QUIZ_URLS = {
   getQuiz: (id: string) => `/quiz/${id}`,
   updateQuiz: (id: string) => `/quiz/${id}`,
   getAllQuizzesResults: "/quiz/result",
+  getAllCompletedQuizzes:"/quiz/completed"
 
 };
 
