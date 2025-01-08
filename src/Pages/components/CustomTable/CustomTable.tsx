@@ -7,10 +7,10 @@ export interface CustomTableInterface {
 }
 export default function CustomTable({columns,children}:CustomTableInterface) {
   return (
-    <table className="table-fixed text-center border-collapse border border-gray-300">
+    <table className="w-full table-fixed border-spacing-x-0.5 border-spacing-y-1 border-separate rounded">
   <thead>
-    <tr className="border border-gray-300 bg-dark text-white p-0.5">
-        {columns.map((col ,index)=>(<th className='w-1/4 border border-gray-300 p-2' key ={index}>{col}</th>))}
+    <tr className=" bg-dark text-white">
+        {columns.map((col ,index)=>(<th className='w-1/4 px-5 py-0 rounded' key ={index}>{col}</th>))}
     </tr>
   </thead>
   <tbody>

@@ -150,6 +150,11 @@ export const apis = createApi({
         url: QUIZ_URLS.getAllQuizzesResults,
       }),
     }),
+    allCompletedQuizzes: builder.query<Results[], void>({
+      query: () => ({
+        url: QUIZ_URLS.getAllCompletedQuizzes,
+      }),
+    }),
     deleteGroups: builder.mutation<group, {id: string; data: group}>({
       query: ({id,data}) => ({
         url: GROUPS_URLS.deleteGroup(id),
@@ -175,6 +180,7 @@ export const {
   useGetQuizQuery,
   useUpdateQuizMutation,
   useAllQuizzesResultsQuery,
+  useAllCompletedQuizzesQuery,
   useAllStudentsQuery,
   useDeleteGroupsMutation,
   useDeleteQuestionMutation,

@@ -23,7 +23,7 @@ export const QuizzesSetup = () => {
       </div>
       <div className="w-full md:w-1/2 pr-3">
         <Tabs className="w-full">
-          <TabList className="flex justify-between border-opacity-5 border-b-2 ">
+          <TabList className="flex justify-between border-opacity-5">
             <Tab>Upcoming quizzes</Tab>
             <Tab>Completed Quizzes</Tab>
             <Tab>All Quizzes</Tab>
