@@ -48,6 +48,15 @@ export interface resetPasswordResponse {
   message: string;
 }
 
+export interface ChangePasswordCredentials {
+  password: string;
+  password_new: string;
+  Confirm_Password: string;
+}
+export interface ChangePasswordResponse {
+  message: string;
+}
+
 //* quiz
 export interface Quiz {
   _id: string;

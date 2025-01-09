@@ -8,6 +8,8 @@ import {
   STUDENTS_URLS,
 } from "../../services/urls";
 import {
+  ChangePasswordCredentials,
+  ChangePasswordResponse,
   forgetPasswordCredentials,
   forgetPasswordResponse,
   group,
@@ -24,7 +26,6 @@ import {
   TopStudent,
 } from "../../services/interfaces";
 import { AppState } from "../store";
-
 export const apis = createApi({
   reducerPath: "apis",
   baseQuery: fetchBaseQuery({
@@ -39,8 +40,9 @@ export const apis = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Groups', 'Questions', 'Quizzes', 'Students'],
   endpoints: (builder) => ({
-    /*user */
+    /* user */
     login: builder.mutation<LoginResponse, LoginCredentials>({
       query: (credentials) => ({
         url: AUTH_URLS.login,
@@ -68,11 +70,22 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
-    /*quiz */
+    ChangePassword: builder.mutation<
+       ChangePasswordResponse,
+       ChangePasswordCredentials
+    >({
+      query: (credentials) => ({
+        url: AUTH_URLS.changePassword,
+        method: "POST",
+        body: credentials,
+      }),
+    }),
+    /* quiz */
     topUpcomingQuizzes: builder.query<Quiz[], void>({
       query: () => ({
         url: QUIZ_URLS.getTopUpcommingQuizzes,
       }),
+      providesTags: ['Quizzes'], // توفير علامات الكاش
     }),
     addQuiz: builder.mutation<QuizResponse, Quiz>({
       query: (credentials) => ({
@@ -80,11 +93,13 @@ export const apis = createApi({
         method: "POST",
         body: credentials,
       }),
+      invalidatesTags: ['Quizzes'], // إبطال الكاش عند إضافة Quiz
     }),
     getQuiz: builder.query<Quiz, string>({
       query: (id) => ({
         url: QUIZ_URLS.getQuiz(id),
       }),
+      providesTags: ['Quizzes'],
     }),
     updateQuiz: builder.mutation<QuizResponse, { id: string; data: Quiz }>({
       query: ({ id, data }) => ({
@@ -92,28 +107,33 @@ export const apis = createApi({
         method: "PUT",
         body: data,
       }),
+      invalidatesTags: ['Quizzes'],
     }),
-    /*students */
+    /* students */
     allStudents: builder.query<Student[], void>({
       query: () => ({
         url: STUDENTS_URLS.allStudents,
       }),
+      providesTags: ['Students'],
     }),
     topStudents: builder.query<TopStudent[], void>({
       query: () => ({
         url: STUDENTS_URLS.getTopStudents,
       }),
+      providesTags: ['Students'],
     }),
-    /*questions */
+    /* questions */
     allQuestions: builder.query<Question[], void>({
       query: () => ({
         url: QUESTIONS_URLS.getAllQuestions,
       }),
+      providesTags: ['Questions'],
     }),
     getQuestion: builder.query<Question, string>({
       query: (id) => ({
         url: QUESTIONS_URLS.getQuestion(id),
       }),
+      providesTags: ['Questions'],
     }),
     addQuestion: builder.mutation<QuestionResponse, Question>({
       query: (credentials) => ({
@@ -121,6 +141,7 @@ export const apis = createApi({
         method: "POST",
         body: credentials,
       }),
+      invalidatesTags: ['Questions'],
     }),
     editQuestion: builder.mutation<
       QuestionResponse,
@@ -131,20 +152,32 @@ export const apis = createApi({
         method: "PUT",
         body: data,
       }),
+      invalidatesTags: ['Questions'],
     }),
-    deleteQuestion: builder.mutation<Question, {id: string; data: Question}>({
-      query: ({id,data}) => ({
+    deleteQuestion: builder.mutation<Question, { id: string; data: Question }>({
+      query: ({ id, data }) => ({
         url: QUESTIONS_URLS.deleteQuestion(id),
         method: "DELETE",
         body: data,
       }),
+      invalidatesTags: ['Questions'],
     }),
-    // getAllGroups
+    /* groups */
     allGroups: builder.query<group[], void>({
       query: () => ({
         url: GROUPS_URLS.getAllGroups,
       }),
+      providesTags: ['Groups'],
     }),
+    deleteGroups: builder.mutation<group, { id: string; data: group }>({
+      query: ({ id, data }) => ({
+        url: GROUPS_URLS.deleteGroup(id),
+        method: "DELETE",
+        body: data,
+      }),
+      invalidatesTags: ['Groups'],
+    }),
+    /* results */
     allQuizzesResults: builder.query<Results[], void>({
       query: () => ({
         url: QUIZ_URLS.getAllQuizzesResults,
@@ -155,13 +188,6 @@ export const apis = createApi({
         url: QUIZ_URLS.getAllCompletedQuizzes,
       }),
     }),
-    deleteGroups: builder.mutation<group, {id: string; data: group}>({
-      query: ({id,data}) => ({
-        url: GROUPS_URLS.deleteGroup(id),
-        method: "DELETE",
-        body: data,
-      }),
-    }),
   }),
 });
 
@@ -169,6 +195,7 @@ export const {
   useLoginMutation,
   useForgetPasswordMutation,
   useResetPasswordMutation,
+  useChangePasswordMutation,
   useTopUpcomingQuizzesQuery,
   useTopStudentsQuery,
   useAllQuestionsQuery,
