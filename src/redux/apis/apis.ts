@@ -220,13 +220,6 @@ export const apis = createApi({
         url: QUIZ_URLS.getAllCompletedQuizzes,
       }),
     }),
-    deleteGroups: builder.mutation<group, { id: string; data: group }>({
-      query: ({ id, data }) => ({
-        url: GROUPS_URLS.deleteGroup(id),
-        method: "DELETE",
-        body: data,
-      }),
-    }),
   }),
 });
 
