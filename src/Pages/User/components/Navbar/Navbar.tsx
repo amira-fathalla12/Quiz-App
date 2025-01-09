@@ -4,22 +4,17 @@ import { AlarmIcon } from "../../../components/SvgIcons/SvgIcons";
 import Modal from "../../../components/ModalForm/ModalForm";
 import QuizForm from "../QuizForm/QuizForm";
 import { useForm } from "react-hook-form";
-import { ApiError, Quiz } from "../../../../services/interfaces";
-import { toast } from "react-toastify";
 import { useAddQuizMutation } from "../../../../redux/apis/apis";
-import { useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { openCodeModal, openModal } from "../../../../redux/slices/modalSlice";
 import { useState } from "react";
 import CodeModal from "../CodeModal/CodeModal";
+import { Quiz } from "../../../../services/interfaces";
 
 export const Navbar = () => {
   const { pathname } = useLocation();
   const [code, setCode] = useState("");
-  const dispatch = useAppDispatch();
-  const isOpen = useAppSelector((state) => state.modal.isOpen);
-  const isCodeModalOpen = useAppSelector(
-    (state) => state.modal.isCodeModalOpen
-  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
+
   const navTitle = () => {
     switch (pathname) {
       case "/dashboard":
@@ -44,53 +39,53 @@ export const Navbar = () => {
     reset,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<Quiz>({ mode: "onChange" });
-  // const { isLoading, isError, data, refetch } = useAllQuizesQuery();
+  } = useForm<Quiz>({
+    mode: "onChange",
+  });
   const [addQuiz, { isLoading }] = useAddQuizMutation();
 
   const handleOpenModal = () => {
     reset();
-    dispatch(openModal());
+    setIsModalOpen(!isModalOpen);
   };
   const handleOpenCodeModal = () => {
-    dispatch(openCodeModal());
+    setIsCodeModalOpen(!isCodeModalOpen);
   };
 
-  const handleAddQuestion = async (data: Quiz) => {
+  const handleAddQuiz = async (data: Quiz) => {
     try {
       const result = await addQuiz(data).unwrap();
-      console.log(result);
       handleOpenModal();
-      // refetch();
-      toast.success(result?.message || "Quiz created successfully");
       setCode(result?.data?.code);
-      dispatch(openCodeModal());
-    } catch (err: unknown) {
-      const error = err as ApiError;
-      toast.error(error.data?.message || "Something went wrong");
+      setIsCodeModalOpen(true);
+    } catch (error) {
+      console.error("Failed to add quiz:", error);
     }
   };
+
   return (
     <div className="flex p-4  items-center justify-between border-b border-gray-300">
       <p className="text-xl font-bold">{navTitle()}</p>
 
       <div className="flex gap-2 items-center ">
-        <div
+        <button
           className="flex gap-2 items-center border-2 border-gray-300 
          px-5 py-2 rounded-3xl cursor-pointer"
           onClick={handleOpenModal}
         >
+          <span className="sr-only">Add quiz</span>
+
           <AlarmIcon />
           <p>New quiz</p>
-        </div>
+        </button>
         <DropdownMenu />
       </div>
       <Modal
-        isOpen={isOpen}
+        isOpen={isModalOpen}
         closeModal={handleOpenModal}
         title="Set up a new quiz"
         handleSubmitQuiz={handleSubmit}
-        onSubmit={handleAddQuestion}
+        onSubmit={handleAddQuiz}
         isSubmitting={isSubmitting}
         isLoading={isLoading}
         formType={"quiz"}

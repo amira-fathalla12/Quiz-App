@@ -8,6 +8,7 @@ import {
   STUDENTS_URLS,
 } from "../../services/urls";
 import {
+  ApiError,
   forgetPasswordCredentials,
   forgetPasswordResponse,
   group,
@@ -24,9 +25,12 @@ import {
   TopStudent,
 } from "../../services/interfaces";
 import { AppState } from "../store";
+import { toast } from "react-toastify";
 
 export const apis = createApi({
   reducerPath: "apis",
+  refetchOnMountOrArgChange: true,
+  refetchOnReconnect: true,
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -47,6 +51,15 @@ export const apis = createApi({
         method: "POST",
         body: credentials,
       }),
+      transformResponse: (response: LoginResponse) => {
+        toast.success(response.message || "Login successful");
+        return response;
+      },
+      transformErrorResponse: (err: unknown) => {
+        const error = err as ApiError;
+        toast.error(error.data?.message || "Something went wrong");
+        return error;
+      },
     }),
     forgetPassword: builder.mutation<
       forgetPasswordResponse,
@@ -80,6 +93,15 @@ export const apis = createApi({
         method: "POST",
         body: credentials,
       }),
+      transformResponse: (response: QuizResponse) => {
+        toast.success(response.message || "Quiz created successfully");
+        return response;
+      },
+      transformErrorResponse: (err: unknown) => {
+        const error = err as ApiError;
+        toast.error(error.data?.message || "Something went wrong");
+        return error;
+      },
     }),
     getQuiz: builder.query<Quiz, string>({
       query: (id) => ({
@@ -92,6 +114,15 @@ export const apis = createApi({
         method: "PUT",
         body: data,
       }),
+      transformResponse: (response: QuizResponse) => {
+        toast.success(response.message || "Quiz updated successfully");
+        return response;
+      },
+      transformErrorResponse: (err: unknown) => {
+        const error = err as ApiError;
+        toast.error(error.data?.message || "Something went wrong");
+        return error;
+      },
     }),
     /*students */
     allStudents: builder.query<Student[], void>({
@@ -132,8 +163,8 @@ export const apis = createApi({
         body: data,
       }),
     }),
-    deleteQuestion: builder.mutation<Question, {id: string; data: Question}>({
-      query: ({id,data}) => ({
+    deleteQuestion: builder.mutation<Question, { id: string; data: Question }>({
+      query: ({ id, data }) => ({
         url: QUESTIONS_URLS.deleteQuestion(id),
         method: "DELETE",
         body: data,
@@ -155,8 +186,8 @@ export const apis = createApi({
         url: QUIZ_URLS.getAllCompletedQuizzes,
       }),
     }),
-    deleteGroups: builder.mutation<group, {id: string; data: group}>({
-      query: ({id,data}) => ({
+    deleteGroups: builder.mutation<group, { id: string; data: group }>({
+      query: ({ id, data }) => ({
         url: GROUPS_URLS.deleteGroup(id),
         method: "DELETE",
         body: data,
