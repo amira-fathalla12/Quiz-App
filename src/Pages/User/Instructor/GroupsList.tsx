@@ -11,10 +11,9 @@ import { useEffect, useState } from "react";
 import { group } from "../../../services/interfaces";
 
 export const GroupsList = () => {
-  const { isLoading, isError, data: fetchedData, refetch } = useAllGroupsQuery();
+  const { isLoading, isError, data: fetchedData} = useAllGroupsQuery();
   const [groups, setGroups] = useState<group[]>(fetchedData || []);
   const [deleteGroup, { isLoading: isLoadingDell }] = useDeleteGroupsMutation();
-  const [deleting, setDeleting] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedId, setSelectedId] = useState<string>("");
 
@@ -34,16 +33,11 @@ export const GroupsList = () => {
   // function to handle deletion
   const onDeleteGroup = async () => {
     try {
-      setDeleting(true);
       const groupToDelete = groups.find((group) => group._id === selectedId);
   
       if (groupToDelete) {
         await deleteGroup({ id: selectedId, data: groupToDelete }).unwrap();
         toast.success("Group deleted successfully");
-        
-        // Refetch the data to update the table
-        await refetch();
-
         // Optionally, update local state if you want to avoid refetching
         setGroups((prevGroups) =>
           prevGroups.filter((group) => group._id !== selectedId)
@@ -53,7 +47,6 @@ export const GroupsList = () => {
       console.error(error);
       toast.error(error?.message || "Something went wrong");
     } finally {
-      setDeleting(false);
       handleCloseDelete();
     }
   };
@@ -105,7 +98,7 @@ export const GroupsList = () => {
         <DeleteConfirm
           setOpenModal={handleCloseDelete}
           openModal={openDelete}
-          loading={deleting || isLoadingDell}
+          loading={isLoadingDell}  // Use isLoadingDell here instead of deleting state
           onConfirm={onDeleteGroup}
           title="Group"
           modalRef={null}

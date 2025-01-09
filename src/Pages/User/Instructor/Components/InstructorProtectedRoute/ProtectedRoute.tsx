@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 interface ProtectedRouteProps {
     children: ReactNode;
@@ -6,6 +6,8 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   return (
-    <div>ProtectedRoute</div>
+    <div>ProtectedRoute
+          {children}
+    </div>
   )
 }

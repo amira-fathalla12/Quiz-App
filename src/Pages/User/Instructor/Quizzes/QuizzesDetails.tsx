@@ -49,7 +49,7 @@ export const QuizzesDetails = () => {
       });
       await refetch();
       await refetchQuiz();
-      navigate("/quzzies");
+      navigate(-1);
     } catch (error) {
       console.error("Failed to add quiz:", error);
     }

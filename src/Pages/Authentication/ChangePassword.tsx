@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
-
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import {
@@ -9,7 +8,7 @@ import {
   PasswordValidation,
 } from "../../services/validations";
 import { CheckIcon } from "../components/SvgIcons/SvgIcons";
-import { AUTH_URLS, axiosInstance } from "../../services/urls";
+import { useChangePasswordMutation } from "../../redux/apis/apis"; 
 import CustomPasswordInput from "./Components/CustomPasswordInput/CustomPasswordInput";
 
 export type User = {
@@ -28,19 +27,21 @@ export default function ChangePassword() {
   } = useForm<User>({ mode: "onChange" });
 
   const navigate = useNavigate();
+  const password = useLocation().state?.password || "";
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const onSubmit = async (data: User): Promise<void> => {
     console.log(data);
     try {
-      await axiosInstance.put<string>(AUTH_URLS.changePassword, data);
+      await changePassword(data).unwrap();
       toast.success("Password changed successfully");
-      navigate("/login");
+      navigate("/login", {
+        state: { password: data.password },
+      });
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || "An error occurred");
+      toast.error(error?.message || "An error occurred");
     }
   };
-
-  const password = watch("password_new");
   const confirmPassword = watch("Confirm_Password");
 
   useEffect(() => {
@@ -84,8 +85,12 @@ export default function ChangePassword() {
         />
 
         <div className="flex items-center justify-between gap-4">
-          <button className="auth-button" type="submit">
-            {isSubmitting ? "loading" : "Change"}
+          <button 
+          className="auth-button" 
+          type="submit" 
+					disabled={isSubmitting || isLoading}
+          >
+            {isLoading ? "loading" : "Change"}
             <CheckIcon />
           </button>
         </div>
