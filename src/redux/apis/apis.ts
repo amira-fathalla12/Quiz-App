@@ -10,6 +10,7 @@ import {
 import {
   ChangePasswordCredentials,
   ChangePasswordResponse,
+  ApiError,
   forgetPasswordCredentials,
   forgetPasswordResponse,
   group,
@@ -26,8 +27,12 @@ import {
   TopStudent,
 } from "../../services/interfaces";
 import { AppState } from "../store";
+import { toast } from "react-toastify";
+
 export const apis = createApi({
   reducerPath: "apis",
+  refetchOnMountOrArgChange: true,
+  refetchOnReconnect: true,
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -40,7 +45,7 @@ export const apis = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Groups', 'Questions', 'Quizzes', 'Students'],
+  tagTypes: ["Groups", "Questions", "Quizzes", "Students"],
   endpoints: (builder) => ({
     /* user */
     login: builder.mutation<LoginResponse, LoginCredentials>({
@@ -49,6 +54,15 @@ export const apis = createApi({
         method: "POST",
         body: credentials,
       }),
+      transformResponse: (response: LoginResponse) => {
+        toast.success(response.message || "Login successful");
+        return response;
+      },
+      transformErrorResponse: (err: unknown) => {
+        const error = err as ApiError;
+        toast.error(error.data?.message || "Something went wrong");
+        return error;
+      },
     }),
     forgetPassword: builder.mutation<
       forgetPasswordResponse,
@@ -71,8 +85,8 @@ export const apis = createApi({
       }),
     }),
     ChangePassword: builder.mutation<
-       ChangePasswordResponse,
-       ChangePasswordCredentials
+      ChangePasswordResponse,
+      ChangePasswordCredentials
     >({
       query: (credentials) => ({
         url: AUTH_URLS.changePassword,
@@ -85,7 +99,7 @@ export const apis = createApi({
       query: () => ({
         url: QUIZ_URLS.getTopUpcommingQuizzes,
       }),
-      providesTags: ['Quizzes'], // توفير علامات الكاش
+      providesTags: ["Quizzes"], // توفير علامات الكاش
     }),
     addQuiz: builder.mutation<QuizResponse, Quiz>({
       query: (credentials) => ({
@@ -93,13 +107,22 @@ export const apis = createApi({
         method: "POST",
         body: credentials,
       }),
-      invalidatesTags: ['Quizzes'], // إبطال الكاش عند إضافة Quiz
+      transformResponse: (response: QuizResponse) => {
+        toast.success(response.message || "Quiz created successfully");
+        return response;
+      },
+      transformErrorResponse: (err: unknown) => {
+        const error = err as ApiError;
+        toast.error(error.data?.message || "Something went wrong");
+        return error;
+      },
+      invalidatesTags: ["Quizzes"], // إبطال الكاش عند إضافة Quiz
     }),
     getQuiz: builder.query<Quiz, string>({
       query: (id) => ({
         url: QUIZ_URLS.getQuiz(id),
       }),
-      providesTags: ['Quizzes'],
+      providesTags: ["Quizzes"],
     }),
     updateQuiz: builder.mutation<QuizResponse, { id: string; data: Quiz }>({
       query: ({ id, data }) => ({
@@ -107,33 +130,42 @@ export const apis = createApi({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ['Quizzes'],
+      transformResponse: (response: QuizResponse) => {
+        toast.success(response.message || "Quiz updated successfully");
+        return response;
+      },
+      transformErrorResponse: (err: unknown) => {
+        const error = err as ApiError;
+        toast.error(error.data?.message || "Something went wrong");
+        return error;
+      },
+      invalidatesTags: ["Quizzes"],
     }),
     /* students */
     allStudents: builder.query<Student[], void>({
       query: () => ({
         url: STUDENTS_URLS.allStudents,
       }),
-      providesTags: ['Students'],
+      providesTags: ["Students"],
     }),
     topStudents: builder.query<TopStudent[], void>({
       query: () => ({
         url: STUDENTS_URLS.getTopStudents,
       }),
-      providesTags: ['Students'],
+      providesTags: ["Students"],
     }),
     /* questions */
     allQuestions: builder.query<Question[], void>({
       query: () => ({
         url: QUESTIONS_URLS.getAllQuestions,
       }),
-      providesTags: ['Questions'],
+      providesTags: ["Questions"],
     }),
     getQuestion: builder.query<Question, string>({
       query: (id) => ({
         url: QUESTIONS_URLS.getQuestion(id),
       }),
-      providesTags: ['Questions'],
+      providesTags: ["Questions"],
     }),
     addQuestion: builder.mutation<QuestionResponse, Question>({
       query: (credentials) => ({
@@ -141,7 +173,7 @@ export const apis = createApi({
         method: "POST",
         body: credentials,
       }),
-      invalidatesTags: ['Questions'],
+      invalidatesTags: ["Questions"],
     }),
     editQuestion: builder.mutation<
       QuestionResponse,
@@ -152,7 +184,7 @@ export const apis = createApi({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ['Questions'],
+      invalidatesTags: ["Questions"],
     }),
     deleteQuestion: builder.mutation<Question, { id: string; data: Question }>({
       query: ({ id, data }) => ({
@@ -160,14 +192,14 @@ export const apis = createApi({
         method: "DELETE",
         body: data,
       }),
-      invalidatesTags: ['Questions'],
+      invalidatesTags: ["Questions"],
     }),
     /* groups */
     allGroups: builder.query<group[], void>({
       query: () => ({
         url: GROUPS_URLS.getAllGroups,
       }),
-      providesTags: ['Groups'],
+      providesTags: ["Groups"],
     }),
     deleteGroups: builder.mutation<group, { id: string; data: group }>({
       query: ({ id, data }) => ({
@@ -175,7 +207,7 @@ export const apis = createApi({
         method: "DELETE",
         body: data,
       }),
-      invalidatesTags: ['Groups'],
+      invalidatesTags: ["Groups"],
     }),
     /* results */
     allQuizzesResults: builder.query<Results[], void>({
