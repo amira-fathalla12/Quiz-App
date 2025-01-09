@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -48,4 +48,62 @@
 }
 .sidebar-container.collapsed ~ .main {
   margin-left: 100px;
+}
+
+/* date-time picker styles */
+.react-datetime-picker {
+  height: 50px !important;
+  width: 53% !important;
+}
+.react-datetime-picker__wrapper {
+  border: none !important;
+}
+.react-datetime-picker__inputGroup:first-child::before {
+  content: "\f073"; /* Font Awesome calendar icon */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-inline-end: 0.7rem;
+  font-size: 20px;
+}
+.react-datetime-picker__inputGroup__divider:nth-of-type(3):before {
+  content: "\f017"; /* Font Awesome calendar icon */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-inline-start: 1.5rem;
+  margin-inline-end: 0.5rem;
+  font-size: 20px;
+}
+@media screen and (max-width: 768px) {
+  .react-datetime-picker {
+    width: 100% !important;
+  }
+  .react-datetime-picker__wrapper {
+    /* width: 90% !important; */
+  }
+  .react-datetime-picker__button {
+    padding: 0 !important;
+    padding-inline-end: 3px !important;
+  }
+  .react-datetime-picker__inputGroup__divider:nth-of-type(3):before {
+    margin-inline-start: 0.4rem;
+    margin-inline-end: 0.3rem;
+  }
+  .react-datetime-picker__inputGroup:first-child::before {
+    margin-inline-end: 0.3rem;
+  }
+  /* .react-datetime-picker__clear-button__icon,
+  .react-datetime-picker__calendar-button__icon {
+    display: none !important;
+  } */
+}
+
+/* code modal */
+div[id="\:r6\:"] {
+  width: 450px;
+  margin-inline: auto !important;
+  height: auto;
+}
+
+#modal-overlay {
+  height: auto !important;
 }

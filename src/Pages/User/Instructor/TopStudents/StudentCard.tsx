@@ -1,34 +1,64 @@
-import quizImg from '../../../../assets/Images/quiz-img.png';
-import { Link } from "react-router-dom";
-export default function StudentCard() {
+import { useState } from "react";
+import user1 from "../../../../assets/Images/user1.png";
+import user2 from "../../../../assets/Images/user2.png";
+import user3 from "../../../../assets/Images/user3.png";
+import user4 from "../../../../assets/Images/user4.png";
+import user5 from "../../../../assets/Images/user5.png";
+import { CircleArrowRight } from "lucide-react";
+import { Student } from "../../../../services/interfaces";
+import StudentModalDetails from "./StudentModalDetails";
+
+interface IProps {
+  student: Student;
+  index: number;
+}
+
+export default function StudentCard({ student, index }: IProps) {
+  const userImages = [user1, user2, user3, user4, user5];
+  const selectedImage = userImages[index % userImages.length];
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => setOpenModal(true);
+
+  const handelCloseModle = () => setOpenModal(false);
+
   return (
-    <div className="flex mb-5 border rounded-xl border-gray-300 w-full">
-      <img src={quizImg} width={70} height={70} />
-      <div className="px-4 py-6 flex justify-between items-center w-full">
-        <div>
-          <p className="font-bold text-lg">Emmanuel James</p>
-          <p className="text-sm text-gray-500">
-            Class rank: 2nd{" "}
-            <span className="border-l border-gray-300 pl-3 ml-3">
-              Average score: 87%
-            </span>
-          </p>
-        </div>
-        <Link to="/studentsDetails/:id">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 0C15.5242 0 20 4.47581 20 10C20 15.5242 15.5242 20 10 20C4.47581 20 0 15.5242 0 10C0 4.47581 4.47581 0 10 0ZM8.83468 5.79032L11.879 8.70968H4.51613C3.97984 8.70968 3.54839 9.14113 3.54839 9.67742V10.3226C3.54839 10.8589 3.97984 11.2903 4.51613 11.2903H11.879L8.83468 14.2097C8.44355 14.5847 8.43548 15.2097 8.81855 15.5927L9.2621 16.0323C9.64113 16.4113 10.254 16.4113 10.629 16.0323L15.9798 10.6855C16.3589 10.3065 16.3589 9.69355 15.9798 9.31855L10.629 3.96371C10.25 3.58468 9.6371 3.58468 9.2621 3.96371L8.81855 4.40323C8.43548 4.79032 8.44355 5.41532 8.83468 5.79032Z"
-              fill="#0D1321"
+    <>
+      <StudentModalDetails
+        handelCloseModle={handelCloseModle}
+        openModal={openModal}
+        student={student}
+      />
+
+      <div className="w-full mt-5">
+        <div className="flex h-[70px] border border-gray-300 rounded-[10px]">
+          <div className="w-[70px] h-full rounded-[10px] bg-[#FFEDDF] flex-shrink-0">
+            <img
+              className="w-full h-full object-cover"
+              src={selectedImage}
+              alt="User"
             />
-          </svg>
-        </Link>
+          </div>
+
+          <div className="flex items-center justify-between w-full px-3">
+            <div>
+              <h6 className="text-lg font-bold">{`${student.first_name} ${student.last_name}`}</h6>
+              <div className="flex gap-[10px]">
+                <p className="font-normal text-xs">
+                  Class rank: {student?.group?.name}
+                </p>
+                <p className="font-normal text-xs">|</p>
+                <p className="font-normal text-xs">
+                  Average score: {Math.floor(student.avg_score) * 10}%
+                </p>
+              </div>
+            </div>
+            <button onClick={handleOpenModal}>
+              <CircleArrowRight size={30} color="#0D1321" />
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

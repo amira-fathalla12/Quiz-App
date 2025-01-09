@@ -1,10 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { QuizzesSetup } from "./Pages/User/Instructor/Quizzes/QuizzesSetup";
-import { StudentList } from "./Pages/User/Instructor/StudentList";
+import StudentsList from "./Pages/User/Instructor/StudentList";
 import { GroupsList } from "./Pages/User/Instructor/GroupsList";
-import { ResultList } from "./Pages/User/Instructor/Results/ResultList";
-import { ResultDetails } from "./Pages/User/Instructor/Results/ResultDetails";
 import { QuestionsList } from "./Pages/User/Instructor/QuestionsList";
 import { QuizzesDetails } from "./Pages/User/Instructor/Quizzes/QuizzesDetails";
 import { ToastContainer } from "react-toastify";
@@ -57,17 +55,13 @@ const App = () => {
         },
         {
           path: "students",
-          element: <StudentList />,
+          element: <StudentsList />,
         },
         {
           path: "groups",
           element: <GroupsList />,
         },
-        {
-          path: "result-list",
-          element: <ResultList />,
-        },
-        { path: "resultDetails/:id", element: <ResultDetails /> },
+
         {
           path: "questions",
           element: <QuestionsList />,
