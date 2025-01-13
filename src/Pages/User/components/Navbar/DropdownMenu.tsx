@@ -8,7 +8,6 @@ export default function DropdownMenu() {
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  console.log(user);
 
   const logout = () => {
     dispatch(clearUser());

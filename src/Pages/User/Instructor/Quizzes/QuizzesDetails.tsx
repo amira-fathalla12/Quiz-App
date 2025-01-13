@@ -31,6 +31,7 @@ export const QuizzesDetails = () => {
   const [updateQuiz, { isLoading: isLoadingEdit }] = useUpdateQuizMutation();
   const [dateTime, setDateTime] = useState(new Date());
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,

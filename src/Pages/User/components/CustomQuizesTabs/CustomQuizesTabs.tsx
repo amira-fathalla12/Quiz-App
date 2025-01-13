@@ -11,10 +11,12 @@ const CustomQuizesTab = ({
   icon,
   label,
   border,
+  role,
 }: {
   icon: React.ReactNode;
   label: string;
   border: string;
+  role?: string;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
@@ -22,6 +24,8 @@ const CustomQuizesTab = ({
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [addQuiz, { isLoading }] = useAddQuizMutation();
+
+  console.log(role);
 
   const {
     register,
@@ -78,7 +82,9 @@ const CustomQuizesTab = ({
           isLoading={isLoading}
           formType={"quiz"}
         >
-          <QuizForm register={register} errors={errors} control={control} />
+          {role === "Instructor" && (
+            <QuizForm register={register} errors={errors} control={control} />
+          )}
         </Modal>
         <CodeModal
           openModal={isCodeModalOpen}

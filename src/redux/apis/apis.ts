@@ -215,7 +215,7 @@ export const apis = createApi({
         url: QUIZ_URLS.getAllQuizzesResults,
       }),
     }),
-    allCompletedQuizzes: builder.query<Results[], void>({
+    allCompletedQuizzes: builder.query<Quiz[], void>({
       query: () => ({
         url: QUIZ_URLS.getAllCompletedQuizzes,
       }),
