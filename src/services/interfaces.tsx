@@ -73,6 +73,7 @@ export interface Quiz {
   score_per_question: number;
   type: "BE" | "FE" | "DO";
   difficulty: "easy" | "medium" | "hard";
+  closed_at: string;
   updatedAt: string;
   createdAt: string;
   __v: number;
@@ -144,7 +145,7 @@ export interface DeleteModalType {
   setOpenModal: (value: boolean) => void;
   openModal: boolean;
   loading: boolean;
-  onConfirm: (data:Question) => void;
+  onConfirm: (data: Question) => void;
   title: string;
   modalRef: RefObject<HTMLDivElement> | null;
 }
