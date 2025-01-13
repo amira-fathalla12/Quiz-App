@@ -57,6 +57,19 @@ export interface ChangePasswordResponse {
   message: string;
 }
 
+// Register 
+export interface registerCredentials {
+  first_name:string,
+  last_name:string,
+  email:string,
+  password:string,
+  role:"Instructor" | "Student"
+}
+export interface registerResponse {
+  message: string;
+}
+
+
 //* quiz
 export interface Quiz {
   _id: string;

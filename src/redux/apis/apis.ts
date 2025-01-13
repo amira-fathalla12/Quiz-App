@@ -25,6 +25,8 @@ import {
   Results,
   Student,
   TopStudent,
+  registerResponse,
+  registerCredentials,
 } from "../../services/interfaces";
 import { AppState } from "../store";
 import { toast } from "react-toastify";
@@ -94,6 +96,17 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
+   
+    register: builder.mutation<
+    registerResponse,
+    registerCredentials
+  >({
+    query: (credentials) => ({
+      url: AUTH_URLS.register,
+      method: "POST",
+      body: credentials,
+    }),
+  }),
     /* quiz */
     topUpcomingQuizzes: builder.query<Quiz[], void>({
       query: () => ({
@@ -224,6 +237,7 @@ export const apis = createApi({
 });
 
 export const {
+  useRegisterMutation,
   useLoginMutation,
   useForgetPasswordMutation,
   useResetPasswordMutation,
