@@ -17,6 +17,7 @@ import { AuthLayout } from "./Pages/Authentication/AuthLayout";
 import { MasterLayout } from "./Pages/User/MasterLayout";
 import { Dashboard } from "./Pages/User/components/Dashboard/Dashboard";
 import { VerifyRegister } from "./Pages/Authentication/VerifyRegister";
+import ExamQuestions from "./Pages/components/ExamQuestions/ExamQuestions";
 
 const App = () => {
   const routes = createBrowserRouter([
@@ -66,6 +67,8 @@ const App = () => {
           path: "questions",
           element: <QuestionsList />,
         },
+        { path: "exam-questions/:id", element: <ExamQuestions />},
+
       ],
     },
   ]);

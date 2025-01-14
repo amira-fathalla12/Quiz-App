@@ -81,6 +81,7 @@ export interface Quiz {
 }
 export interface QuizResponse {
   message: string;
+  success: string;
   data: Quiz;
 }
 //* questions
@@ -193,3 +194,4 @@ export interface Participants {
   started_at: string;
   finished_at: string;
 }
+

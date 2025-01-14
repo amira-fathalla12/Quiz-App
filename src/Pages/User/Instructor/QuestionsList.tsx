@@ -27,7 +27,6 @@ export const QuestionsList = () => {
   const [editId, setEditId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedId, setSelectedId] = useState("");
-
   const [addQuestion] = useAddQuestionMutation();
   const [editQuestion] = useEditQuestionMutation();
   const [deleteQuestion] = useDeleteQuestionMutation();
