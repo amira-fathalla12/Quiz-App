@@ -98,17 +98,17 @@ export const QuestionsList = () => {
 
   useEffect(() => {
     if (questionData) {
-      setValue("title", questionData.title);
-      setValue("description", questionData.description);
-      setValue("type", questionData.type);
-      setValue("answer", questionData.answer);
-      setValue("options.A", questionData.options?.A);
-      setValue("options.B", questionData.options?.B);
-      setValue("options.C", questionData.options?.C);
-      setValue("options.D", questionData.options?.D);
+      setValue("title", questionData.title ?? "");
+      setValue("description", questionData.description ?? "");
+      setValue("type", questionData.type ?? "BE");
+      setValue("answer", questionData.answer ?? "A");
+      setValue("options.A", questionData.options?.A ?? "");
+      setValue("options.B", questionData.options?.B ?? "");
+      setValue("options.C", questionData.options?.C ?? "");
+      setValue("options.D", questionData.options?.D ?? "");
     }
   }, [questionData, setValue]);
-
+  
   return (
     <div className="p-5">
       <Modal
