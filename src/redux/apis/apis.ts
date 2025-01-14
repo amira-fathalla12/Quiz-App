@@ -158,7 +158,7 @@ export const apis = createApi({
       query: ({ data}) => ({
         url: QUIZ_URLS.joinQuiz, 
         method: "POST",
-        body: { data },
+        body: { code:data },
       }),
       transformResponse: (response: QuizResponse) => {
         toast.success(response.message || "Joined the quiz successfully!");

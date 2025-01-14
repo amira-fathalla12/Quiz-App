@@ -15,7 +15,7 @@ export const SideBarMenu = () => {
   const { pathname } = useLocation();
 
   const [isCollapse, setIsCollapse] = useState<boolean>(false);
-  let toggleCollapse = () => {
+  const toggleCollapse = () => {
     setIsCollapse(!isCollapse);
   };
   return (
