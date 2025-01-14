@@ -1,5 +1,4 @@
 import { Button, Modal, TextInput } from "flowbite-react";
-import { CheckIcon } from "../../../components/SvgIcons/SvgIcons";
 import { toast } from "react-toastify";
 import { twMerge } from "tailwind-merge";
 import { useState } from "react";
@@ -8,7 +7,7 @@ type Props = {
   openModal: boolean;
   setOpenModal: () => void;
   title: string;
-  onJoin: (code:string) => void;
+  onJoin: (code: string) => void;
 };
 
 const JoinQuizModel = ({ openModal, setOpenModal, title, onJoin }: Props) => {
@@ -25,7 +24,6 @@ const JoinQuizModel = ({ openModal, setOpenModal, title, onJoin }: Props) => {
       console.error("Error while joining quiz:", error);
     }
   };
-  
 
   return (
     <div
@@ -44,27 +42,34 @@ const JoinQuizModel = ({ openModal, setOpenModal, title, onJoin }: Props) => {
           <div className="flex flex-col w-[370px] justify-center items-center text-center">
             {/* Content */}
             <div className="flex flex-col gap-2 items-center pb-11 font-Inter">
-              <div className="text-4xl">
-                <CheckIcon width={"60"} height={"60"} />
-              </div>
               <h3 className="text-xl font-bold text-black">{title}</h3>
-              <TextInput
-                type="text"
-                placeholder="Enter your code here"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                className="w-[300px] h-10 border border-black rounded-full px-4 text-center text-xl"
-              />
+              <p className="text-gray-500 mb-4">
+                Input the code received for the quiz below to join
+              </p>
+              <div className="flex justify-between items-center w-[300px] h-10 rounded-full border border-black bg-linen overflow-hidden">
+                {/* Label Code */}
+                <span className="font-bold text-lg bg-linen px-4 py-1 rounded-l-full">
+                  CODE:
+                </span>
+                {/* Text Input Field */}
+                <TextInput
+                  type="text"
+                  placeholder="Enter your code here"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  className="flex-1 bg-transparent font-bold text-lg px-3 outline-none focus:ring-2 focus:ring-olive"
+                />
+              </div>
             </div>
 
             <div className="flex flex-col items-center gap-4">
               <Button
                 onClick={handleJoin}
-                className="w-36 h-9 text-gray-700 bg-olive hover:bg-gray-300 rounded-full text-lg"
+                className="w-36 h-9  text-gray-700 py-0
+                bg-olive hover:bg-gray-300 rounded-full text-lg"
               >
                 Join
               </Button>
-              ;
             </div>
           </div>
         </Modal.Body>

@@ -15,7 +15,7 @@ export const SideBarMenu = () => {
   const { pathname } = useLocation();
 
   const [isCollapse, setIsCollapse] = useState<boolean>(false);
-  let toggleCollapse = () => {
+  const toggleCollapse = () => {
     setIsCollapse(!isCollapse);
   };
   return (
@@ -87,7 +87,6 @@ export const SideBarMenu = () => {
             icon={
               <ResultsIcon
                 color={pathname == "/result-list" ? "#0D1321" : "#FFEDDF"}
-                color2={pathname == "/result-list" ? "#FFEDDF" : "#0D1321"}
               />
             }
             className={`border border-gray-300 py-2 ${

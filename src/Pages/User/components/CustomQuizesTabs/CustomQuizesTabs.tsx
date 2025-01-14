@@ -75,11 +75,9 @@ const CustomQuizesTab = ({
   // Modify: handleJoinQuiz now accepts 'code' (string)
   const handleJoinQuiz = async (data: string) => {
     try {
-      const result = await joinQuiz({ data
-  
-       }).unwrap(); // Call the API with code
+      const result = await joinQuiz({ data}).unwrap(); // Call the API with code
       if (result?.success) {
-        navigate(`exam-questions`);
+        navigate(`exam-questions`)
       }
     } catch (error) {
       console.error("Failed to join quiz:", error);
@@ -121,7 +119,7 @@ const CustomQuizesTab = ({
           openModal={isJoinQuizModalOpen}
           setOpenModal={() => setIsJoinQuizModalOpen(!isJoinQuizModalOpen)}
           title="Join a Quiz"
-          onJoin={handleJoinQuiz} // يتم تمرير دالة handleJoinQuiz كما هي
+          onJoin={handleJoinQuiz} 
         />
       </div>
     </>
