@@ -129,7 +129,7 @@ export const apis = createApi({
         toast.error(error.data?.message || "Something went wrong");
         return error;
       },
-      invalidatesTags: ["Quizzes"], // إبطال الكاش عند إضافة Quiz
+      invalidatesTags: ["Quizzes"], 
     }),
     getQuiz: builder.query<Quiz, string>({
       query: (id) => ({
@@ -154,6 +154,26 @@ export const apis = createApi({
       },
       invalidatesTags: ["Quizzes"],
     }),
+    joinQuiz: builder.mutation<QuizResponse, { data: string }>({
+      query: ({ data}) => ({
+        url: QUIZ_URLS.joinQuiz, 
+        method: "POST",
+        body: { data },
+      }),
+      transformResponse: (response: QuizResponse) => {
+        toast.success(response.message || "Joined the quiz successfully!");
+        return response;
+      },
+      transformErrorResponse: (err: unknown) => {
+        const error = err as ApiError;
+        console.error("Error while joining quiz:", error);
+        toast.error(error.data?.message || "Failed to join the quiz.");
+        return error;
+      },      
+      invalidatesTags: ["Quizzes"],
+    }),
+    
+    
     /* students */
     allStudents: builder.query<Student[], void>({
       query: () => ({
@@ -257,4 +277,5 @@ export const {
   useAllStudentsQuery,
   useDeleteGroupsMutation,
   useDeleteQuestionMutation,
+  useJoinQuizMutation,
 } = apis;
