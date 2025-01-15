@@ -47,7 +47,7 @@ export default function QuizCard({
           )}
 
           <Link
-            to={role === "Instructor" ? `/quzziesDetails/${id}` : ""}
+            to={role === "Instructor" ? `/quzziesDetails/${id}` : `/exam-questions/${id}`}
             className={twMerge(
               `${role === "Student" && "flex w-full justify-end"}`,
               `flex items-center gap-x-1`

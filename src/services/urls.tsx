@@ -37,6 +37,7 @@ export const QUIZ_URLS = {
   getAllQuizzesResults: "/quiz/result",
   getAllCompletedQuizzes: "/quiz/completed",
   joinQuiz: "/quiz/join",
+  getQuizWithoutAnswers: (id: string) => `/quiz/without-answers/${id}`,
 };
 
 // questionsUrls
