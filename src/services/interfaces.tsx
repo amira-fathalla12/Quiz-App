@@ -159,7 +159,7 @@ export interface DeleteModalType {
   setOpenModal: (value: boolean) => void;
   openModal: boolean;
   loading: boolean;
-  onConfirm: (data: Question) => void;
+  onConfirm: () => void;
   title: string;
   modalRef: RefObject<HTMLDivElement> | null;
 }

@@ -57,10 +57,14 @@ export const QuestionsList = () => {
     }
   };
 
-  const deleteQuestions = async (data: Question) => {
+  const deleteQuestions = async () => {
     try {
-      await deleteQuestion({ id: selectedId, data }).unwrap();
-      toast.success("Question deleted successfully");
+      const questionToDelete = data?.find((question) => question._id === selectedId);
+  
+      if (questionToDelete) {
+        await deleteQuestion({ id: selectedId, data: questionToDelete }).unwrap();
+        toast.success("Question deleted successfully");
+        }
     } catch (error: any) {
       console.error(error);
       toast.error(error?.message || "Something went wrong");
@@ -68,6 +72,8 @@ export const QuestionsList = () => {
       handleCloseDelete();
     }
   };
+  
+  
 
   const openAddModal = () => {
     reset();
