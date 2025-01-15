@@ -172,6 +172,24 @@ export const apis = createApi({
       },      
       invalidatesTags: ["Quizzes"],
     }),
+     submitQuizAnswers: builder.mutation<QuizResponse, { id: string; data: { answers: { question: string; answer: string }[] } }>({
+      query: ({ id, data }) => ({
+        url: QUIZ_URLS.submitQuizAnswers(id), 
+        method: "POST",
+        body: data, 
+      }),
+      transformResponse: (response: QuizResponse) => {
+        toast.success(response.message || "Answers submitted!");
+        return response; 
+      },
+      transformErrorResponse: (err: unknown) => {
+        const error = err as ApiError;
+        console.error("Error while submitting quiz:", error);
+        toast.error(error.data?.message || "Failed to submit the quiz.");
+        return error; 
+      },
+      invalidatesTags: ["Quizzes"], 
+    }),
     getQuizWithoutAnswers: builder.query<QuizResponse, string>({
       query: (id) => ({
         url: QUIZ_URLS.getQuizWithoutAnswers(id),
@@ -284,4 +302,5 @@ export const {
   useDeleteQuestionMutation,
   useJoinQuizMutation,
   useGetQuizWithoutAnswersQuery,
+  useSubmitQuizAnswersMutation
 } = apis;
