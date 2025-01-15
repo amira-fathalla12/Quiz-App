@@ -172,6 +172,11 @@ export const apis = createApi({
       },      
       invalidatesTags: ["Quizzes"],
     }),
+    getQuizWithoutAnswers: builder.query<QuizResponse, string>({
+      query: (id) => ({
+        url: QUIZ_URLS.getQuizWithoutAnswers(id),
+      }),
+    }),
     
     
     /* students */
@@ -278,4 +283,5 @@ export const {
   useDeleteGroupsMutation,
   useDeleteQuestionMutation,
   useJoinQuizMutation,
+  useGetQuizWithoutAnswersQuery,
 } = apis;
