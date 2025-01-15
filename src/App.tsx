@@ -17,6 +17,7 @@ import { AuthLayout } from "./Pages/Authentication/AuthLayout";
 import { MasterLayout } from "./Pages/User/MasterLayout";
 import { Dashboard } from "./Pages/User/components/Dashboard/Dashboard";
 import ExamQuestions from "./Pages/components/ExamQuestions/ExamQuestions";
+import { Results } from "./Pages/User/Learner/Results";
 
 const App = () => {
   const routes = createBrowserRouter([
@@ -64,6 +65,10 @@ const App = () => {
         {
           path: "questions",
           element: <QuestionsList />,
+        },
+        {
+          path: "quiz-result",
+          element: <Results />,
         },
         { path: "exam-questions/:id", element: <ExamQuestions />},
 

@@ -91,6 +91,7 @@ export interface Quiz {
   createdAt: string;
   __v: number;
   participants: number;
+  score:string
 }
 export interface QuizResponse {
   message: string;
@@ -208,3 +209,7 @@ export interface Participants {
   finished_at: string;
 }
 
+export interface answers {
+  question:string,
+  answer:string
+}

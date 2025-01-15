@@ -20,6 +20,7 @@ const JoinQuizModel = ({ openModal, setOpenModal, title, onJoin }: Props) => {
     }
     try {
       await onJoin(code); // Passing the code to joinQuiz
+      
     } catch (error) {
       console.error("Error while joining quiz:", error);
     }
