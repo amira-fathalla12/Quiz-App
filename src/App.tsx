@@ -70,6 +70,10 @@ const App = () => {
           path: "quiz-result",
           element: <Results />,
         },
+        {
+          path: "result-list",
+          element: <Results />,
+        },
         { path: "exam-questions/:id", element: <ExamQuestions />},
 
       ],
