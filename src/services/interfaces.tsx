@@ -91,7 +91,8 @@ export interface Quiz {
   createdAt: string;
   __v: number;
   participants: number;
-  score:string
+  score:string;
+  quiz: string;
 }
 export interface QuizResponse {
   message: string;
