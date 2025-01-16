@@ -38,7 +38,7 @@ export default function ExamQuestions() {
                 data: selectedAnswers,
             }).unwrap();
 
-            navigate('/quiz-result', { state: { score: response?.data?.score } });
+            navigate('/result-list', { state: { score: response?.data?.score } });
         } catch (err) {
             console.error('Error submitting quiz:', err);
         }
