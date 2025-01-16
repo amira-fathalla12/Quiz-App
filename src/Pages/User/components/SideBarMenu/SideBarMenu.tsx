@@ -10,9 +10,11 @@ import {
   ResultsIcon,
   StudentsIcon,
 } from "../../../components/SvgIcons/SvgIcons";
+import { useAppSelector } from "../../../../redux/store";
 
 export const SideBarMenu = () => {
   const { pathname } = useLocation();
+    const { user } = useAppSelector((state) => state.user);
 
   const [isCollapse, setIsCollapse] = useState<boolean>(false);
   const toggleCollapse = () => {
@@ -40,7 +42,9 @@ export const SideBarMenu = () => {
             {" "}
             Dashboard
           </MenuItem>
-          <MenuItem
+          {
+            user!.role == 'Instructor' ? <>
+                      <MenuItem
             component={<Link to="/students" />}
             icon={
               <StudentsIcon
@@ -68,6 +72,9 @@ export const SideBarMenu = () => {
             {" "}
             Groups
           </MenuItem>
+            </> : ''
+          }
+
           <MenuItem
             component={<Link to="/quzzies" />}
             icon={

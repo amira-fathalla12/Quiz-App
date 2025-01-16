@@ -8,8 +8,11 @@ import { useAddQuizMutation } from "../../../../redux/apis/apis";
 import { useState } from "react";
 import CodeModal from "../CodeModal/CodeModal";
 import { Quiz } from "../../../../services/interfaces";
+import { useAppSelector } from "../../../../redux/store";
 
 export const Navbar = () => {
+  const { user } = useAppSelector((state) => state.user);
+  
   const { pathname } = useLocation();
   const [code, setCode] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,17 +70,20 @@ export const Navbar = () => {
     <div className="flex p-4  items-center justify-between border-b border-gray-300">
       <p className="text-xl font-bold">{navTitle()}</p>
 
-      <div className="flex gap-2 items-center ">
-        <button
-          className="flex gap-2 items-center border-2 border-gray-300 
-         px-5 py-2 rounded-3xl cursor-pointer"
-          onClick={handleOpenModal}
-        >
-          <span className="sr-only">Add quiz</span>
 
-          <AlarmIcon />
-          <p>New quiz</p>
-        </button>
+      <div className="flex gap-2 items-center ">
+     {
+      user!.role ==  'Instructor' ?    <button
+      className="flex gap-2 items-center border-2 border-gray-300 
+     px-5 py-2 rounded-3xl cursor-pointer"
+      onClick={handleOpenModal}
+    >
+      <span className="sr-only">Add quiz</span>
+
+      <AlarmIcon />
+      <p>New quiz</p>
+    </button> : ''
+     }
         <DropdownMenu />
       </div>
       <Modal
