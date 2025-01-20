@@ -24,6 +24,7 @@ export default function UpComingQuizzes() {
           participants={quiz.participants}
           key={quiz._id}
           id ={quiz._id}
+          role="student"
         />
       ))}
     </div>

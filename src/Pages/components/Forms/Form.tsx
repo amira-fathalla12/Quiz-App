@@ -16,7 +16,7 @@ const Form = ({ register, errors }: Iprops) => {
       <CustomFormInput
         label="Title"
         width="w-full"
-        register={register("title", { required: getRequiredMessage("title") })}
+        {...register("title", { required: getRequiredMessage("title") })}
         isError={errors?.title}
         errorMessage={errors?.title?.message}
       />
@@ -36,7 +36,7 @@ const Form = ({ register, errors }: Iprops) => {
         <CustomFormInput
           label="A"
           width="w-[49%]"
-          register={register("options.A", {
+          {...register("options.A", {
             required: getRequiredMessage("option A"),
           })}
           isError={errors?.options?.A}
@@ -45,7 +45,7 @@ const Form = ({ register, errors }: Iprops) => {
         <CustomFormInput
           label="B"
           width="w-[49%]"
-          register={register("options.B", {
+          {...register("options.B", {
             required: getRequiredMessage("option B"),
           })}
           isError={errors?.options?.B}
@@ -54,7 +54,7 @@ const Form = ({ register, errors }: Iprops) => {
         <CustomFormInput
           label="C"
           width="w-[49%]"
-          register={register("options.C", {
+          {...register("options.C", {
             required: getRequiredMessage("option C"),
           })}
           isError={errors?.options?.C}
@@ -63,7 +63,7 @@ const Form = ({ register, errors }: Iprops) => {
         <CustomFormInput
           label="D"
           width="w-[49%]"
-          register={register("options.D", {
+          {...register("options.D", {
             required: getRequiredMessage("option D"),
           })}
           isError={errors?.options?.D}
@@ -74,7 +74,7 @@ const Form = ({ register, errors }: Iprops) => {
         <CustomFormInput
           label="Right Answer"
           width="w-[49%]"
-          register={register("answer", {
+          {...register("answer", {
             required: getRequiredMessage("Correct answer"),
           })}
           isError={errors?.answer}

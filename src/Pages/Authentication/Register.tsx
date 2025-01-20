@@ -9,12 +9,10 @@ import CustomInput from "./Components/CustomInput/CustomInput";
 import { useForm } from "react-hook-form";
 import { emailValidation } from "../../services/validations";
 import CustomPasswordInput from "./Components/CustomPasswordInput/CustomPasswordInput";
-export type user = {
-  name: string;
-  email: string;
-  role: string;
-  password: string;
-};
+import { ApiError, registerCredentials } from "../../services/interfaces";
+import { useRegisterMutation } from "../../redux/apis/apis";
+import { toast } from "react-toastify";
+
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -23,14 +21,23 @@ export const Register = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<user>();
+  } = useForm<registerCredentials>();
 
-  const onSubmitdata = (data: user) => {
+  const [registeUser] = useRegisterMutation();
+
+  const onSubmitData = async (data: registerCredentials) => {
+    // console.log(data);
     try {
-      console.log(data);
-      navigate("/verify-user");
-    } catch (error) {
+      const result = await registeUser(data).unwrap();
+      console.log(result);
+      if (result.message) {
+        toast.success(result.message);
+        navigate('/login');
+      }
+    } catch (err: unknown) {
+      const error = err as ApiError;
       console.log(error);
+      toast.error(error.data?.message[0] || 'Something went wrong');
     }
   };
 
@@ -66,7 +73,7 @@ export const Register = () => {
 
       <form
         className="flex flex-col gap-6"
-        onSubmit={handleSubmit(onSubmitdata)}>
+        onSubmit={handleSubmit(onSubmitData)}>
         <div className="flex gap-6 w-full">
           <div className="flex-1">
             <CustomInput
@@ -74,11 +81,11 @@ export const Register = () => {
               type="text"
               placeholder="Type your first name"
               inputId="firstName"
-              register={register("name", {
+              register={register("first_name", {
                 required: "First name is required",
               })}
-              isError={errors?.name}
-              errorMessage={errors?.name?.message}
+              isError={errors?.first_name}
+              errorMessage={errors?.first_name?.message}
             />
           </div>
 
@@ -88,7 +95,7 @@ export const Register = () => {
               type="text"
               placeholder="Type your last name"
               inputId="lastName"
-              register={register("name")}
+              register={register("last_name")}
             />
           </div>
         </div>
@@ -110,16 +117,16 @@ export const Register = () => {
           <div className="relative">
             <select
               id="role"
-              name="role"
+              {...register("role", { required: "Role is required" })}
               className="py-4 pl-12 bg-inherit border-[3px] rounded-[10px] w-full outline-none appearance-none">
               <option hidden>Choose your role</option>
               <option
-                value="instructor"
+                value="Instructor"
                 className="bg-gray-200 text-gray-800 hover:bg-green-300 ">
                 Instructor
               </option>
               <option
-                value="student"
+                value="Student"
                 className="bg-gray-200 text-gray-800 hover:bg-green-300">
                 Student
               </option>

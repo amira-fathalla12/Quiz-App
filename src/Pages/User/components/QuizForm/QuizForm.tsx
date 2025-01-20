@@ -27,11 +27,12 @@ const QuizForm = ({ register, errors, control }: Props) => {
           label="Title:"
           width="w-full"
           height="h-10"
-          register={register("title", {
+          {...register("title", {
             required: getRequiredMessage("Title"),
           })}
           isError={errors?.title}
           errorMessage={errors?.title?.message}
+          name="title"
         />
         <div className="flex flex-wrap gap-3">
           <CustomFormInput
@@ -39,18 +40,19 @@ const QuizForm = ({ register, errors, control }: Props) => {
             width="w-full sm:w-[35.5%]"
             height="h-10"
             labelWidth="w-44"
-            register={register("duration", {
+            {...register("duration", {
               required: getRequiredMessage("Duration"),
             })}
             isError={errors?.duration}
             errorMessage={errors?.duration?.message}
+            name="duration"
           />
           <CustomFormSelect
             label="No. of questions"
             width="w-full sm:w-[30%]"
             height="h-10"
             labelWidth="w-44"
-            register={register("questions_number", {
+            {...register("questions_number", {
               required: getRequiredMessage("Questions No"),
             })}
             isError={errors?.questions_number}
@@ -59,25 +61,31 @@ const QuizForm = ({ register, errors, control }: Props) => {
               { length: questions?.length ?? 0 },
               (_, i) => (i + 1).toString()
             )}
+            defaultValue={""}
           />
           <CustomFormInput
             label="Score per question"
             width="w-full sm:w-[30.5%]"
             height="h-10"
             labelWidth="w-44"
-            register={register("score_per_question", {
+            {...register("score_per_question", {
               required: getRequiredMessage("Score"),
             })}
             isError={errors?.score_per_question}
             errorMessage={errors?.score_per_question?.message}
+            name="score_per_question"
           />
         </div>
         <div className="mb-2 w-full flex overflow-hidden">
-          <label className="flex-shrink-0 flex items-center p-2.5 pointer-events-none border-y border-l border-[#0000004D] bg-linen rounded-l-lg font-bold">
+          <label
+            className="flex-shrink-0 flex items-center p-2.5 pointer-events-none
+           border-y border-l border-[#0000004D] bg-linen rounded-l-lg font-bold"
+          >
             Description
           </label>
           <textarea
-            className="block w-full p-2.5 border-y border-r border-[#0000004D] rounded-r-lg resize-none"
+            className="block w-full p-2.5 border-y border-r border-[#0000004D] 
+            rounded-r-lg resize-none"
             {...register("description")}
             name="description"
           ></textarea>
@@ -95,31 +103,33 @@ const QuizForm = ({ register, errors, control }: Props) => {
             width="w-full sm:w-[31.7%]"
             height="h-10"
             labelWidth="w-44"
-            register={register("difficulty", {
+            {...register("difficulty", {
               required: getRequiredMessage("Difficulty"),
             })}
             isError={errors?.difficulty}
             errorMessage={errors?.difficulty?.message}
             selectValues={["easy", "medium", "hard"]}
+            defaultValue={""}
           />
           <CustomFormSelect
             label="Category type"
             width="w-full sm:w-[31.7%]"
             height="h-10"
             labelWidth="w-44"
-            register={register("type", {
+            {...register("type", {
               required: getRequiredMessage("Type"),
             })}
             isError={errors?.type}
             errorMessage={errors?.type?.message}
             selectValues={["FE", "BE", "DO"]}
+            defaultValue={""}
           />
           <CustomFormSelect
             label="Group name"
             width="w-full sm:w-[31.7%]"
             height="h-10"
             labelWidth="w-44"
-            register={register("group", {
+            {...register("group", {
               required: getRequiredMessage("Group"),
             })}
             isError={errors?.group}
@@ -129,6 +139,7 @@ const QuizForm = ({ register, errors, control }: Props) => {
             selectType="group"
             groupValue={groups}
             errorMessage={errors?.group?.message}
+            defaultValue={""}
           />
         </div>
       </div>

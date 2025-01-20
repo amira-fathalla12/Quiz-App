@@ -16,7 +16,8 @@ import ChangePassword from "./Pages/Authentication/ChangePassword";
 import { AuthLayout } from "./Pages/Authentication/AuthLayout";
 import { MasterLayout } from "./Pages/User/MasterLayout";
 import { Dashboard } from "./Pages/User/components/Dashboard/Dashboard";
-import { VerifyRegister } from "./Pages/Authentication/VerifyRegister";
+import ExamQuestions from "./Pages/components/ExamQuestions/ExamQuestions";
+import { Results } from "./Pages/User/Learner/Results";
 
 const App = () => {
   const routes = createBrowserRouter([
@@ -28,7 +29,6 @@ const App = () => {
         { index: true, element: <Login /> },
         { path: "login", element: <Login /> },
         { path: "register", element: <Register /> },
-        { path: "verify-user", element: <VerifyRegister /> },
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
         { path: "change-password", element: <ChangePassword /> },
@@ -66,6 +66,16 @@ const App = () => {
           path: "questions",
           element: <QuestionsList />,
         },
+        {
+          path: "quiz-result",
+          element: <Results />,
+        },
+        {
+          path: "result-list",
+          element: <Results />,
+        },
+        { path: "exam-questions/:id", element: <ExamQuestions />},
+
       ],
     },
   ]);

@@ -5,39 +5,57 @@ import "react-tabs/style/react-tabs.css";
 import Comingquizes from "./Comingquizes";
 import AllQuizzes from "./AllQuizzes";
 import CompletedQuizzes from "./CompletedQuizzes";
+import { useAppSelector } from "../../../../redux/store";
+import { twMerge } from "tailwind-merge";
 
 export const QuizzesSetup = () => {
+  const { user } = useAppSelector((state) => state.user);
+  console.log(user?.role);
   return (
-    <div className="flex justify-between pt-5 ps-2">
-      <div className="flex flex-wrap  gap-7">
+    <div className="flex flex-wrap lg:flex-nowrap gap-5 lg:gap-0 justify-between pt-5 ps-2">
+      <div className="flex gap-2 sm:gap-5">
         <CustomQuizesTab
           icon={<ClockIcon />}
-          label="Set up a new quiz"
+          label={
+            user!.role === "Instructor" ? "Set up a new quiz" : "Join Quiz"
+          }
           border="border-r-2"
+          role={user!.role}
         />
-        <CustomQuizesTab
-          icon={<BankIcon />}
-          label="Question Bank"
-          border="border-r-2"
-        />
+        {user?.role === "Instructor" && (
+          <CustomQuizesTab
+            icon={<BankIcon />}
+            label="Question Bank"
+            border="border-r-2"
+          />
+        )}
       </div>
-      <div className="w-full md:w-1/2 pr-3">
+      <div className="w-full md:w-3/5 pr-3 ">
         <Tabs className="w-full">
-          <TabList className="flex justify-between border-opacity-5">
+          <TabList
+            className={twMerge(
+              user?.role === "Instructor"
+                ? "justify-between"
+                : "gap-1 sm:gap-7",
+              "flex border-opacity-5"
+            )}
+          >
             <Tab>Upcoming quizzes</Tab>
             <Tab>Completed Quizzes</Tab>
-            <Tab>All Quizzes</Tab>
+            {user?.role === "Instructor" && <Tab>All Quizzes</Tab>}
           </TabList>
 
           <TabPanel>
-            <Comingquizes />
+            <Comingquizes role={user!.role} />
           </TabPanel>
           <TabPanel>
             <CompletedQuizzes />
           </TabPanel>
-          <TabPanel>
-            <AllQuizzes />
-          </TabPanel>
+          {user?.role === "Instructor" && (
+            <TabPanel>
+              <AllQuizzes />
+            </TabPanel>
+          )}
         </Tabs>
       </div>
     </div>

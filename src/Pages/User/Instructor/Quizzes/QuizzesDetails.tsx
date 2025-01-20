@@ -11,10 +11,9 @@ import {
 } from "../../../../redux/apis/apis";
 import CustomFormSelect from "../../../components/CustomFormSelect/CustomFormSelect";
 import { Controller, useForm } from "react-hook-form";
-import { ApiError, Quiz } from "../../../../services/interfaces";
+import { Quiz } from "../../../../services/interfaces";
 import { getRequiredMessage } from "../../../../services/validations";
 import CustomFormInput from "../../../components/CustomFormInput/CustomFormInput";
-import { toast } from "react-toastify";
 import Spinner from "../../../components/Spinner/Spinner";
 import { twMerge } from "tailwind-merge";
 import DateTimePicker from "react-datetime-picker";
@@ -32,6 +31,7 @@ export const QuizzesDetails = () => {
   const [updateQuiz, { isLoading: isLoadingEdit }] = useUpdateQuizMutation();
   const [dateTime, setDateTime] = useState(new Date());
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -41,22 +41,21 @@ export const QuizzesDetails = () => {
 
   const onSubmit = async (data: Quiz) => {
     try {
-      const result = await updateQuiz({
+      await updateQuiz({
         id: id ?? "",
         data: {
           ...data,
           title: quiz?.title ?? "",
         },
-      }).unwrap();
-      toast.success(result?.message || "Quiz updated successfully");
+      });
       await refetch();
       await refetchQuiz();
-      navigate("/quzzies");
-    } catch (err: unknown) {
-      const error = err as ApiError;
-      toast.error(error?.data?.message || "Something went wrong");
+      navigate(-1);
+    } catch (error) {
+      console.error("Failed to add quiz:", error);
     }
   };
+
   return (
     <div
       className={twMerge(
@@ -121,10 +120,10 @@ export const QuizzesDetails = () => {
                 label="Duration"
                 width="w-full"
                 labelWidth="w-48"
-                register={register("duration", {
+                {...register("duration", {
                   required: getRequiredMessage("Duration"),
                 })}
-                value={quiz?.duration.toString()}
+                defaultValue={quiz?.duration.toString()}
                 isError={errors?.duration}
                 errorMessage={errors?.duration?.message}
               />
@@ -135,10 +134,10 @@ export const QuizzesDetails = () => {
                 label="Score per question"
                 width="w-full"
                 labelWidth="w-48"
-                register={register("score_per_question", {
+                {...register("score_per_question", {
                   required: getRequiredMessage("Score"),
                 })}
-                value={quiz?.score_per_question.toString()}
+                defaultValue={quiz?.score_per_question.toString()}
                 isError={errors?.score_per_question}
                 errorMessage={errors?.score_per_question?.message}
               />
@@ -164,10 +163,10 @@ export const QuizzesDetails = () => {
                 label="Group name"
                 width="w-full"
                 labelWidth="w-48"
-                register={register("group", {
+                {...register("group", {
                   required: getRequiredMessage("Group"),
                 })}
-                value={quiz?.group}
+                defaultValue={quiz?.group}
                 isError={errors?.group}
                 selectValues={
                   !isGroupsLoading ? groups?.map((group) => group.name) : []

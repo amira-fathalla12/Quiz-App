@@ -1,3 +1,4 @@
+
 import axios, { AxiosInstance } from "axios";
 
 const BASE_URL = "https://upskilling-egypt.com:3005/api";
@@ -35,6 +36,9 @@ export const QUIZ_URLS = {
   updateQuiz: (id: string) => `/quiz/${id}`,
   getAllQuizzesResults: "/quiz/result",
   getAllCompletedQuizzes: "/quiz/completed",
+  joinQuiz: "/quiz/join",
+  getQuizWithoutAnswers: (id: string) => `/quiz/without-answers/${id}`,
+  submitQuizAnswers: (id: string) => `/quiz/submit/${id}`,
 };
 
 // questionsUrls
@@ -59,7 +63,8 @@ export const GROUPS_URLS = {
   getAllGroups: "/group",
   getGroup: (id: string) => `/group/${id}`,
   deleteGroup: (id: string) => `/group/${id}`,
-  addGroup: "/groups",
+  addGroup: "/group",
+  editGroup: (id: string) => `/group/${id}`,
 };
 
 export { axiosInstance, BASE_URL, IMAGE_URL };
