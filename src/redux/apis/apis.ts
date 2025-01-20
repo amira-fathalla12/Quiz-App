@@ -27,6 +27,7 @@ import {
   TopStudent,
   registerResponse,
   registerCredentials,
+  groupResponse,
 } from "../../services/interfaces";
 import { AppState } from "../store";
 import { toast } from "react-toastify";
@@ -265,6 +266,31 @@ export const apis = createApi({
       }),
       invalidatesTags: ["Groups"],
     }),
+    addGroup: builder.mutation<groupResponse, group>({
+      query: (credentials) => ({
+        url: GROUPS_URLS.addGroup,
+        method: "POST",
+        body: credentials,
+      }),
+      invalidatesTags: ["Groups"],
+    }),
+    editGroup: builder.mutation<
+    groupResponse,
+    { id: string; data: group }
+  >({
+    query: ({ id, data }) => ({
+      url: GROUPS_URLS.editGroup(id),
+      method: "PUT",
+      body: data,
+    }),
+    invalidatesTags: ["Groups"],
+  }),
+  getGroup: builder.query<group, string>({
+    query: (id) => ({
+      url: GROUPS_URLS.getGroup(id)
+    }),
+    providesTags: ["Groups"],
+  }),
     /* results */
     allQuizzesResults: builder.query<Results[], void>({
       query: () => ({
@@ -289,6 +315,9 @@ export const {
   useTopStudentsQuery,
   useAllQuestionsQuery,
   useAllGroupsQuery,
+  useGetGroupQuery,
+  useAddGroupMutation,
+  useEditGroupMutation,
   useAddQuestionMutation,
   useEditQuestionMutation,
   useGetQuestionQuery,

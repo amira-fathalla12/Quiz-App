@@ -63,7 +63,8 @@ export const GROUPS_URLS = {
   getAllGroups: "/group",
   getGroup: (id: string) => `/group/${id}`,
   deleteGroup: (id: string) => `/group/${id}`,
-  addGroup: "/groups",
+  addGroup: "/group",
+  editGroup: (id: string) => `/group/${id}`,
 };
 
 export { axiosInstance, BASE_URL, IMAGE_URL };

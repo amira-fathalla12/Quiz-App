@@ -142,6 +142,11 @@ export interface group {
   __v: number;
 }
 
+export interface groupResponse {
+  message: string;
+  data: group;
+}
+
 //* students
 export interface Student {
   _id: string;
