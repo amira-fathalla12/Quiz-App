@@ -30,18 +30,17 @@ const CustomFormInput = forwardRef<HTMLInputElement, Iprops>(
             )}
           >
             {label === "Duration" ? (
-              <div className="flex  items-center">
-                {label}
-                <span className="font-normal hidden sm:flex sm:ps-1">
-                  {" "}
-                  (in minutes)
-                </span>
-              </div>
-            ) : label === "Score per question" ? (
               <>
+                {label}
+                <span className="font-normal hidden sm:flex sm:ps-1 text-nowrap">
+                  (in mins)
+                </span>
+              </>
+            ) : label === "Score per question" ? (
+              <div className="flex items-center">
                 Score
                 <span className="hidden sm:flex sm:ps-1 "> per question</span>
-              </>
+              </div>
             ) : (
               label
             )}
