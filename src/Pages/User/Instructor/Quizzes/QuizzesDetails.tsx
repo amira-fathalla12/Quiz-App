@@ -119,7 +119,7 @@ export const QuizzesDetails = () => {
               <CustomFormInput
                 label="Duration"
                 width="w-full"
-                labelWidth="w-48"
+                labelWidth="w-44"
                 {...register("duration", {
                   required: getRequiredMessage("Duration"),
                 })}
@@ -133,7 +133,7 @@ export const QuizzesDetails = () => {
               <CustomFormInput
                 label="Score per question"
                 width="w-full"
-                labelWidth="w-48"
+                labelWidth="w-44"
                 {...register("score_per_question", {
                   required: getRequiredMessage("Score"),
                 })}
@@ -161,12 +161,16 @@ export const QuizzesDetails = () => {
             <div className="w-[80%]">
               <CustomFormSelect
                 label="Group name"
-                width="w-full"
+                slotProps={{
+                  inputProps: {
+                    className: "w-full",
+                    defaultValue: quiz?.group,
+                  },
+                }}
                 labelWidth="w-48"
                 {...register("group", {
                   required: getRequiredMessage("Group"),
                 })}
-                defaultValue={quiz?.group}
                 isError={errors?.group}
                 selectValues={
                   !isGroupsLoading ? groups?.map((group) => group.name) : []

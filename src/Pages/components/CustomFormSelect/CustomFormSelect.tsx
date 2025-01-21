@@ -1,40 +1,45 @@
-import { forwardRef } from "react";
+import { ComponentProps, forwardRef } from "react";
 import { Select } from "@headlessui/react";
 import { FieldError } from "react-hook-form";
 import { group } from "../../../services/interfaces";
+import { twMerge } from "tailwind-merge";
 
 type Props = {
   label: string;
-  width: string;
   isError: FieldError | undefined;
   errorMessage?: string;
   selectValues?: string[];
   selectType?: string;
   groupValue?: group[];
   labelWidth?: string;
-  defaultValue?: string | number;
-  height?: string;
+  slotProps?: {
+    inputProps?: ComponentProps<"input">;
+  };
 };
 
 const CustomFormSelect = forwardRef<HTMLSelectElement, Props>(
   (
     {
       label,
-      width,
       isError,
       errorMessage,
       selectValues,
       selectType,
       groupValue,
       labelWidth,
-      height,
+      slotProps,
       ...rest
     },
     ref
   ) => {
     return (
-      <div className={`flex flex-col ${width} mb-2`}>
-        <div className={`flex ${height}`}>
+      <div
+        className={twMerge(
+          `flex flex-col mb-2`,
+          `${slotProps?.inputProps?.className}`
+        )}
+      >
+        <div className={`flex`}>
           <label
             className={`flex-shrink-0 flex items-center p-2.5
             pointer-events-none border-y border-l border-[#0000004D] bg-linen
@@ -47,7 +52,8 @@ const CustomFormSelect = forwardRef<HTMLSelectElement, Props>(
             className="block w-full ps-1 border-y border-r border-[#0000004D]
             rounded-r-lg h-10"
             {...rest}
-            defaultValue={rest.defaultValue}
+            defaultValue={slotProps?.inputProps?.defaultValue}
+            // defaultValue={rest.defaultValue}
             ref={ref}
           >
             <option value="" disabled>

@@ -42,8 +42,6 @@ export const apis = createApi({
       const token = (getState() as AppState).user.token;
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
-      } else {
-        console.error("Token is missing");
       }
       return headers;
     },
@@ -97,17 +95,14 @@ export const apis = createApi({
         body: credentials,
       }),
     }),
-   
-    register: builder.mutation<
-    registerResponse,
-    registerCredentials
-  >({
-    query: (credentials) => ({
-      url: AUTH_URLS.register,
-      method: "POST",
-      body: credentials,
+
+    register: builder.mutation<registerResponse, registerCredentials>({
+      query: (credentials) => ({
+        url: AUTH_URLS.register,
+        method: "POST",
+        body: credentials,
+      }),
     }),
-  }),
     /* quiz */
     topUpcomingQuizzes: builder.query<Quiz[], void>({
       query: () => ({
@@ -130,13 +125,13 @@ export const apis = createApi({
         toast.error(error.data?.message || "Something went wrong");
         return error;
       },
-      invalidatesTags: ["Quizzes"], 
+      invalidatesTags: ["Quizzes"],
     }),
     getQuiz: builder.query<Quiz, string>({
       query: (id) => ({
         url: QUIZ_URLS.getQuiz(id),
       }),
-      providesTags: ["Quizzes"],
+      providesTags: (_, __, id) => [{ type: "Quizzes", id }],
     }),
     updateQuiz: builder.mutation<QuizResponse, { id: string; data: Quiz }>({
       query: ({ id, data }) => ({
@@ -156,10 +151,10 @@ export const apis = createApi({
       invalidatesTags: ["Quizzes"],
     }),
     joinQuiz: builder.mutation<QuizResponse, { data: string }>({
-      query: ({ data}) => ({
-        url: QUIZ_URLS.joinQuiz, 
+      query: ({ data }) => ({
+        url: QUIZ_URLS.joinQuiz,
         method: "POST",
-        body: { code:data },
+        body: { code: data },
       }),
       transformResponse: (response: QuizResponse) => {
         toast.success(response.message || "Joined the quiz successfully!");
@@ -170,34 +165,36 @@ export const apis = createApi({
         console.error("Error while joining quiz:", error);
         toast.error(error.data?.message || "Failed to join the quiz.");
         return error;
-      },      
+      },
       invalidatesTags: ["Quizzes"],
     }),
-     submitQuizAnswers: builder.mutation<QuizResponse, { id: string; data: { answers: { question: string; answer: string }[] } }>({
+    submitQuizAnswers: builder.mutation<
+      QuizResponse,
+      { id: string; data: { answers: { question: string; answer: string }[] } }
+    >({
       query: ({ id, data }) => ({
-        url: QUIZ_URLS.submitQuizAnswers(id), 
+        url: QUIZ_URLS.submitQuizAnswers(id),
         method: "POST",
-        body: data, 
+        body: data,
       }),
       transformResponse: (response: QuizResponse) => {
         toast.success(response.message || "Answers submitted!");
-        return response; 
+        return response;
       },
       transformErrorResponse: (err: unknown) => {
         const error = err as ApiError;
         console.error("Error while submitting quiz:", error);
         toast.error(error.data?.message || "Failed to submit the quiz.");
-        return error; 
+        return error;
       },
-      invalidatesTags: ["Quizzes"], 
+      invalidatesTags: ["Quizzes"],
     }),
     getQuizWithoutAnswers: builder.query<QuizResponse, string>({
       query: (id) => ({
         url: QUIZ_URLS.getQuizWithoutAnswers(id),
       }),
     }),
-    
-    
+
     /* students */
     allStudents: builder.query<Student[], void>({
       query: () => ({
@@ -274,23 +271,20 @@ export const apis = createApi({
       }),
       invalidatesTags: ["Groups"],
     }),
-    editGroup: builder.mutation<
-    groupResponse,
-    { id: string; data: group }
-  >({
-    query: ({ id, data }) => ({
-      url: GROUPS_URLS.editGroup(id),
-      method: "PUT",
-      body: data,
+    editGroup: builder.mutation<groupResponse, { id: string; data: group }>({
+      query: ({ id, data }) => ({
+        url: GROUPS_URLS.editGroup(id),
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Groups"],
     }),
-    invalidatesTags: ["Groups"],
-  }),
-  getGroup: builder.query<group, string>({
-    query: (id) => ({
-      url: GROUPS_URLS.getGroup(id)
+    getGroup: builder.query<group, string>({
+      query: (id) => ({
+        url: GROUPS_URLS.getGroup(id),
+      }),
+      providesTags: ["Groups"],
     }),
-    providesTags: ["Groups"],
-  }),
     /* results */
     allQuizzesResults: builder.query<Results[], void>({
       query: () => ({
@@ -331,5 +325,5 @@ export const {
   useDeleteQuestionMutation,
   useJoinQuizMutation,
   useGetQuizWithoutAnswersQuery,
-  useSubmitQuizAnswersMutation
+  useSubmitQuizAnswersMutation,
 } = apis;

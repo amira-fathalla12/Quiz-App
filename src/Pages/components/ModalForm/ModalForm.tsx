@@ -10,25 +10,21 @@ import { UseFormHandleSubmit } from "react-hook-form";
 import { group, Question, Quiz } from "../../../services/interfaces";
 import Spinner from "../Spinner/Spinner";
 
-interface ModalI {
+interface ModalI<T> {
   isOpen: boolean;
   closeModal: () => void;
   title: string;
   handleSubmitQuestion?: UseFormHandleSubmit<Question, undefined>;
   handleSubmitQuiz?: UseFormHandleSubmit<Quiz, undefined>;
-  handleSubmitGroup?: UseFormHandleSubmit<group, undefined>
-  onSubmit:
-    | ((data: Question) => Promise<void>)
-    | ((data: Quiz) => Promise<void>)
-    | ((data: group) => Promise<void>);
- 
+  handleSubmitGroup?: UseFormHandleSubmit<group, undefined>;
+  onSubmit: (data: T) => Promise<void>;
   children: ReactNode;
   isSubmitting?: boolean;
   isLoading?: boolean;
   formType?: string;
 }
 
-export default function Modal({
+export default function Modal<T>({
   isOpen,
   closeModal,
   children,
@@ -40,7 +36,7 @@ export default function Modal({
   formType,
   isSubmitting,
   isLoading,
-}: ModalI) {
+}: ModalI<T>) {
   return (
     <>
       <Dialog
@@ -69,8 +65,8 @@ export default function Modal({
                       )
                     : formType === "group"
                     ? handleSubmitGroup?.(
-                      onSubmit as (data: group) => Promise<void>
-                    )
+                        onSubmit as (data: group) => Promise<void>
+                      )
                     : undefined
                 }
               >

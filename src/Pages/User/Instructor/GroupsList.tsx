@@ -17,8 +17,14 @@ import { useForm } from "react-hook-form";
 import FormGroup from "../../components/FormGroup/FormGroup";
 
 export const GroupsList = () => {
-  const { register, handleSubmit, setValue, reset, formState: { errors, isSubmitting } } = useForm<group>({ mode: "onChange" });
-  
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<group>({ mode: "onChange" });
+
   const { data: studentsData } = useAllStudentsQuery();
   const [deleteGroup, { isLoading: isLoadingDell }] = useDeleteGroupsMutation();
   const [openDelete, setOpenDelete] = useState(false);
@@ -29,15 +35,15 @@ export const GroupsList = () => {
   const [openEdit, setOpenEdit] = useState(false);
   const [editId, setEditId] = useState("");
   const { isLoading, isError, data: fetchedData } = useAllGroupsQuery();
-  const { data: groupData, isFetching: isFetchingGroup } = useGetGroupQuery(editId);
+  const { data: groupData, isFetching: isFetchingGroup } =
+    useGetGroupQuery(editId);
   const [groups, setGroups] = useState<group[]>(fetchedData || []);
-
 
   const openAddModal = () => {
     reset();
     setOpenAdd(true);
   };
-  
+
   const closeAddModal = () => {
     setOpenAdd(false);
     reset();
@@ -47,7 +53,7 @@ export const GroupsList = () => {
     setEditId(id);
     setOpenEdit(true);
   };
-  
+
   const closeEditModal = () => {
     setOpenEdit(false);
     reset();
@@ -60,7 +66,10 @@ export const GroupsList = () => {
       closeAddModal();
     } catch (error: any) {
       const serverErrorMessage =
-        error?.data?.error || error?.data?.message || error?.message || "Something went wrong";
+        error?.data?.error ||
+        error?.data?.message ||
+        error?.message ||
+        "Something went wrong";
       toast.error(serverErrorMessage);
     }
   };
@@ -72,7 +81,10 @@ export const GroupsList = () => {
       closeEditModal();
     } catch (error: any) {
       const serverErrorMessage =
-        error?.data?.error || error?.data?.message || error?.message || "Something went wrong";
+        error?.data?.error ||
+        error?.data?.message ||
+        error?.message ||
+        "Something went wrong";
       toast.error(serverErrorMessage);
     }
   };
@@ -82,32 +94,31 @@ export const GroupsList = () => {
       setGroups(fetchedData);
     }
   }, [fetchedData]);
-    
 
   const handleOpenDelete = (id: string) => {
     setSelectedId(id);
     setOpenDelete(true);
   };
 
+  useEffect(() => {
+    if (groupData) {
+      setValue("name", groupData.name);
 
-useEffect(() => {
-  if (groupData) {
-    
-    setValue("name", groupData.name);
-
-    if (Array.isArray(groupData.students)) {
-      const studentIds = groupData.students.map((student: any) => student._id);
-      setValue("students", studentIds);
+      if (Array.isArray(groupData.students)) {
+        const studentIds = groupData.students.map(
+          (student: any) => student._id
+        );
+        setValue("students", studentIds);
+      }
     }
-  }
-}, [groupData, setValue]);
+  }, [groupData, setValue]);
 
   const handleCloseDelete = () => setOpenDelete(false);
 
   const onDeleteGroup = async () => {
     try {
       const groupToDelete = groups.find((group) => group._id === selectedId);
-  
+
       if (groupToDelete) {
         await deleteGroup({ id: selectedId, data: groupToDelete }).unwrap();
         toast.success("Group deleted successfully");
@@ -126,7 +137,7 @@ useEffect(() => {
   return (
     <>
       <div className="p-5">
-        <Modal 
+        <Modal<group>
           isOpen={openAdd}
           closeModal={closeAddModal}
           title="Set up a new group"
@@ -143,8 +154,8 @@ useEffect(() => {
             setValue={setValue}
           />
         </Modal>
-   
-        <Modal
+
+        <Modal<group>
           isOpen={openEdit}
           closeModal={closeEditModal}
           title="Update Group"
@@ -167,9 +178,9 @@ useEffect(() => {
             />
           )}
         </Modal>
-        
+
         <TableHeader btnText="Add group" title="" handleClick={openAddModal} />
-        
+
         <div className="groupWrapper border-2 rounded-lg px-[1rem] py-[1rem]">
           <h3 className="pt-[1rem] pb-[1.7rem]">Group List</h3>
 

@@ -30,9 +30,16 @@ export const QuestionsList = () => {
   const [addQuestion] = useAddQuestionMutation();
   const [editQuestion] = useEditQuestionMutation();
   const [deleteQuestion] = useDeleteQuestionMutation();
-  const { data: questionData, isFetching: isFetchingQuestion } = useGetQuestionQuery(editId);
+  const { data: questionData, isFetching: isFetchingQuestion } =
+    useGetQuestionQuery(editId);
 
-  const { register, handleSubmit, setValue, reset, formState: { errors, isSubmitting } } = useForm<Question>({ mode: "onChange" });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<Question>({ mode: "onChange" });
 
   const handleAddQuestion = async (data: Question) => {
     try {
@@ -59,12 +66,17 @@ export const QuestionsList = () => {
 
   const deleteQuestions = async () => {
     try {
-      const questionToDelete = data?.find((question) => question._id === selectedId);
-  
+      const questionToDelete = data?.find(
+        (question) => question._id === selectedId
+      );
+
       if (questionToDelete) {
-        await deleteQuestion({ id: selectedId, data: questionToDelete }).unwrap();
+        await deleteQuestion({
+          id: selectedId,
+          data: questionToDelete,
+        }).unwrap();
         toast.success("Question deleted successfully");
-        }
+      }
     } catch (error: any) {
       console.error(error);
       toast.error(error?.message || "Something went wrong");
@@ -72,8 +84,6 @@ export const QuestionsList = () => {
       handleCloseDelete();
     }
   };
-  
-  
 
   const openAddModal = () => {
     reset();
@@ -114,10 +124,10 @@ export const QuestionsList = () => {
       setValue("options.D", questionData.options?.D ?? "");
     }
   }, [questionData, setValue]);
-  
+
   return (
     <div className="p-5">
-      <Modal
+      <Modal<Question>
         isOpen={isOpenAdd}
         closeModal={closeAddModal}
         title="Set up a new question"
@@ -128,7 +138,7 @@ export const QuestionsList = () => {
       >
         <Form register={register} errors={errors} />
       </Modal>
-      <Modal
+      <Modal<Question>
         isOpen={isOpenEdit}
         closeModal={closeEditModal}
         title="Update question"
@@ -190,7 +200,7 @@ export const QuestionsList = () => {
       <DeleteConfirm
         setOpenModal={handleCloseDelete}
         openModal={openDelete}
-        loading={false} 
+        loading={false}
         onConfirm={deleteQuestions}
         title="Question"
         modalRef={null}
