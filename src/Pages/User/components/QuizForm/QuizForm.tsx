@@ -49,9 +49,13 @@ const QuizForm = ({ register, errors, control }: Props) => {
           />
           <CustomFormSelect
             label="No. of questions"
-            width="w-full sm:w-[30%]"
-            height="h-10"
-            labelWidth="w-44"
+            slotProps={{
+              inputProps: {
+                className: "w-full sm:w-[30%]",
+                defaultValue: "",
+              },
+            }}
+            labelWidth="w-40"
             {...register("questions_number", {
               required: getRequiredMessage("Questions No"),
             })}
@@ -61,7 +65,6 @@ const QuizForm = ({ register, errors, control }: Props) => {
               { length: questions?.length ?? 0 },
               (_, i) => (i + 1).toString()
             )}
-            defaultValue={""}
           />
           <CustomFormInput
             label="Score per question"
@@ -78,14 +81,15 @@ const QuizForm = ({ register, errors, control }: Props) => {
         </div>
         <div className="mb-2 w-full flex overflow-hidden">
           <label
-            className="flex-shrink-0 flex items-center p-2.5 pointer-events-none
-           border-y border-l border-[#0000004D] bg-linen rounded-l-lg font-bold"
+            className="flex-shrink-0 flex items-center p-2.5 pointer-events-none 
+           border-y border-l border-[#0000004D] bg-linen rounded-l-lg 
+           font-bold text-sm sm:text-base"
           >
             Description
           </label>
           <textarea
             className="block w-full p-2.5 border-y border-r border-[#0000004D] 
-            rounded-r-lg resize-none"
+            rounded-r-lg resize-none "
             {...register("description")}
             name="description"
           ></textarea>
@@ -100,35 +104,45 @@ const QuizForm = ({ register, errors, control }: Props) => {
         <div className="flex flex-wrap gap-4 ">
           <CustomFormSelect
             label="Difficulty level"
-            width="w-full sm:w-[31.7%]"
-            height="h-10"
-            labelWidth="w-44"
+            slotProps={{
+              inputProps: {
+                className: "w-full sm:w-[31.7%] ",
+                defaultValue: "",
+              },
+            }}
+            labelWidth="w-36"
             {...register("difficulty", {
               required: getRequiredMessage("Difficulty"),
             })}
             isError={errors?.difficulty}
             errorMessage={errors?.difficulty?.message}
             selectValues={["easy", "medium", "hard"]}
-            defaultValue={""}
           />
           <CustomFormSelect
             label="Category type"
-            width="w-full sm:w-[31.7%]"
-            height="h-10"
-            labelWidth="w-44"
+            slotProps={{
+              inputProps: {
+                className: "w-full sm:w-[31.7%] ",
+                defaultValue: "",
+              },
+            }}
+            labelWidth="w-36"
             {...register("type", {
               required: getRequiredMessage("Type"),
             })}
             isError={errors?.type}
             errorMessage={errors?.type?.message}
             selectValues={["FE", "BE", "DO"]}
-            defaultValue={""}
           />
           <CustomFormSelect
             label="Group name"
-            width="w-full sm:w-[31.7%]"
-            height="h-10"
-            labelWidth="w-44"
+            slotProps={{
+              inputProps: {
+                className: "w-full sm:w-[31.7%] ",
+                defaultValue: "",
+              },
+            }}
+            labelWidth="w-36"
             {...register("group", {
               required: getRequiredMessage("Group"),
             })}
@@ -139,7 +153,6 @@ const QuizForm = ({ register, errors, control }: Props) => {
             selectType="group"
             groupValue={groups}
             errorMessage={errors?.group?.message}
-            defaultValue={""}
           />
         </div>
       </div>

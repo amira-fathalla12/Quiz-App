@@ -22,7 +22,7 @@ const CustomDateTimePicker = ({ control, isError, errorMessage }: Props) => {
         <label
           className="flex-shrink-0 flex items-center  
         p-2.5 pointer-events-none border-y border-l
-         border-[#0000004D] bg-linen rounded-l-lg font-bold"
+         border-[#0000004D] bg-linen rounded-l-lg font-bold text-sm sm:text-base"
         >
           Schedule
         </label>

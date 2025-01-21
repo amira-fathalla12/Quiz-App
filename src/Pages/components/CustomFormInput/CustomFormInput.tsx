@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import { FieldError } from "react-hook-form";
+import { twMerge } from "tailwind-merge";
 
 interface Iprops {
   label: string;
@@ -21,19 +22,25 @@ const CustomFormInput = forwardRef<HTMLInputElement, Iprops>(
       <div className={`flex flex-col ${width} mb-2`}>
         <div className={`flex ${height}`}>
           <label
-            className={`flex-shrink-0 flex items-center p-2.5 
+            className={twMerge(
+              `flex-shrink-0 flex items-center p-2.5 
             pointer-events-none border-y border-l border-[#0000004D]
-            bg-linen rounded-l-lg font-bold w-20 sm:${labelWidth}`}
+            bg-linen rounded-l-lg font-bold text-sm sm:text-base`,
+              `w-20 sm:${labelWidth}`
+            )}
           >
             {label === "Duration" ? (
-              <>
+              <div className="flex  items-center">
                 {label}
-                <span className="font-normal ps-1"> (in minutes)</span>
-              </>
+                <span className="font-normal hidden sm:flex sm:ps-1">
+                  {" "}
+                  (in minutes)
+                </span>
+              </div>
             ) : label === "Score per question" ? (
               <>
                 Score
-                <span className="hidden sm:visible">per question</span>
+                <span className="hidden sm:flex sm:ps-1 "> per question</span>
               </>
             ) : (
               label

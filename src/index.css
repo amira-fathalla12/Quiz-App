@@ -107,3 +107,11 @@ div[id="\:r6\:"] {
 #modal-overlay {
   height: auto !important;
 }
+
+/* Custom styles for autofilled input */
+.custom-autocomplete:-webkit-autofill {
+  background-color: inherit !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0px 1000px #0d1321 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
