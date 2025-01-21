@@ -13,24 +13,19 @@ interface Iprops {
   groupData?: group;
 }
 
-const FormGroup = ({
-  register,
-  errors,
-  students,
-  setValue,
-  groupData,
-}: Iprops) => {
+const FormGroup = ({ register, errors, students , setValue , groupData }: Iprops) => {
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
+
 
   useEffect(() => {
     if (groupData) {
+
       setValue("name", groupData.name);
 
       if (Array.isArray(groupData.students)) {
-        const studentIds = groupData.students.map(
-          (student: any) => student._id
-        );
-        setSelectedStudents(studentIds);
+
+        const studentIds = groupData.students.map((student: any) => student._id);
+        setSelectedStudents(studentIds); 
         setValue("students", studentIds);
       }
     }
@@ -53,29 +48,25 @@ const FormGroup = ({
           List Students
         </label>
 
+
         <Listbox
           value={selectedStudents}
-          {...register("students", {
-            required: getRequiredMessage("students"),
-          })}
-          onChange={(selected) => setSelectedStudents(selected)}
+          onChange={(selected) => {
+            setSelectedStudents(selected); 
+            setValue("students", selected, { shouldValidate: true }); 
+          }}
           multiple
         >
+
           <div className="relative flex-1">
             <Listbox.Button className="block w-full p-2.5 border-y border-r border-[#0000004D] rounded-r-lg text-left">
-              {selectedStudents.length === 0 ? (
-                <span className="text-gray-100">Select students</span>
-              ) : (
-                selectedStudents
-                  .map(
-                    (id) =>
-                      students.find((student) => student._id === id)
-                        ?.first_name +
-                      " " +
-                      students.find((student) => student._id === id)?.last_name
-                  )
-                  .join(", ")
-              )}
+              {selectedStudents.length === 0
+                ? <span className="text-gray-100">Select students</span>
+                : selectedStudents
+                    .map((id) =>
+                      students.find((student) => student._id === id)?.first_name + " " + students.find((student) => student._id === id)?.last_name
+                    )
+                    .join(", ")}
             </Listbox.Button>
 
             <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto bg-white border border-gray-300 rounded-md shadow-lg">
@@ -84,9 +75,7 @@ const FormGroup = ({
                   key={student._id}
                   value={student._id}
                   className={({ active }) =>
-                    `cursor-pointer select-none p-2 ${
-                      active ? "bg-blue-500 text-white" : "text-black"
-                    }`
+                    `cursor-pointer select-none p-2 ${active ? "bg-blue-500 text-white" : "text-black"}`
                   }
                 >
                   {student.first_name} {student.last_name}
