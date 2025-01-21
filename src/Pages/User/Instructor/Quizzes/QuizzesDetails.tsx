@@ -81,7 +81,7 @@ export const QuizzesDetails = () => {
         </div>
       )}
       {quiz && (
-        <div className="border border-black rounded-md p-5 ">
+        <div className="border border-black rounded-md p-5 md:w-[23rem]  xl:w-full ">
           <h1 className="text-2xl font-bold">{quiz?.title}</h1>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -119,9 +119,10 @@ export const QuizzesDetails = () => {
               <CustomFormInput
                 label="Duration"
                 width="w-full"
-                labelWidth="w-44"
+                labelWidth="w-40"
                 {...register("duration", {
                   required: getRequiredMessage("Duration"),
+                  valueAsNumber: true,
                 })}
                 defaultValue={quiz?.duration.toString()}
                 isError={errors?.duration}
@@ -129,11 +130,11 @@ export const QuizzesDetails = () => {
               />
             </div>
 
-            <div className="w-[80%] ">
+            <div className="w-[80%]">
               <CustomFormInput
                 label="Score per question"
                 width="w-full"
-                labelWidth="w-44"
+                labelWidth="w-40"
                 {...register("score_per_question", {
                   required: getRequiredMessage("Score"),
                 })}

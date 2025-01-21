@@ -39,7 +39,7 @@ const QuizForm = ({ register, errors, control }: Props) => {
             label="Duration"
             width="w-full sm:w-[35.5%]"
             height="h-10"
-            labelWidth="w-44"
+            labelWidth="w-40"
             {...register("duration", {
               required: getRequiredMessage("Duration"),
             })}
@@ -55,7 +55,7 @@ const QuizForm = ({ register, errors, control }: Props) => {
                 defaultValue: "",
               },
             }}
-            labelWidth="w-40"
+            labelWidth="w-44"
             {...register("questions_number", {
               required: getRequiredMessage("Questions No"),
             })}
@@ -70,7 +70,7 @@ const QuizForm = ({ register, errors, control }: Props) => {
             label="Score per question"
             width="w-full sm:w-[30.5%]"
             height="h-10"
-            labelWidth="w-44"
+            labelWidth="w-40"
             {...register("score_per_question", {
               required: getRequiredMessage("Score"),
             })}
@@ -110,7 +110,7 @@ const QuizForm = ({ register, errors, control }: Props) => {
                 defaultValue: "",
               },
             }}
-            labelWidth="w-36"
+            labelWidth="w-44"
             {...register("difficulty", {
               required: getRequiredMessage("Difficulty"),
             })}
@@ -126,7 +126,7 @@ const QuizForm = ({ register, errors, control }: Props) => {
                 defaultValue: "",
               },
             }}
-            labelWidth="w-36"
+            labelWidth="w-44"
             {...register("type", {
               required: getRequiredMessage("Type"),
             })}
@@ -142,7 +142,7 @@ const QuizForm = ({ register, errors, control }: Props) => {
                 defaultValue: "",
               },
             }}
-            labelWidth="w-36"
+            labelWidth="w-44"
             {...register("group", {
               required: getRequiredMessage("Group"),
             })}
