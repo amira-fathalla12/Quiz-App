@@ -12,12 +12,7 @@ const AllQuizzes = () => {
         <p className="text-xl font-bold"> All Quizzes</p>
       </div>
       <CustomTable
-        columns={[
-          "Title",
-          "Description",
-          "No. Of Participants",
-          "Date",
-        ]}
+        columns={["Title", "Description", "No. Of Participants", "Date"]}
       >
         {isError && <h3>Something went wrong! Could not get questions</h3>}
         {isLoading && (
@@ -29,14 +24,17 @@ const AllQuizzes = () => {
         )}
         {tableData &&
           tableData?.map((result) => (
-            <tr key={result.quiz._id} className="hover:bg-gray-100 transition rounded-md">
+            <tr
+              key={result.quiz._id}
+              className="hover:bg-gray-100 transition rounded-md"
+            >
               <td className="border border-gray-300 px-2 py-1 rounded">
                 {result.quiz.title}
               </td>
               <td className="border border-gray-300 px-2 py-1 rounded">
                 {result.quiz.description}
               </td>
-              <td className="border border-gray-300 px-2 py-1 rounded">
+              <td className="border border-gray-300 px-2 py-1 rounded text-center">
                 {result.participants.length}
               </td>
               <td className="border border-gray-300 px-2 py-1 rounded">

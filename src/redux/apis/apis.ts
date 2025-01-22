@@ -283,7 +283,8 @@ export const apis = createApi({
       query: (id) => ({
         url: GROUPS_URLS.getGroup(id),
       }),
-      providesTags: ["Groups"],
+      // providesTags: ["Groups"],
+      // providesTags: (_, __, id) => [{ type: "Groups", id }],
     }),
     /* results */
     allQuizzesResults: builder.query<Results[], void>({

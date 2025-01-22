@@ -6,7 +6,7 @@ import Spinner from "../../../components/Spinner/Spinner";
 
 export default function UpComingQuizzes() {
   const { isLoading, isError, data } = useTopUpcomingQuizzesQuery();
-  console.log(data);
+
   return (
     <div className="border rounded-xl border-gray-300 p-4 w-full md:w-1/2 h-fit">
       <div className="flex justify-between items-center mb-5">
@@ -16,17 +16,23 @@ export default function UpComingQuizzes() {
         </Link>
       </div>
       {isError && <h3>Something went wrong! Could not get Upcoming quizzes</h3>}
-      {isLoading && <div className="flex w-full justify-center"><Spinner/></div>}
-      {data && data?.map((quiz) => (
-        <QuizCard
-          title={quiz.title}
-          schadule={quiz.schadule}
-          participants={quiz.participants}
-          key={quiz._id}
-          id ={quiz._id}
-          role="student"
-        />
-      ))}
+      {isLoading && (
+        <div className="flex w-full justify-center">
+          <Spinner />
+        </div>
+      )}
+      {data &&
+        data?.map((quiz) => (
+          <QuizCard
+            title={quiz.title}
+            schadule={quiz.schadule}
+            participants={quiz.participants}
+            key={quiz._id}
+            id={quiz._id}
+            role="student"
+            code={quiz?.code}
+          />
+        ))}
     </div>
   );
 }
