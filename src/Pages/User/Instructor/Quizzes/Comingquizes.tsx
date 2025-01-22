@@ -25,6 +25,7 @@ const Comingquizes = ({ role }: { role: string }) => {
             key={quiz._id}
             id={quiz._id}
             role={role}
+            code={quiz?.code}
           />
         ))}
     </div>

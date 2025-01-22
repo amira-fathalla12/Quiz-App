@@ -13,6 +13,7 @@ export interface QuizCardInterface {
   participants: number;
   id: string;
   role: string;
+  code?: string;
 }
 
 export default function QuizCard({
@@ -21,10 +22,10 @@ export default function QuizCard({
   participants,
   id,
   role,
+  code,
 }: QuizCardInterface) {
   const date = formatDate(schadule);
   const time = formatTime(schadule);
-
   return (
     <div className="flex mb-5 border rounded-xl border-gray-300 w-full">
       <img src={quizImg} />
@@ -33,6 +34,7 @@ export default function QuizCard({
         <p className="text-sm">
           {date}{" "}
           <span className="border-l border-gray-300 pl-3 ml-3">{time}</span>
+          <span className="border-l border-gray-300 pl-3 ml-3">{code}</span>
         </p>
         <div
           className={twMerge(
@@ -47,7 +49,11 @@ export default function QuizCard({
           )}
 
           <Link
-            to={role === "Instructor" ? `/quzziesDetails/${id}` : `/exam-questions/${id}`}
+            to={
+              role === "Instructor"
+                ? `/quzziesDetails/${id}`
+                : `/exam-questions/${id}`
+            }
             className={twMerge(
               `${role === "Student" && "flex w-full justify-end"}`,
               `flex items-center gap-x-1`
