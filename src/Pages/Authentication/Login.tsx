@@ -14,8 +14,6 @@ import CustomInput from "./Components/CustomInput/CustomInput";
 import CustomPasswordInput from "./Components/CustomPasswordInput/CustomPasswordInput";
 import { useEffect } from "react";
 import { useLoginMutation } from "../../redux/apis/apis";
-import { toast } from "react-toastify";
-import { ApiError } from "../../services/interfaces";
 import Spinner from "../components/Spinner/Spinner";
 import { useAppDispatch } from "../../redux/store";
 import { setUser } from "../../redux/slices/userSlice";
@@ -45,19 +43,17 @@ export const Login = () => {
   const dispatch = useAppDispatch();
 
   const onSubmit = async (data: User) => {
-    console.log(data);
     try {
-      const result = await login(data).unwrap();
-      if (result.data) {
-        toast.success(result.message || "Login successful");
-        dispatch(
-          setUser({ user: result.data.profile, token: result.data.accessToken })
-        );
-        navigate("/dashboard");
-      }
-    } catch (err: unknown) {
-      const error = err as ApiError;
-      toast.error(error.data?.message || "Something went wrong");
+      const response = await login(data).unwrap();
+      dispatch(
+        setUser({
+          user: response.data.profile,
+          token: response.data.accessToken,
+        })
+      );
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Failed to login:", error);
     }
   };
 

@@ -7,7 +7,6 @@ import {
   useEditQuestionMutation,
   useGetQuestionQuery,
 } from "../../../redux/apis/apis";
-import ActionsMenu from "../../components/CustomTable/ActionsMenu";
 import CustomTable from "../../components/CustomTable/CustomTable";
 import Spinner from "../../components/Spinner/Spinner";
 import TableHeader from "../../components/TableHeader/TableHeader";
@@ -17,27 +16,22 @@ import { useForm } from "react-hook-form";
 import { Question } from "../../../services/interfaces";
 import { toast } from "react-toastify";
 import { DeleteConfirm } from "../components/DeleteConfirm/DeleteConfirm";
+import ActionsMenu from "../../components/CustomTable/ActionsMenu";
 
 export const QuestionsList = () => {
   const { isLoading, isError, data, refetch } = useAllQuestionsQuery();
   const tableData = data?.slice(0, 10);
-  console.log(tableData);
 
-  const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
-  const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
-  const [editId, setEditId] = useState<string>("");
-  const [deleting, setDeleting] = useState<boolean>(false);
+  const [isOpenAdd, setIsOpenAdd] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [editId, setEditId] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
-  const [selectedId, setSelectedId] = useState<string>("");
-
-  const [deleteQuestion, { isLoading: isLoadingDell }] = useDeleteQuestionMutation();
-
-  const handleOpenDelete = (id: string) => {
-    setSelectedId(id);
-    setOpenDelete(true);
-  };
-
-  const handleCloseDelete = () => setOpenDelete(false);
+  const [selectedId, setSelectedId] = useState("");
+  const [addQuestion] = useAddQuestionMutation();
+  const [editQuestion] = useEditQuestionMutation();
+  const [deleteQuestion] = useDeleteQuestionMutation();
+  const { data: questionData, isFetching: isFetchingQuestion } =
+    useGetQuestionQuery(editId);
 
   const {
     register,
@@ -47,106 +41,110 @@ export const QuestionsList = () => {
     formState: { errors, isSubmitting },
   } = useForm<Question>({ mode: "onChange" });
 
-  const [addQuestion, { isLoading: isLoadingAdd }] = useAddQuestionMutation();
-  const [editQuestion, { isLoading: isLoadingEdit }] = useEditQuestionMutation();
-  const { data: questionData, isFetching: isFetchingQuestion } = useGetQuestionQuery(editId);
-
   const handleAddQuestion = async (data: Question) => {
     try {
       const result = await addQuestion(data).unwrap();
-      console.log(result);
+      toast.success(result.message);
       closeAddModal();
       refetch();
-      toast.success(result.message);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.message || "Something went wrong");
     }
   };
 
   const handleEditQuestion = async (data: Question) => {
-    console.log(editId);
     try {
       const result = await editQuestion({ id: editId, data }).unwrap();
-      console.log(result);
-      closeEditModal();
-      refetch();
       toast.success(result.message);
-    } catch (error) {
-      console.log(error);
+      closeEditModal();
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.message || "Something went wrong");
     }
   };
 
-  const deleteQuestions = async (data: Question) => {
+  const deleteQuestions = async () => {
     try {
-      setDeleting(true);
-      await deleteQuestion({id:selectedId, data}).unwrap(); 
-      toast.success("Question deleted successfully");
-      refetch();
+      const questionToDelete = data?.find(
+        (question) => question._id === selectedId
+      );
+
+      if (questionToDelete) {
+        await deleteQuestion({
+          id: selectedId,
+          data: questionToDelete,
+        }).unwrap();
+        toast.success("Question deleted successfully");
+      }
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       toast.error(error?.message || "Something went wrong");
     } finally {
-      setDeleting(false);
       handleCloseDelete();
     }
   };
 
-  function openAddModal() {
+  const openAddModal = () => {
     reset();
     setIsOpenAdd(true);
-  }
+  };
 
-  function closeAddModal() {
+  const closeAddModal = () => {
     setIsOpenAdd(false);
     reset();
-  }
+  };
 
-  function openEditModal(id: string) {
+  const openEditModal = (id: string) => {
     setEditId(id);
     setIsOpenEdit(true);
-  }
-  
+  };
 
-  useEffect(() => {
-    if (!openEditModal) return;
-    setValue("title", questionData?.title);
-    setValue("description", questionData?.description);
-    setValue("type", questionData?.type);
-    setValue("answer", questionData?.answer);
-    setValue("options.A", questionData?.options?.A);
-    setValue("options.B", questionData?.options?.B);
-    setValue("options.C", questionData?.options?.C);
-    setValue("options.D", questionData?.options?.D);
-  }, [questionData, setValue]);
-
-  function closeEditModal() {
+  const closeEditModal = () => {
     setIsOpenEdit(false);
     reset();
-  }
+  };
 
+  const handleOpenDelete = (id: string) => {
+    setSelectedId(id);
+    setOpenDelete(true);
+  };
+
+  const handleCloseDelete = () => setOpenDelete(false);
+
+  useEffect(() => {
+    if (questionData) {
+      setValue("title", questionData.title ?? "");
+      setValue("description", questionData.description ?? "");
+      setValue("type", questionData.type ?? "BE");
+      setValue("answer", questionData.answer ?? "A");
+      setValue("options.A", questionData.options?.A ?? "");
+      setValue("options.B", questionData.options?.B ?? "");
+      setValue("options.C", questionData.options?.C ?? "");
+      setValue("options.D", questionData.options?.D ?? "");
+    }
+  }, [questionData, setValue]);
 
   return (
     <div className="p-5">
-      <Modal
+      <Modal<Question>
         isOpen={isOpenAdd}
         closeModal={closeAddModal}
         title="Set up a new question"
         handleSubmitQuestion={handleSubmit}
         onSubmit={handleAddQuestion}
         isSubmitting={isSubmitting}
-        isLoading={isLoadingAdd}
         formType="question"
       >
         <Form register={register} errors={errors} />
       </Modal>
-      <Modal
+      <Modal<Question>
         isOpen={isOpenEdit}
         closeModal={closeEditModal}
         title="Update question"
         handleSubmitQuestion={handleSubmit}
         onSubmit={handleEditQuestion}
         isSubmitting={isSubmitting}
-        isLoading={isLoadingEdit}
         formType="question"
       >
         {isFetchingQuestion ? (
@@ -180,7 +178,7 @@ export const QuestionsList = () => {
           </tr>
         )}
         {tableData &&
-          tableData?.map((ques) => (
+          tableData.map((ques) => (
             <tr key={ques._id} className="border border-gray-300">
               <td className="border border-gray-300 px-2 py-1">{ques.title}</td>
               <td className="border border-gray-300 px-2 py-1">
@@ -200,12 +198,12 @@ export const QuestionsList = () => {
           ))}
       </CustomTable>
       <DeleteConfirm
-        setOpenModal={handleCloseDelete} 
-        openModal={openDelete} 
-        loading={deleting || isLoadingDell}
-        onConfirm={deleteQuestions} 
-        title="Question" 
-        modalRef={null} 
+        setOpenModal={handleCloseDelete}
+        openModal={openDelete}
+        loading={false}
+        onConfirm={deleteQuestions}
+        title="Question"
+        modalRef={null}
       />
     </div>
   );

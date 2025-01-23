@@ -48,6 +48,28 @@ export interface resetPasswordResponse {
   message: string;
 }
 
+export interface ChangePasswordCredentials {
+  password: string;
+  password_new: string;
+  Confirm_Password: string;
+}
+export interface ChangePasswordResponse {
+  message: string;
+}
+
+// Register 
+export interface registerCredentials {
+  first_name:string,
+  last_name:string,
+  email:string,
+  password:string,
+  role:"Instructor" | "Student"
+}
+export interface registerResponse {
+  message: string;
+}
+
+
 //* quiz
 export interface Quiz {
   _id: string;
@@ -64,13 +86,17 @@ export interface Quiz {
   score_per_question: number;
   type: "BE" | "FE" | "DO";
   difficulty: "easy" | "medium" | "hard";
+  closed_at: string;
   updatedAt: string;
   createdAt: string;
   __v: number;
   participants: number;
+  score:string;
+  quiz: string;
 }
 export interface QuizResponse {
   message: string;
+  success: string;
   data: Quiz;
 }
 //* questions
@@ -116,6 +142,11 @@ export interface group {
   __v: number;
 }
 
+export interface groupResponse {
+  message: string;
+  data: group;
+}
+
 //* students
 export interface Student {
   _id: string;
@@ -135,7 +166,7 @@ export interface DeleteModalType {
   setOpenModal: (value: boolean) => void;
   openModal: boolean;
   loading: boolean;
-  onConfirm: (data:Question) => void;
+  onConfirm: () => void;
   title: string;
   modalRef: RefObject<HTMLDivElement> | null;
 }
@@ -182,4 +213,9 @@ export interface Participants {
   score: number;
   started_at: string;
   finished_at: string;
+}
+
+export interface answers {
+  question:string,
+  answer:string
 }

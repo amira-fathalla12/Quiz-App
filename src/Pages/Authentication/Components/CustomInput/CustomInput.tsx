@@ -43,7 +43,7 @@ const CustomInput = ({
           id={inputId}
           readOnly={readonly}
           value={value}
-          className="py-4 pl-12 bg-inherit border-[3px] rounded-[10px] w-full outline-none"
+          className="py-4 pl-12 bg-inherit border-[3px] rounded-[10px] w-full outline-none custom-autocomplete"
           {...register}
         />
       </div>

@@ -25,14 +25,18 @@ const CodeModal = ({ openModal, setOpenModal, title, code }: Props) => {
   return (
     <div
       className={twMerge(
-        `fixed inset-0 flex items-center justify-center `,
+        `fixed inset-0 flex items-center justify-center  `,
         openModal ? "bg-black/30  z-10" : "hidden"
       )}
     >
-      <Modal show={openModal} className="mx-auto w-fit border-0 z-20 " popup>
+      <Modal
+        show={openModal}
+        className="mx-auto h-fit my-auto w-fit border-0 z-20"
+        popup
+      >
         <Modal.Header onClick={() => setOpenModal()} />
         <Modal.Body className="">
-          <div className="flex  flex-col  justify-center items-center text-center">
+          <div className="flex  flex-col w-[370px]  justify-center items-center text-center">
             {/* Content */}
             <div className=" flex flex-col gap-2 items-center pb-11 font-Inter">
               <div className="text-4xl">
@@ -47,13 +51,14 @@ const CodeModal = ({ openModal, setOpenModal, title, code }: Props) => {
                   CODE:
                 </span>
                 <span className="font-bold text-xl py-1 pe-2">{code}</span>
-                <div
+                <button
                   className="py-1 cursor-pointer"
                   title="Copy"
                   onClick={() => copyToClipboard(code)}
                 >
+                  <span className="sr-only">Copy Code</span>
                   <CopyIcon />
-                </div>
+                </button>
               </div>
             </div>
 

@@ -7,25 +7,24 @@ import {
 import { ReactNode } from "react";
 import { CloseIcon, SaveIcon } from "../SvgIcons/SvgIcons";
 import { UseFormHandleSubmit } from "react-hook-form";
-import { Question, Quiz } from "../../../services/interfaces";
+import { group, Question, Quiz } from "../../../services/interfaces";
 import Spinner from "../Spinner/Spinner";
 
-interface ModalI {
+interface ModalI<T> {
   isOpen: boolean;
   closeModal: () => void;
   title: string;
   handleSubmitQuestion?: UseFormHandleSubmit<Question, undefined>;
   handleSubmitQuiz?: UseFormHandleSubmit<Quiz, undefined>;
-  onSubmit:
-    | ((data: Question) => Promise<void>)
-    | ((data: Quiz) => Promise<void>);
+  handleSubmitGroup?: UseFormHandleSubmit<group, undefined>;
+  onSubmit: (data: T) => Promise<void>;
   children: ReactNode;
   isSubmitting?: boolean;
   isLoading?: boolean;
   formType?: string;
 }
 
-export default function Modal({
+export default function Modal<T>({
   isOpen,
   closeModal,
   children,
@@ -33,10 +32,11 @@ export default function Modal({
   onSubmit,
   handleSubmitQuestion,
   handleSubmitQuiz,
+  handleSubmitGroup,
   formType,
   isSubmitting,
   isLoading,
-}: ModalI) {
+}: ModalI<T>) {
   return (
     <>
       <Dialog
@@ -59,9 +59,15 @@ export default function Modal({
                     ? handleSubmitQuiz?.(
                         onSubmit as (data: Quiz) => Promise<void>
                       )
-                    : handleSubmitQuestion?.(
+                    : formType === "question"
+                    ? handleSubmitQuestion?.(
                         onSubmit as (data: Question) => Promise<void>
                       )
+                    : formType === "group"
+                    ? handleSubmitGroup?.(
+                        onSubmit as (data: group) => Promise<void>
+                      )
+                    : undefined
                 }
               >
                 <div className="pl-12 flex justify-between items-center border-b-[1px] border-[#0000004D] ">

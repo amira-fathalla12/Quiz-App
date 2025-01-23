@@ -8,7 +8,6 @@ export default function DropdownMenu() {
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  console.log(user);
 
   const logout = () => {
     dispatch(clearUser());
@@ -47,7 +46,8 @@ export default function DropdownMenu() {
           <MenuItem>
             <div
               onClick={logout}
-              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100
+               data-[focus]:text-gray-900 data-[focus]:outline-none cursor-pointer"
             >
               Log out
             </div>
